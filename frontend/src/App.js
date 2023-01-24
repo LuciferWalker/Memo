@@ -22,6 +22,7 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/post" element={<Post />} />
         <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/desc" element={<PostDescription/>} />
         {/* <Route path="/uploadcontent" element={<UploadContent/>}/>
       <Route path="/getprotected" element={<GetProtected/>}/>
       <Route path="/protectedContent" element={<ProtectedContent/>}/> */}
