@@ -24,7 +24,7 @@ const Home = () => {
 
     return(
         <div style={Bg}>
-            <div style={{padding:'60px'}}>
+            <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
                     <div>

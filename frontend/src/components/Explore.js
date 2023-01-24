@@ -13,7 +13,8 @@ const Explore = () => {
 
     const tab = {
         background: 'linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)',
-        padding: '3px'
+        padding: '1px',
+        cursor:'pointer'
     }
 
     const explore={
@@ -24,7 +25,7 @@ const Explore = () => {
 
     return(
         <div style={explore}>
-            <div style={{padding:'60px'}}>
+            <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
                     <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
@@ -45,37 +46,37 @@ const Explore = () => {
                 <table>
                     <tr>
                         <td>
-                            <table style={tab}>
+                            <table style={tab} onClick={()=>navigate("/desc")}>
                                 <tr>
-                                    <td><h4>MUSIC</h4></td>
-                                    <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>
+                                    <td style={{paddingLeft:'40px'}}><h5>MUSIC</h5></td>
+                                    <td style={{paddingLeft:'80px'}}><h5>CREATORS</h5></td>
                                 </tr>
                                 <tr>
-                                    <td style={{width:'300px'}}>
+                                    <td style={{width:'340px',paddingLeft:'40px'}}>
                                         <h5>This record is made up of music from around the globe.</h5>
-                                        <h5>18.05.2023</h5>
+                                        <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'250px'}}></td>
+                                    <td style={{width:'270px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h4> $ LISTEN<br/> $ DOWNLOAD</h4>
+                                        <h5> $ LISTEN<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                         <td style={{paddingLeft:'20px'}}>
-                            <table style={tab}>
+                            <table style={tab} onClick={()=>navigate("/desc")}>
                                 <tr>
-                                    <td><h4>MUSIC</h4></td>
-                                    <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>
+                                    <td style={{paddingLeft:'40px'}}><h5>MUSIC</h5></td>
+                                    <td style={{paddingLeft:'80px'}}><h5>CREATORS</h5></td>
                                 </tr>
                                 <tr>
-                                    <td style={{width:'300px'}}>
+                                    <td style={{width:'340px',paddingLeft:'40px'}}>
                                         <h5>This record is made up of music from around the globe.</h5>
-                                        <h5>18.05.2023</h5>
+                                        <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'250px'}}></td>
+                                    <td style={{width:'270px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h4> $ LISTEN<br/> $ DOWNLOAD</h4>
+                                        <h5> $ LISTEN<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>
@@ -87,35 +88,35 @@ const Explore = () => {
                         <td>
                             <table style={tab} onClick={()=>navigate("/desc")}>
                                 <tr>
-                                    <td><h4>ARCHIVES</h4></td>
-                                    <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>
+                                    <td style={{paddingLeft:'40px'}}><h5>ARCHIVES</h5></td>
+                                    <td style={{paddingLeft:'80px'}}><h5>CREATORS</h5></td>
                                 </tr>
                                 <tr>
-                                    <td style={{width:'300px'}}>
+                                    <td style={{width:'340px',paddingLeft:'40px'}}>
                                         <h5>PROJECT DESCRIPTION</h5>
-                                        <h5>18.05.2023</h5>
+                                        <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'250px'}}></td>
+                                    <td style={{width:'270px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h4> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h4>
+                                        <h5> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                         <td style={{paddingLeft:'20px'}}>
-                            <table style={tab}>
+                            <table style={tab} onClick={()=>navigate("/desc")}>
                                 <tr>
-                                    <td><h4>ARCHIVES</h4></td>
-                                    <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>
+                                    <td style={{paddingLeft:'40px'}}><h5>ARCHIVES</h5></td>
+                                    <td style={{paddingLeft:'80px'}}><h5>CREATORS</h5></td>
                                 </tr>
                                 <tr>
-                                    <td style={{width:'300px'}}>
+                                    <td style={{width:'340px',paddingLeft:'40px'}}>
                                         <h5>PROJECT DESCRIPTION</h5>
-                                        <h5>18.05.2023</h5>
+                                        <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'250px'}}></td>
+                                    <td style={{width:'270px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h4> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h4>
+                                        <h5> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>

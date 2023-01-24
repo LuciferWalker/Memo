@@ -22,7 +22,7 @@ const CreatePost = () => {
 
     return(
         <div style={createpost}>
-            <div style={{padding:'60px'}}>
+            <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                         {/* <SignIn /> */}
                         <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>

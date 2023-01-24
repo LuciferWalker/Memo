@@ -21,7 +21,7 @@ const PostDescrip = () => {
 
     return(
         <div>
-            <div style={{padding:'60px'}}>
+            <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
                     <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
@@ -47,8 +47,8 @@ const PostDescrip = () => {
                 <div>
                     <table>
                         <tr>
-                            <td style={{width:'700px',backgroundColor:'black'}}>
-                                <div>
+                            <td style={{width:'700px',backgroundColor:'rgba(7, 7, 7, 0.5)'}}>
+                                <div style={{paddingLeft:'30px'}}>
                                     <h4>PROJECT TITLE</h4>
                                     <img src={Img1} style={{width:'400px'}} />
                                     <h4>PROJECT DESCRIPTION</h4>
@@ -58,43 +58,43 @@ const PostDescrip = () => {
                             <td style={{paddingLeft:'20px'}}>
                                 <table style={tab}>
                                     <tr>
-                                        <td><h4>MUSIC</h4></td>
+                                        <td style={{paddingLeft:'20px'}}><h4>DOWNLOAD</h4></td>
                                     </tr>
                                     <tr>
-                                        <td style={{width:'200px'}}>
+                                        <td style={{width:'200px',paddingLeft:'20px'}}>
                                             <h5>18.05.2023</h5>
                                         </td>
                                         <td style={{width:'200px'}}></td>
                                         <td style={{width:'200px'}}>
-                                            <h4>WISHLIST<span style={{marginLeft:'30px'}}>PURCHASE</span></h4>
+                                            <h5>WISHLIST<span style={{marginLeft:'30px',paddingRight:'10px'}}>PURCHASE</span></h5>
                                         </td>
                                     </tr>
                                 </table>
                                 <table style={tab}>
                                     <tr>
-                                        <td><h4>MUSIC</h4></td>
+                                        <td style={{paddingLeft:'20px'}}><h4>RENT</h4></td>
                                     </tr>
                                     <tr>
-                                        <td style={{width:'200px'}}>
+                                        <td style={{width:'200px',paddingLeft:'20px'}}>
                                             <h5>18.05.2023</h5>
                                         </td>
                                         <td style={{width:'200px'}}></td>
                                         <td style={{width:'200px'}}>
-                                            <h4>WISHLIST<span style={{marginLeft:'30px'}}>PURCHASE</span></h4>
+                                            <h5>WISHLIST<span style={{marginLeft:'30px',paddingRight:'10px'}}>PURCHASE</span></h5>
                                         </td>
                                     </tr>
                                 </table>
                                 <table style={tab}>
                                     <tr>
-                                        <td><h4>MUSIC</h4></td>
+                                        <td style={{paddingLeft:'20px'}}><h4>PURCHASE</h4></td>
                                     </tr>
                                     <tr>
-                                        <td style={{width:'200px'}}>
+                                        <td style={{width:'200px',paddingLeft:'20px'}}>
                                             <h5>18.05.2023</h5>
                                         </td>
                                         <td style={{width:'200px'}}></td>
                                         <td style={{width:'200px'}}>
-                                            <h4>WISHLIST<span style={{marginLeft:'30px'}}>PURCHASE</span></h4>
+                                            <h5>WISHLIST<span style={{marginLeft:'30px',paddingRight:'10px'}}>PURCHASE</span></h5>
                                         </td>
                                     </tr>
                                 </table>

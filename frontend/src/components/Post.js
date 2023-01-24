@@ -22,7 +22,7 @@ const Post = () =>{
 
     return(
         <div style={post}>
-            <div style={{padding:'60px'}}>
+            <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                         {/* <SignIn /> */}
                         <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
@@ -60,19 +60,19 @@ const Post = () =>{
                             </td>
                             <td style={{width:'80%',padding:'10px'}}>
                                 <h3>ACTIVE PROJECTS</h3>
-                                <table className="tab" style={{background: 'linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)',padding:'5px'}}>
+                                <table style={{background: 'linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)',padding:'0px'}}>
                                     <tr>
-                                        <td><h4>MUSIC</h4></td>
-                                        <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>
+                                        <td style={{paddingLeft:'40px'}}><h5>MUSIC</h5></td>
+                                        <td style={{paddingLeft:'80px'}}><h5>CREATORS</h5></td>
                                     </tr>
                                     <tr>
-                                        <td style={{width:'300px'}}>
+                                        <td style={{width:'340px',paddingLeft:'40px'}}>
                                             <h5>This record is made up of music from around the globe.</h5>
                                             <h5>18. 05. 2020</h5>
                                         </td>
-                                        <td style={{width:'250px'}}></td>
+                                        <td style={{width:'270px'}}></td>
                                         <td style={{width:'200px'}}>
-                                            <h4> $ LISTEN<br/> $ DOWNLOAD</h4>
+                                            <h5> $ LISTEN<br/> $ DOWNLOAD</h5>
                                         </td>
                                     </tr>
                                 </table>
