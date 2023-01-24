@@ -8,6 +8,7 @@ const CreatePost = () => {
 
     const [hover, setHover] = useState(false);
     const [hover1, setHover1] = useState(false);
+    const [hoversub, sethoversub] = useState(false);
     const [distribution, setDistribution] = useState();
     const [members, setMembers] = useState([]);
 
@@ -15,6 +16,8 @@ const CreatePost = () => {
     const handleMouseLeave = () => {setHover(false);};
     const handleMouseEnter1 = () => {setHover1(true);};
     const handleMouseLeave1 = () => {setHover1(false);};
+    const handleMouseEnter2 = () => {sethoversub(true);};
+    const handleMouseLeave2 = () => {sethoversub(false);};
 
     const createpost={
         backgroundImage: `url(${image})`,
@@ -38,8 +41,16 @@ const CreatePost = () => {
         return  members.map((quest) => (
             <div style={{fontSize:'12px',marginTop:'5px'}}>
                 <tr>
-                    <label style={{marginLeft:'130px'}}>Wallet Add{quest+1}</label>
-                    <input type="text" style={{marginLeft:'20px',padding:'4px',width:'216px'}} />
+                    <label style={{marginLeft:'130px'}}>Creator Name {quest+1}</label>
+                    <input type="text" style={{marginLeft:'56px',padding:'4px',width:'160px'}} />
+                </tr>
+                <tr>
+                    <label style={{marginLeft:'130px'}}>Social Login</label>
+                    <input type="text" style={{marginLeft:'77px',padding:'4px',width:'160px'}} />
+                </tr>
+                <tr>
+                    <label style={{marginLeft:'130px'}}>Wallet Add</label>
+                    <input type="text" style={{marginLeft:'83px',padding:'4px',width:'160px'}} />
                 </tr>
                 <tr>
                     <label style={{marginLeft:'130px'}}>%Royalty Distribution</label>
@@ -138,7 +149,7 @@ const CreatePost = () => {
                                             </div>
                                             <div style={{marginTop:'10px'}}>
                                                 <tr>
-                                                    <td style={{width:"250px"}}><label>Creators</label></td>
+                                                    <td style={{width:"250px"}}><label>No. of Creators</label></td>
                                                     <td><input id="creator" value={distribution} style={{padding:'8px',width:'300px',marginLeft:'40px'}} onChange={handleChange}/></td>
                                                 </tr> 
                                             </div>
@@ -159,7 +170,11 @@ const CreatePost = () => {
                                             </div>
                                         </table> 
                                         <div style={{marginLeft:'270px',marginTop:'20px'}}>
-                                            <button type="submit" href="/" style={{padding:'7px'}}>Submit</button>
+                                            <button type="submit" style={{
+                                                color: hoversub ? '#658BD6' : 'white',
+                                                padding:'7px',background:'none',border:'none',fontFamily: 'Montserrat, sans-serif',cursor:'pointer'}}
+                                                onMouseEnter={handleMouseEnter2} onMouseLeave={handleMouseLeave2}
+                                                ><b>SUBMIT</b></button>
                                         </div>                                      
                                     </div>
                                 </form>
