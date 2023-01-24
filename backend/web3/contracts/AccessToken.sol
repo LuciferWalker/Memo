@@ -57,7 +57,11 @@ contract AccessToken is ERC20 {
         projectStatus = status;
     }
 
+    function _transfer(address from, address to, uint amount) internal override {
+    revert(); //transfer is not allowed
+  }
+  
     // function maxSupply
 
-    //transfer is not allowed
+    
 }
