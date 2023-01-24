@@ -1,8 +1,13 @@
-const mongoose = require('mongoose'); //library to help us enforce data schema(dont know much about it)
+const mongoose = require('mongoose');
 
-const DB = process.env.MONGO_URI 
+const connectDB = async () =>{
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI)
+        console.log('MongoDB connected')
+    } catch (error) {
+        console.log(error);
+        process.exit(1)
+    }
+}
 
-//Connecting mongodb to our server
-mongoose.connect(DB).then(() => {
-    console.log('our db is connected')
-}).catch((err) => console.log(err.message)) 
+module.exports = connectDB

@@ -1,15 +1,17 @@
 const express = require("express");
 const cors = require("cors");
+const connecDB = require('./database/connection')
 
 const app = express();
 
 require("dotenv".config({ path: "./config.env" }));
 const PORT = process.env.PORT;
 
-require("./database/connection");
+connecDB()
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/uploadFile", async (req, res) => {
   //upload file to the ipfs, then upload the contract
