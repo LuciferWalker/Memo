@@ -6,25 +6,20 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract AccessToken is ERC20 {
 
     uint MAX_SUPPLY;
-    uint tokenCounter;
-    uint TOKEN_PRICE;
+    uint public tokenCounter;
+    uint public TOKEN_PRICE;
     address[] creators;
     uint[] shares;
     bool projectStatus = true;
 
     //add creators to list to distribute royalties
 
-    constructor(string memory name, string memory symbol, string memory CID, uint maxSupply, uint tokenPrice, address[] memory creators, uint[] memory shares) ERC20(name, symbol) {
+    constructor(string memory _name, string memory _symbol, uint _maxSupply, uint _tokenPrice, address[] memory _creators, uint[] memory _shares) ERC20(_name, _symbol) {
         require(creators.length == shares.length, "Length of creators and royalties array must be equal");
-        MAX_SUPPLY = maxSupply;
-        TOKEN_PRICE = tokenPrice;
-        creators = creators;
-        shares = shares;
-    }
-
-    modifier onlyMemo {
-        require(msg.sender == memo);
-        _;
+        MAX_SUPPLY = _maxSupply;
+        TOKEN_PRICE = _tokenPrice;
+        creators = _creators;
+        shares = _shares;
     }
 
     //check if royalty distribution sum is valid
@@ -34,14 +29,14 @@ contract AccessToken is ERC20 {
         
     // }
      
-    function distributeFunds(uint amount) private {
-        for(int i = 0;i<creators.length;i++){
-            creators[i].transfer(royalties[i]*amount);
+    function distributeFunds(uint _amount) private {
+        for(uint i = 0; i<creators.length;i++){
+            payable(creators[i]).transfer(shares[i]*_amount);
         }
     }
 
     function mint() public payable {
-        require(msg.value >= tokenPrice, "Insufficient Amount");
+        require(msg.value >= TOKEN_PRICE, "Insufficient Amount");
         require(tokenCounter < MAX_SUPPLY, "Tokens are sold out");
         require(balanceOf(msg.sender) == 0 , "You have already bought this token");
         _mint(msg.sender, 1);
@@ -53,15 +48,21 @@ contract AccessToken is ERC20 {
         }
     }
 
-    function updateProjectStatus(bool status) private{
-        projectStatus = status;
+    function updateProjectStatus(bool _status) private{
+        projectStatus = _status;
     }
 
-    function _transfer(address from, address to, uint amount) internal override {
-    revert(); //transfer is not allowed
+    function getProjectStatus() public view returns(bool) {
+        return projectStatus;
+    }
+
+    function _transfer(address _from, address _to, uint _amount) internal override {
+        revert(); //transfer is not allowed
   }
   
-    // function maxSupply
+    // function _maxSupply
+
+    //override burn and other relevant functions as well
 
     
 }

@@ -31,6 +31,12 @@ contract MarketPlace {
         projectCost = _projectCost;
     }
 
+    
+    modifier onlyMemo {
+        require(msg.sender == memo);
+        _;
+    }
+
 
     function createProject(string memory name, string memory symbol, string memory CID, uint maxSupply, uint tokenPrice, address[] memory creators, uint[] memory shares) public payable{
         require(msg.value >= projectCost, "Insufficient Amount");
