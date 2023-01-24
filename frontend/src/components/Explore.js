@@ -1,16 +1,29 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import image from '../images/star.png'
 
 const Explore = () => {
 
     const navigate = useNavigate();
 
+    const [hover, setHover] = useState(false);
+
+    const handleMouseEnter = () => {setHover(true);};
+    const handleMouseLeave = () => {setHover(false);};
+
     const tab = {
-        background: 'linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)',
+        background: 'linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)',
         padding: '3px'
     }
 
+    const explore={
+        backgroundImage: `url(${image})`,
+        backgroundRepeat:'no-repeat',
+        backgroundPosition:'center',
+    }
+
     return(
-        <div className="explore">
+        <div style={explore}>
             <div style={{padding:'60px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
@@ -19,7 +32,13 @@ const Explore = () => {
                         <h5>01.01.2023</h5>
                     </div>
                     <div style={{cursor: 'pointer'}}>
-                        <h4>CONNECT WALLET<br/>EXPLORE MEMOS<br/><span onClick={()=>navigate("/post")}>POST A MEMO</span></h4>
+                        <h4>CONNECT WALLET<br/><span style={{color:'#658BD6'}}>EXPLORE MEMOS</span><br/>
+                        <span 
+                        style={{color: hover ? '#658BD6' : 'white'}} 
+                        onClick={()=>navigate("/post")}
+                        onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                            POST A MEMO
+                        </span></h4>
                     </div>
                 </div>
 
@@ -66,7 +85,7 @@ const Explore = () => {
                 <table style={{marginTop:'8px'}}>
                     <tr>
                         <td>
-                            <table style={tab}>
+                            <table style={tab} onClick={()=>navigate("/desc")}>
                                 <tr>
                                     <td><h4>ARCHIVES</h4></td>
                                     <td style={{paddingLeft:'80px'}}><h4>CREATORS</h4></td>

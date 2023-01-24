@@ -1,10 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@300&display=swap');
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../images/star.png');
+  /* background: linear-gradient(135deg, rgba(1, 2, 3, 1) 25%, transparent 30%),
+  linear-gradient(225deg, rgba(1, 2, 3, 1) 25%, transparent 30%),
+  linear-gradient(315deg, rgba(1, 2, 3, 1) 25%, transparent 30%),
+  linear-gradient(45deg, rgba(1, 2, 3, 1) 25%, transparent 30%); 
+  background-size: 1370px 700px;
+  background-color: rgba(73, 157, 255, 0.9);
+  background-position: top;
+  background-repeat: no-repeat; */
+  background: radial-gradient(50% 50% at 50% 50%, rgba(73, 157, 255, 0.57) 0%, rgba(1, 2, 3, 0.995521) 99.99%, #000000 100%);
+  background-repeat:no-repeat;
+  background-size: 1370px 700px;
 }
 
 code {

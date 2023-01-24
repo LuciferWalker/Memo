@@ -10,6 +10,7 @@ import Explore from "./components/Explore";
 // import GetProtected from "./components/GetProtected";
 import Home from './components/Home'
 import Post from "./components/Post";
+import PostDescrip from "./components/PostDescrip";
 
 import "./styles/App.css";
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/explore" element={<Explore/>}/>
       <Route path="/post" element={<Post/>}/>
       <Route path="/createpost" element={<CreatePost/>}/>
+      <Route path="/desc" element={<PostDescrip/>}/>
       {/* <Route path="/uploadcontent" element={<UploadContent/>}/>
       <Route path="/getprotected" element={<GetProtected/>}/>
       <Route path="/protectedContent" element={<ProtectedContent/>}/> */}
