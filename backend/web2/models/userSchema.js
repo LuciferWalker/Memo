@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
-const userSchema = mongoose.Schema({
-    id: {
-        
-    },
+const UserSchema = mongoose.Schema({
     name:{
         type:String,
     },
@@ -19,5 +16,5 @@ const userSchema = mongoose.Schema({
     // 2 arrays to store the project Ids of invested and created
 })
 
-const Creator = mongoose.model('User', userSchema)
+const Creator = mongoose.model('User', UserSchema)
 module.exports = User

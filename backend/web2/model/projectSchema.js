@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
 const projectSchema = mongoose.Schema({
-    id: {
-
-    },
     name:{
         type:String,
     },
