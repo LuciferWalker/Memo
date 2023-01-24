@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
-    
     address: {
         type:String,
         required:true
@@ -9,7 +8,7 @@ const UserSchema = mongoose.Schema({
     boughtProjects:{
         type:[Number],
     },
-    projectsCreated:{
+    createdProjects:{
         type:[Number],
     },
     // 2 arrays to store the project Ids of invested and created
