@@ -1,59 +1,97 @@
 const express = require("express");
 const cors = require("cors");
 const connecDB = require('./database/connection')
-
+const Project = require('./models/projectSchema')
+const User = require('./models/UserSchema')
 const app = express();
 
-require("dotenv".config({ path: "./config.env" }));
-const PORT = process.env.PORT;
+
+const PORT = process.env.PORT || 3001;
 
 connecDB()
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/uploadFile", async (req, res) => {
-  //upload file to the ipfs, then upload the contract
-  //upload file logic
-});
 
 app.post("/createProject", async (req, res) => {
-  const {
-    projectTitle,
-    projectDescription,
-    creators,
-    tokenPrice,
-    tokenSupply,
-    shares,
-  } = req.body;
+  try {
+    // const {
+  //   projectTitle,
+  //   projectDescription,
+  //   creators,
+  //   tokenPrice,
+  //   tokenSupply,
+  //   shares,
+  // } = req.body;
 
-  //store data in database
+  // create project
+  const project = await Project.create({...req.body});
+  // add project in user db
+  const user = await User.findOne({address:req.body.creators[0]})
+  user.projectsCreated.push(projectId);
+  await user.save()
+  
+  res.status(201).json(project)
+  } catch (err) {
+    console.log(err);
+  }
+  
 
-  //call createProject function from marketplace
 
 });
+
+app.post("/projectTokenBought", async (req, res) => {
+  try {
+    const projectId = req.body.projectId
+    
+    // Update in user db that ticket has been bought
+    const user = await User.findOne({address:req.body.address})
+    user.boughtProjects.push(projectId);
+    await user.save()
+
+    // Update in project db that ticket has been bought 
+    const project = await Project.updateOne({projectId},{ $inc: { tokensBought: 1 } })
+    await project.save()
+    res.status(201).json(user)
+    //store data in database
+  } catch (err) {
+    console.log(err);
+  }
+  
+});
+
 
 app.get("/listedProjects", async(req,res) => {
 
-    //fetch all projects whos status is true from mongodb
+  try {
+    const projects = await Project.find()
+    res.status(200).json(projects)
+  } catch (err) {
+    console.log(err);
+  }
 })
 
-app.post("/downloadFile", async(req,res) => {
-
-    const {projectId} = req.body
-
-    //download the content using the cid associated with this projectId
-})
 
 app.get("/boughtProjects", async(req,res)=>{
-
-    //show all projects the user has bought tokens in
+  try {
+    const user = await User.findOne({address:req.body.address})
+    res.status(200).send(user.projects)
+  } catch (err) {
+    console.log(err);
+  }
+  
 })
 
 app.get("/createdProjects", async(req,res)=>{
-
-    //show all projects the user has created
+  try {
+    const user = await User.findOne({address:req.body.address})
+    res.status(200).send(user.boughtProjects)
+  } catch (err) {
+    console.log(err);
+  }
 })
 
 

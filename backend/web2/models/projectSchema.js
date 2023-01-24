@@ -2,6 +2,12 @@ const mongoose = require('mongoose')
 
 const ProjectSchema = mongoose.Schema({
 
+    projectId:{
+        type:Number,
+    },
+    image:{
+        type:String,
+    },
     name:{
         type:String,
         required: true,
@@ -23,6 +29,15 @@ const ProjectSchema = mongoose.Schema({
     projectStatus:{
         type:Boolean,
         default: true
+    },
+    totalTokens:{
+        type:Number
+    },
+    tokensBought:{
+        type:Number
+    },
+    tokenPrice:{
+        type:Number
     }
 
 })
