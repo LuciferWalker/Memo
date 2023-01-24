@@ -1,29 +1,31 @@
 const mongoose = require('mongoose')
 
-const projectSchema = mongoose.Schema({
-    id: {
+const ProjectSchema = mongoose.Schema({
 
-    },
     name:{
         type:String,
+        required: true,
     },
     description:{
         type:String,
+        required: true,
     },
     tokenContractAddress:{
-        type:String
+        type:String,
+        required: true,
     },
     creatorIds: {
-        type:[Number], //[1,2,3]
+        type:[String], //[1,2,3]
     },
     cid: {
-        type:[String]
+        type:String,
     },
     projectStatus:{
         type:Boolean,
+        default: true
     }
 
 })
 
-const Project = mongoose.model('Project', projectSchema)
+const Project = mongoose.model('Project', ProjectSchema)
 module.exports = Project
