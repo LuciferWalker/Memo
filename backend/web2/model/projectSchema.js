@@ -21,7 +21,14 @@ const projectSchema = mongoose.Schema({
     },
     projectStatus:{
         type:Boolean,
-    }
+    },
+    tokenSupply:{
+        type:Number,
+    },
+    tokenPrice:{
+        type:Number,
+    },
+    tokenLeft:
 
 })
 
