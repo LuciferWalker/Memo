@@ -8,25 +8,39 @@ const ConnectWallet = () => {
   const [errorMessage, seterrorMessage] = useState(null);
 
   const connectWalletHandler = async () => {
-
     //check if metmask exists
     if (window.ethereum) {
-      console.log("Detected Metamask");
-
       try {
         const accounts = await window.ethereum.request({
           //returns an array of accounts
           method: "eth_requestAccounts",
         });
 
-        setWalletAddress(accounts[0]);
-        navigate("/getprotected", { state: { walletAddress: accounts[0]} });
+        accountChangeHandler(accounts[0]);
+
+        navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
         console.log(error);
       }
     } else {
-        seterrorMessage("Did not detect Metamask");
+      seterrorMessage("Need to install Metamask");
     }
+  };
+
+  const accountChangeHandler = (newAccount) => {
+    setWalletAddress(newAccount);
+    updateEthers();
+  };
+
+  const updateEthers = () => {
+
+    let tempProvider = new updateEthers.providers.web3Provider(window.ethereum);
+    setProvider(tempProvider);
+
+    let tempSigner = tempProvider.getSigner();
+    setSigner(tempSigner);
+
+
   };
 
   return (
