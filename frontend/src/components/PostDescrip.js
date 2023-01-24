@@ -21,7 +21,7 @@ const PostDescrip = () => {
 
     return(
         <div>
-            <div style={{padding:'40px'}}>
+            <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
                     <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
