@@ -7,9 +7,8 @@ const app = express();
 
 
 const PORT = process.env.PORT || 3001;
-
+require('dotenv').config({path: '../config.env'})
 connecDB()
-require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
