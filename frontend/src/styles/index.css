@@ -10,6 +10,7 @@ body {
   background-size: 1370px 700px;
   color: white;
   line-height: 1.6;
+  background-attachment: fixed;
 }
 
 code {

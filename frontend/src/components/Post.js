@@ -7,8 +7,8 @@ const Post = () =>{
     const navigate = useNavigate();
 
     return(
-        <div>
-            <div style={{padding:'60px'}}>
+        <div style={post}>
+            <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                         {/* <SignIn /> */}
                         <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>

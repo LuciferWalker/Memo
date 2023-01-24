@@ -25,7 +25,7 @@ const Explore = () => {
 
     return(
         <div style={explore}>
-            <div style={{padding:'40px'}}>
+            <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
                     {/* <SignIn /> */}
                     <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
@@ -56,7 +56,7 @@ const Explore = () => {
                                         <h5>This record is made up of music from around the globe.</h5>
                                         <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'270px'}}></td>
+                                    <td style={{width:'250px'}}></td>
                                     <td style={{width:'200px'}}>
                                         <h5> $ LISTEN<br/> $ DOWNLOAD</h5>
                                     </td>
@@ -74,7 +74,7 @@ const Explore = () => {
                                         <h5>This record is made up of music from around the globe.</h5>
                                         <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'270px'}}></td>
+                                    <td style={{width:'250px'}}></td>
                                     <td style={{width:'200px'}}>
                                         <h5> $ LISTEN<br/> $ DOWNLOAD</h5>
                                     </td>
@@ -96,9 +96,9 @@ const Explore = () => {
                                         <h5>PROJECT DESCRIPTION</h5>
                                         <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'270px'}}></td>
+                                    <td style={{width:'250px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h5> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
+                                        <h5 style={{marginRight:'20px'}}> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>
@@ -114,9 +114,9 @@ const Explore = () => {
                                         <h5>PROJECT DESCRIPTION</h5>
                                         <h6>18.05.2023</h6>
                                     </td>
-                                    <td style={{width:'270px'}}></td>
+                                    <td style={{width:'250px'}}></td>
                                     <td style={{width:'200px'}}>
-                                        <h5> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
+                                        <h5 style={{marginRight:'20px'}}> $ JOIN COMMUNITY<br/> $ DOWNLOAD</h5>
                                     </td>
                                 </tr>
                             </table>
