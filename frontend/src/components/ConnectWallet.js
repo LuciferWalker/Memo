@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
+//import contract address, abi from contractsData
 
 const ConnectWallet = () => {
   const navigate = useNavigate();
-  const [walletAddress, setWalletAddress] = useState(null);
+  const [account, setAccount] = useState(null);
   const [signer, setSigner] = useState(null);
-  const [errorMessage, seterrorMessage] = useState(null);
+  const [contract, setContract] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [provider, setProvider] = useState(null);
 
   const connectWalletHandler = async () => {
     //check if metmask exists
@@ -23,24 +27,28 @@ const ConnectWallet = () => {
         console.log(error);
       }
     } else {
-      seterrorMessage("Need to install Metamask");
+      setErrorMessage("Need to install Metamask");
     }
   };
 
   const accountChangeHandler = (newAccount) => {
-    setWalletAddress(newAccount);
+    setAccount(newAccount);
     updateEthers();
   };
 
   const updateEthers = () => {
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
 
-    let tempProvider = new updateEthers.providers.web3Provider(window.ethereum);
-    setProvider(tempProvider);
+    let signer = provider.getsigner();
+    setSigner(signer);
 
-    let tempSigner = tempProvider.getSigner();
-    setSigner(tempSigner);
-
-
+    let tempContract = new updateEthers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+    setContract(tempContract);
   };
 
   return (

@@ -63,6 +63,10 @@ contract AccessToken is ERC20 {
     function _transfer(address _from, address _to, uint _amount) internal override {
         revert(); //transfer is not allowed
   }
+
+  function getMyShareAmount() public view returns(uint){
+        return creatorBalance[msg.sender];
+    }
   
     // function _maxSupply
 

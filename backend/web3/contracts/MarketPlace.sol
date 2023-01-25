@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./AccessToken.sol";
 
-contract MarketPlace {
+contract Marketplace {
     using Counters for Counters.Counter;
     Counters.Counter private projectCounter;
 
@@ -40,7 +40,6 @@ contract MarketPlace {
     function createProject(
         string memory name,
         string memory symbol,
-        string memory CID,
         uint256 maxSupply,
         uint256 tokenPrice,
         address[] memory creators,
