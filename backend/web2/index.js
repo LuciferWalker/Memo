@@ -14,6 +14,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.post("/getUserData", async (req,res) =>{
+  //when user connects their wallet.
+  //check if the user exists in the db
+  //if not add him
+  //if yes, return their data to the frontend
+})
+
+app.post("/getProjectData", async(req,res)=>{
+  const {projectId} = req.body;
+
+  //return all the project details
+})
+
 
 app.post("/createProject", async (req, res) => {
   try {
@@ -28,18 +41,23 @@ app.post("/createProject", async (req, res) => {
 
   // create project
   const project = await Project.create({...req.body});
+
+  //check conditions, no two projects must have same title, creator and share array, etc in frontend
+
+  //lighthouse uploading logic
+
   // add project in user db
   const user = await User.findOne({address:req.body.creators[0]})
   user.projectsCreated.push(projectId);
   await user.save()
+
+  //create project in marketplace contract
   
   res.status(201).json(project)
   } catch (err) {
     console.log(err);
   }
   
-
-
 });
 
 app.post("/projectTokenBought", async (req, res) => {
@@ -72,6 +90,8 @@ app.get("/listedProjects", async(req,res) => {
     console.log(err);
   }
 })
+
+//call getProjectStatus function after a user buys token
 
 
 app.get("/boughtProjects", async(req,res)=>{

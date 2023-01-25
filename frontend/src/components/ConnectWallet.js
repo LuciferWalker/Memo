@@ -8,7 +8,7 @@ import MarketplaceAbi from '../contractsData/Marketplace.json'
 const ConnectWallet = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [account, setAccount] = useState(null);
+  const [account, setAccount] = useState("CONNECT WALLET");
   const [signer, setSigner] = useState(null);
   const [marketplaceContract, setMarketplaceContract] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
@@ -61,7 +61,7 @@ const ConnectWallet = () => {
 
   return (
     <>
-      <button onClick={connectWalletHandler}>Connect Wallet</button>
+      <span onClick={connectWalletHandler}>{account}</span>
       {/* <h3>{walletAddress}</h3> */}
     </>
   );

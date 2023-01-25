@@ -10,12 +10,11 @@ contract Marketplace {
 
     //add creators to list to distribute royalties
 
-    uint256 private projectCost;
+    uint256 private fee;
     address payable memo;
 
     struct Project {
         uint256 projectId;
-        string CID;
         AccessToken tokenAddress;
     }
 
@@ -23,13 +22,12 @@ contract Marketplace {
 
     event ProjectCreated(
         uint256 indexed projectId,
-        string CID,
         AccessToken tokenAddress
     );
 
-    constructor(uint256 _projectCost) {
+    constructor(uint256 _fee) {
         memo = payable(msg.sender);
-        projectCost = _projectCost;
+        fee = _fee;
     }
 
     modifier onlyMemo() {
@@ -45,7 +43,7 @@ contract Marketplace {
         address[] memory creators,
         uint256[] memory shares
     ) public payable {
-        require(msg.value >= projectCost, "Insufficient Amount");
+        require(msg.value >= fee, "Insufficient Amount");
         memo.transfer(msg.value);
 
         //deploy the access token
@@ -62,10 +60,9 @@ contract Marketplace {
         projectCounter.increment();
         projectIdToDetails[currentId] = Project(
             currentId,
-            CID,
             newAccessTokenContract
         );
-        emit ProjectCreated(currentId, CID, newAccessTokenContract);
+        emit ProjectCreated(currentId, newAccessTokenContract);
     }
 
     function getProjects() public view {
@@ -75,11 +72,18 @@ contract Marketplace {
     function buyProjectToken(uint _projectId) public payable {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // Calls mint function of the token
-        projectIdToDetails[_projectId].tokenAddress.mint{value:msg.value}();
+        // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.mint.selector));
+        projectIdToDetails[_projectId].tokenAddress.mint{value:msg.value}(msg.sender);
+
     }
 
     function collectFunds(uint _projectId) public {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
-        projectIdToDetails[_projectId].tokenAddress.collectFunds();
+        // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.collectFunds.selector));
+        projectIdToDetails[_projectId].tokenAddress.collectFunds(msg.sender);
+    }
+
+    function getMyShareAmount(uint _projectId) public view returns(uint){
+        return projectIdToDetails[_projectId].tokenAddress.getMyShareAmount(msg.sender);
     }
 }

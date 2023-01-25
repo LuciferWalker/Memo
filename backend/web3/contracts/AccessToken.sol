@@ -26,10 +26,10 @@ contract AccessToken is ERC20 {
 
     //check if royalty distribution sum is valid
     
-    function collectFunds() public {
-        require(creatorBalance[msg.sender] > 0, "Your balance is zero");
-        payable(msg.sender).transfer(creatorBalance[msg.sender]);
-        creatorBalance[msg.sender] = 0;
+    function collectFunds(address userAddress) public {
+        require(creatorBalance[userAddress] > 0, "Your balance is zero");
+        payable(userAddress).transfer(creatorBalance[userAddress]);
+        creatorBalance[userAddress] = 0;
     }
      
     function distributeFunds(uint256 _amount) private {
@@ -40,16 +40,17 @@ contract AccessToken is ERC20 {
         
     }
 
-    function mint() public payable {
+    function mint(address minterAddress) public payable returns(bool){
         require(msg.value >= TOKEN_PRICE, "Insufficient Amount");
         require(tokenCounter < MAX_SUPPLY, "Tokens are sold out");
-        require(balanceOf(msg.sender) == 0 , "You have already bought this token");
-        _mint(msg.sender, 1);
+        require(balanceOf(minterAddress) == 0 , "You have already bought this token");
+        _mint(minterAddress, 1);
         distributeFunds(msg.value);
         tokenCounter++;
         if(tokenCounter == MAX_SUPPLY){ //stops the project if all tokens are sold out
             updateProjectStatus(false);
         }
+        return getProjectStatus();
     }
 
     function updateProjectStatus(bool _status) private{
@@ -64,10 +65,15 @@ contract AccessToken is ERC20 {
         revert(); //transfer is not allowed
   }
 
-  function getMyShareAmount() public view returns(uint){
-        return creatorBalance[msg.sender];
+  function getMyShareAmount(address userAddress) public view returns(uint){
+        return creatorBalance[userAddress];
     }
   
     // function _maxSupply
 
+    
 }
+
+
+//2. use function parameter
+//3. use contract data from web2 storage

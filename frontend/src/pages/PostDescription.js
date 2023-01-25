@@ -1,14 +1,13 @@
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
-import Nav from "./Nav";
+import Navbar from "../components/Navbar.js";
 
 const PostDescription = () => {
-
-  const post={
+  const post = {
     backgroundImage: `url(${image})`,
-    backgroundRepeat:'no-repeat',
-    backgroundPosition:'center',
-  }
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  };
 
   const tab = {
     background:
@@ -20,7 +19,7 @@ const PostDescription = () => {
     <div style={post}>
       <div style={{ padding: "50px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Nav/>
+          <Navbar />
         </div>
         <div>
           <table>
