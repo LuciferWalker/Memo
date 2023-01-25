@@ -1,23 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import image from '../images/star.png'
+import Nav from "./Nav";
 
 const CreatePost = () => {
 
-    const navigate = useNavigate();
-
-    const [hover, setHover] = useState(false);
-    const [hover1, setHover1] = useState(false);
     const [hoversub, sethoversub] = useState(false);
     const [distribution, setDistribution] = useState();
     const [members, setMembers] = useState([]);
 
-    const handleMouseEnter = () => {setHover(true);};
-    const handleMouseLeave = () => {setHover(false);};
-    const handleMouseEnter1 = () => {setHover1(true);};
-    const handleMouseLeave1 = () => {setHover1(false);};
-    const handleMouseEnter2 = () => {sethoversub(true);};
-    const handleMouseLeave2 = () => {sethoversub(false);};
+    const handleMouseEnter = () => {sethoversub(true);};
+    const handleMouseLeave = () => {sethoversub(false);};
 
     const createpost={
         backgroundImage: `url(${image})`,
@@ -63,26 +55,7 @@ const CreatePost = () => {
         <div style={createpost}>
             <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
-                        {/* <SignIn /> */}
-                        <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
-                            <h1>MEMO</h1>
-                            <h5>01.01.2023</h5>
-                        </div>
-                        <div style={{cursor: 'pointer'}}>
-                            <h4>CONNECT WALLET<br/>
-                            <span 
-                            style={{color: hover ? '#658BD6' : 'white'}} 
-                            onClick={()=>navigate("/explore")}
-                            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                EXPLORE MEMOS
-                            </span><br/>
-                            <span 
-                                style={{color: hover1 ? '#658BD6' : 'white'}} 
-                                onClick={()=>navigate("/post")}
-                                onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
-                                POST A MEMO
-                            </span></h4>
-                        </div>
+                        <Nav/>
                 </div>
 
                 <div>
@@ -173,7 +146,7 @@ const CreatePost = () => {
                                             <button type="submit" style={{
                                                 color: hoversub ? '#658BD6' : 'white',
                                                 padding:'7px',background:'none',border:'none',fontFamily: 'Montserrat, sans-serif',cursor:'pointer'}}
-                                                onMouseEnter={handleMouseEnter2} onMouseLeave={handleMouseLeave2}
+                                                onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                                                 ><b>SUBMIT</b></button>
                                         </div>                                      
                                     </div>
