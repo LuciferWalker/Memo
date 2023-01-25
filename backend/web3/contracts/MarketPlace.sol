@@ -72,9 +72,14 @@ contract Marketplace {
         //returns the projectCounter value. Then in front end we can run a loop till that id
     }
 
-    function buyProjectToken(uint256 _projectId) public payable {
+    function buyProjectToken(uint _projectId) public payable {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // Calls mint function of the token
-        projectIdToDetails[_projectId].tokenAddress.mint();
+        projectIdToDetails[_projectId].tokenAddress.mint{value:msg.value}();
+    }
+
+    function collectFunds(uint _projectId) public {
+        require(_projectId < projectCounter.current(), "Invalid Project Id");
+        projectIdToDetails[_projectId].tokenAddress.collectFunds();
     }
 }

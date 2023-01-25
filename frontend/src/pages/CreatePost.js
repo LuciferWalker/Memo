@@ -69,7 +69,19 @@ const CreatePost = () => {
                             <h5>01.01.2023</h5>
                         </div>
                         <div style={{cursor: 'pointer'}}>
-                            <h4>CONNECT WALLET<br/><span onClick={()=>navigate("/explore")}>EXPLORE MEMOS</span><br/><span onClick={()=>navigate("/post")}>POST A MEMO</span></h4>
+                            <h4>CONNECT WALLET<br/>
+                            <span 
+                            style={{color: hover ? '#658BD6' : 'white'}} 
+                            onClick={()=>navigate("/explore")}
+                            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                EXPLORE MEMOS
+                            </span><br/>
+                            <span 
+                                style={{color: hover1 ? '#658BD6' : 'white'}} 
+                                onClick={()=>navigate("/post")}
+                                onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
+                                POST A MEMO
+                            </span></h4>
                         </div>
                 </div>
 
