@@ -1,15 +1,10 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import image from '../images/star.png'
+import Nav from "./Nav";
 
 const Explore = () => {
 
     const navigate = useNavigate();
-
-    const [hover, setHover] = useState(false);
-
-    const handleMouseEnter = () => {setHover(true);};
-    const handleMouseLeave = () => {setHover(false);};
 
     const tab = {
         background: 'linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)',
@@ -27,20 +22,7 @@ const Explore = () => {
         <div style={explore}>
             <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
-                    {/* <SignIn /> */}
-                    <div style={{cursor: 'pointer'}} onClick={()=>navigate("/")}>
-                        <h1>MEMO</h1>
-                        <h5>01.01.2023</h5>
-                    </div>
-                    <div style={{cursor: 'pointer'}}>
-                        <h4>CONNECT WALLET<br/><span style={{color:'#658BD6'}}>EXPLORE MEMOS</span><br/>
-                        <span 
-                        style={{color: hover ? '#658BD6' : 'white'}} 
-                        onClick={()=>navigate("/post")}
-                        onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                            POST A MEMO
-                        </span></h4>
-                    </div>
+                    <Nav color1='#658BD6'/>
                 </div>
 
                 <table>
