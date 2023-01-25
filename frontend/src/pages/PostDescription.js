@@ -1,8 +1,16 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Nav from "./Nav";
 
 const PostDescription = () => {
+
+  const [hover, sethover] = useState(false);
+  const navigate = useNavigate();
+
+  const handleMouseEnter = () => {sethover(true);};
+  const handleMouseLeave = () => {sethover(false);};
 
   const post={
     backgroundImage: `url(${image})`,
@@ -14,6 +22,7 @@ const PostDescription = () => {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
     padding: "0px",
+    cursor:'pointer'
   };
 
   return (
@@ -33,7 +42,7 @@ const PostDescription = () => {
               >
                 <div style={{ paddingLeft: "30px" }}>
                   <h4>PROJECT TITLE</h4>
-                  <img src={Img1} style={{ width: "400px" }} />
+                  <img src={Img1} style={{ width: "55%" }} />
                   <h4>PROJECT DESCRIPTION</h4>
                   <h4>CREATORS</h4>
                 </div>
@@ -54,7 +63,10 @@ const PostDescription = () => {
                       <h5>
                         WISHLIST
                         <span
-                          style={{ marginLeft: "30px", paddingRight: "10px" }}
+                          style={{ marginLeft: "30px", paddingRight: "10px",
+                          color: hover ? '#658BD6' : 'white',}}
+                          onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                          onClick={()=>navigate("/download")}
                         >
                           PURCHASE
                         </span>
