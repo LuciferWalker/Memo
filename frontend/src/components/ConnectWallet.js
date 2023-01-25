@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import MarketplaceAddress from '../contractsData/Marketplace-address.json'
+import MarketplaceAbi from '../contractsData/Marketplace.json'
 //import contract address, abi from contractsData
 
 const ConnectWallet = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState(null);
   const [signer, setSigner] = useState(null);
-  const [contract, setContract] = useState(null);
+  const [marketplaceContract, setMarketplaceContract] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [provider, setProvider] = useState(null);
 
@@ -22,7 +25,9 @@ const ConnectWallet = () => {
 
         accountChangeHandler(accounts[0]);
 
-        navigate("/getprotected", { state: { walletAddress: accounts[0] } });
+        loadContracts(signer);
+
+        // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
         console.log(error);
       }
@@ -42,14 +47,17 @@ const ConnectWallet = () => {
 
     let signer = provider.getsigner();
     setSigner(signer);
+  };
 
-    let tempContract = new updateEthers.Contract(
-      contractAddress,
-      contractABI,
+  const loadContracts = async(signer) =>{
+    let marketplaceContract = new ethers.Contract(
+      MarketplaceAddress.address,
+      MarketplaceAbi.abi,
       signer
     );
-    setContract(tempContract);
-  };
+    setMarketplaceContract(marketplaceContract);
+    setLoading(false);
+  }
 
   return (
     <>

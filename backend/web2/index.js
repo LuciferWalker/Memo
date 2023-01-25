@@ -66,7 +66,7 @@ app.post("/projectTokenBought", async (req, res) => {
 app.get("/listedProjects", async(req,res) => {
 
   try {
-    const projects = await Project.find()
+    const projects = await Project.find() //fetch projects that has true status
     res.status(200).json(projects)
   } catch (err) {
     console.log(err);
