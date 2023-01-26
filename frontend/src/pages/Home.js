@@ -47,18 +47,28 @@ const Home = () => {
                             </span></h4>
                     </div>
                 </div>
-                <h3 style={{textAlign:'center',marginTop:'50px'}}>MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES & MEMORIES.</h3>
+                <h3 style={{textAlign:'center',marginTop:'30px'}}>MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES & MEMORIES.</h3>
 
-                <table style={{marginTop:'130px'}}>
+                <table style={{marginTop:'70px'}}>
                     <tr>
                         <td style={{width:'40%'}}>
                             <h4>Memo is inspired by the golden record sent out to space on Voyager 2 in 1997.
                             The record contained information about our planet, our species as well as other life on earth.</h4>
+                            <br/><h4>Memo aims to create a real-time record of humanity and planet earth as we breathe and live. 
+                            We hope to send this record to space as a window into our everyday lives. </h4>
                         </td>
                         <td style={{width:'15%'}}></td>
                         <td>
-                            <h4>Memo aims to create a real-time record of humanity and planet earth as we breathe and live. 
-                            We hope to send this record to space as a window into our everyday lives. </h4>
+                            <h4>What is a memo ? <br/>
+                                A memo is an expression made up of words, images or audio. 
+                                It can be music, movies, books, forums, anything!<br/><br/>
+                                Find your social rhythm with: 
+                                <ul>
+                                    <li>Creating new memos.</li>
+                                    <li>Sharing memos. </li>
+                                    <li>Downloading memos. </li>
+                                </ul>
+                            </h4>
                         </td>
                     </tr>
                 </table>

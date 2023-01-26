@@ -7,15 +7,15 @@ async function main() {
   // Get the ContractFactories and Signers here.
   const Marketplace = await ethers.getContractFactory("Marketplace");
   // deploy contracts
-  const marketplace = await Marketplace.deploy();
+  const marketplace = await Marketplace.deploy(2);
 
-  // Save copies of each contracts abi and address to the frontend.
+  // Save copies of contracts abi and address to the frontend.
   saveFrontendFiles(marketplace, "Marketplace");
 }
 
 function saveFrontendFiles(contract, name) {
   const fs = require("fs");
-  const contractsDir = __dirname + "/../../frontend/src/contractsData";
+  const contractsDir = __dirname + "/../../../frontend/src/contractsData";
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);

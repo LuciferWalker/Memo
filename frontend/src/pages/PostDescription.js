@@ -1,64 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
+import Navbar from "../components/Navbar.js";
+
 const PostDescription = () => {
+
+  const fetchProjectDetails = () =>{
+
+  }
+
+  useEffect(()=>{
+    fetchProjectDetails();
+  },[])
+
+  const [hover, sethover] = useState(false);
   const navigate = useNavigate();
 
-  const [hover, setHover] = useState(false);
-  const [hover1, setHover1] = useState(false);
+  const handleMouseEnter = () => {sethover(true);};
+  const handleMouseLeave = () => {sethover(false);};
 
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
-  const handleMouseEnter1 = () => {
-    setHover1(true);
-  };
-  const handleMouseLeave1 = () => {
-    setHover1(false);
+  const post={
+    backgroundImage: `url(${image})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
   };
 
   const tab = {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
     padding: "0px",
+    cursor:'pointer'
   };
 
+  const purchaseToken = ()=>{
+    //call mint function from marketplace contract
+
+    //getProjectStatus();
+    //if false, send a req to backend
+
+    //projectTokenBought api call
+
+    //after successful purchase, redirect them to download page
+  }
+
   return (
-    <div>
+    <div style={post}>
       <div style={{ padding: "50px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {/* <SignIn /> */}
-          <div style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-            <h1>MEMO</h1>
-            <h5>01.01.2023</h5>
-          </div>
-          <div style={{ cursor: "pointer" }}>
-            <h4>
-              CONNECT WALLET
-              <br />
-              <span
-                style={{ color: hover ? "#658BD6" : "white" }}
-                onClick={() => navigate("/explore")}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                EXPLORE MEMOS
-              </span>
-              <br />
-              <span
-                style={{ color: hover1 ? "#658BD6" : "white" }}
-                onClick={() => navigate("/post")}
-                onMouseEnter={handleMouseEnter1}
-                onMouseLeave={handleMouseLeave1}
-              >
-                POST A MEMO
-              </span>
-            </h4>
-          </div>
+          <Navbar />
         </div>
         <div>
           <table>
@@ -71,7 +61,7 @@ const PostDescription = () => {
               >
                 <div style={{ paddingLeft: "30px" }}>
                   <h4>PROJECT TITLE</h4>
-                  <img src={Img1} style={{ width: "400px" }} />
+                  <img src={Img1} style={{ width: "55%" }} />
                   <h4>PROJECT DESCRIPTION</h4>
                   <h4>CREATORS</h4>
                 </div>
@@ -92,7 +82,10 @@ const PostDescription = () => {
                       <h5>
                         WISHLIST
                         <span
-                          style={{ marginLeft: "30px", paddingRight: "10px" }}
+                          style={{ marginLeft: "30px", paddingRight: "10px",
+                          color: hover ? '#658BD6' : 'white',}}
+                          onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                          onClick={()=>navigate("/download")}
                         >
                           PURCHASE
                         </span>
