@@ -22,7 +22,14 @@ app.post("/getUserData", async (req, res) => {
 
 app.get("/getProjectData/:projectId", async (req, res) => {
   //gets called in project description page
-  const { projectId } = req.body;
+ try {
+  const { projectId: id } = req.params;
+  const project = await Project.findById(id)
+  res.status(200).json(project);
+ } catch (err) {
+  
+ }
+
 
   //return all the project details
 });
@@ -81,7 +88,7 @@ app.post("/projectTokenBought", async (req, res) => {
       { $inc: { tokensBought: 1 } }
     );
     await project.save();
-    res.status(201).json(user);
+    res.status(200).json(user);
     //store data in database
   } catch (err) {
     console.log(err);
