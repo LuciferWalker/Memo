@@ -20,7 +20,8 @@ app.post("/getUserData", async (req, res) => {
   //if yes, return their data to the frontend
 });
 
-app.post("/getProjectData", async (req, res) => {
+app.get("/getProjectData/:projectId", async (req, res) => {
+  //gets called in project description page
   const { projectId } = req.body;
 
   //return all the project details
@@ -57,7 +58,15 @@ app.post("/createProject", async (req, res) => {
   }
 });
 
+app.put("/updateProjectStatus", async (req, res) => {
+  try {
+    //update status logic
+    //status = req.body.status
+  } catch (error) {}
+});
+
 app.post("/projectTokenBought", async (req, res) => {
+  //updates info after user buys a token
   try {
     const projectId = req.body.projectId;
 
@@ -81,7 +90,7 @@ app.post("/projectTokenBought", async (req, res) => {
 
 app.get("/listedProjects", async (req, res) => {
   try {
-    const projects = await Project.find(); //fetch projects that has true status
+    const projects = await Project.find({ projectStatus: true }); //fetch projects that has true status, - After every mint, call getstatus function, and set status to false once we get it
     res.status(200).json(projects);
   } catch (err) {
     console.log(err);

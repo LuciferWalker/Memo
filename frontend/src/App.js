@@ -23,7 +23,7 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/post" element={<Post />} />
         <Route path="/createpost" element={<CreatePost />} />
-        <Route path="/desc" element={<PostDescription/>} />
+        <Route path="/:projectId" element={<PostDescription/>} />
         <Route path="/download" element={<Download/>} />
         {/* <Route path="/uploadcontent" element={<UploadContent/>}/>
       <Route path="/getprotected" element={<GetProtected/>}/>

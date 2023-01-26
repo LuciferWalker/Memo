@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Navbar from "../components/Navbar.js";
 
 const PostDescription = () => {
+
+  const fetchProjectDetails = () =>{
+
+  }
+
+  useEffect(()=>{
+    fetchProjectDetails();
+  },[])
 
   const [hover, sethover] = useState(false);
   const navigate = useNavigate();
@@ -24,6 +32,17 @@ const PostDescription = () => {
     padding: "0px",
     cursor:'pointer'
   };
+
+  const purchaseToken = ()=>{
+    //call mint function from marketplace contract
+
+    //getProjectStatus();
+    //if false, send a req to backend
+
+    //projectTokenBought api call
+
+    //after successful purchase, redirect them to download page
+  }
 
   return (
     <div style={post}>

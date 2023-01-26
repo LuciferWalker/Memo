@@ -36,18 +36,21 @@ const Explore = () => {
 
   const sampleProjects = [
     {
+      ProjectId: "1",
       Theme: "MUSIC",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
     {
+      ProjectId: "1",
       Theme: "MUSIC",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
     {
+      ProjectId: "1",
       Theme: "MUSIC",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
@@ -58,7 +61,7 @@ const Explore = () => {
   const ProjectCard = () => {
     return (
       <>
-        <table style={tab} onClick={() => navigate("/desc")}>
+        <table style={tab} onClick={() => navigate(`/${sampleProjects[0].ProjectId}`)}>
           <tr>
             <td style={{ paddingLeft: "40px" }}>
               <h5>{sampleProjects[0].Theme}</h5>

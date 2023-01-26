@@ -20,10 +20,7 @@ contract Marketplace {
 
     mapping(uint256 => Project) public projectIdToDetails;
 
-    event ProjectCreated(
-        uint256 indexed projectId,
-        AccessToken tokenAddress
-    );
+    event ProjectCreated(uint256 indexed projectId, AccessToken tokenAddress);
 
     constructor(uint256 _fee) {
         memo = payable(msg.sender);
@@ -42,7 +39,7 @@ contract Marketplace {
         uint256 tokenPrice,
         address[] memory creators,
         uint256[] memory shares
-    ) public payable returns(AccessToken) {
+    ) public payable returns (AccessToken) {
         require(msg.value >= fee, "Insufficient Amount");
         memo.transfer(msg.value);
 
@@ -71,21 +68,29 @@ contract Marketplace {
         //returns the projectCounter value. Then in front end we can run a loop till that id
     }
 
-    function buyProjectToken(uint _projectId) public payable {
+    function buyProjectToken(uint256 _projectId) public payable {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // Calls mint function of the token
         // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.mint.selector));
-        projectIdToDetails[_projectId].tokenAddress.mint{value:msg.value}(msg.sender);
-
+        projectIdToDetails[_projectId].tokenAddress.mint{value: msg.value}(
+            msg.sender
+        );
     }
 
-    function collectFunds(uint _projectId) public {
+    function collectFunds(uint256 _projectId) public {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.collectFunds.selector));
         projectIdToDetails[_projectId].tokenAddress.collectFunds(msg.sender);
     }
 
-    function getMyShareAmount(uint _projectId) public view returns(uint){
-        return projectIdToDetails[_projectId].tokenAddress.getMyShareAmount(msg.sender);
+    function getMyShareAmount(uint256 _projectId)
+        public
+        view
+        returns (uint256)
+    {
+        return
+            projectIdToDetails[_projectId].tokenAddress.getMyShareAmount(
+                msg.sender
+            );
     }
 }
