@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import MarketplaceAddress from '../contractsData/Marketplace-address.json'
@@ -14,7 +14,16 @@ const ConnectWallet = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [provider, setProvider] = useState(null);
 
+  // useEffect(() => {
+  //   setAccount(JSON.parse(window.localStorage.getItem('account')));
+  // }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('account', account);
+  }, [account]);
+
   const connectWalletHandler = async () => {
+
     //check if metmask exists
     if (window.ethereum) {
       try {
