@@ -7,7 +7,7 @@ const ProjectSchema = mongoose.Schema({
   image: {
     type: String,
   },
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -28,6 +28,12 @@ const ProjectSchema = mongoose.Schema({
   projectStatus: {
     type: Boolean,
     default: true,
+  },
+  fileSize: {
+    type: Number,
+  },
+  fileName: {
+    type: String,
   },
   totalTokens: {
     type: Number,

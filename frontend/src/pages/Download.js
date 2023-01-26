@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Nav from "./Nav";
+import Navbar from "../components/Navbar";
 import Img from "../images/mars.jpg";
 
 const Download = () => {
@@ -13,7 +13,7 @@ const Download = () => {
         <>
             <div style={{padding:'50px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
-                    <Nav/>
+                    <Navbar/>
                 </div>
                 
                 <div style={{textAlign:'center'}}>
