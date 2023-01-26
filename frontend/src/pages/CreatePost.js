@@ -289,7 +289,7 @@ const CreatePost = () => {
                     </div>
                   </table>
                   <div style={{ marginLeft: "270px", marginTop: "20px" }}>
-                    <UploadButton />
+                    {/* <UploadButton /> */}
                   </div>
                 </div>
               </form>

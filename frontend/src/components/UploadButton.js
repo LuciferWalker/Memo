@@ -1,133 +1,135 @@
-import React from "react";
-import { ethers } from "ethers";
-import lighthouse from "@lighthouse-web3/sdk";
+// import React from "react";
+// import { ethers } from "ethers";
+// import lighthouse from "@lighthouse-web3/sdk";
 
-function UploadButton() {
-  //FLOW
+// function UploadButton() {
 
-  // 1. Validate Data
-  // 2. Upload Encrypted File to IPFS
-  // 3. Create Contract and Store Data in DB
-  // 4. Apply Access condition
+//   const [loader, setLoader] = useState(null);
+//   //FLOW
 
-  const encryptionSignature = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    const messageRequested = (await lighthouse.getAuthMessage(address)).data
-      .message;
-    const signedMessage = await signer.signMessage(messageRequested);
-    return {
-      signedMessage: signedMessage,
-      publicKey: address,
-    };
-  };
+//   // 1. Validate Data
+//   // 2. Upload Encrypted File to IPFS
+//   // 3. Create Contract and Store Data in DB
+//   // 4. Apply Access condition
 
-  const progressCallback = (progressData) => {
-    let percentageDone =
-      100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
-    console.log(percentageDone);
-  };
+//   const encryptionSignature = async () => {
+//     const provider = new ethers.providers.Web3Provider(window.ethereum);
+//     const signer = provider.getSigner();
+//     const address = await signer.getAddress();
+//     const messageRequested = (await lighthouse.getAuthMessage(address)).data
+//       .message;
+//     const signedMessage = await signer.signMessage(messageRequested);
+//     return {
+//       signedMessage: signedMessage,
+//       publicKey: address,
+//     };
+//   };
 
-  /* Deploy file along with encryption */
-  const deployEncrypted = async (e) => {
+//   const progressCallback = (progressData) => {
+//     let percentageDone =
+//       100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
+//     console.log(percentageDone);
+//   };
 
-    const sig = await encryptionSignature();
-    const uploadResponse = await lighthouse.uploadEncrypted(
-      e,
-      sig.publicKey,
-      "a980ea91-5a5d-4e6e-87fa-3f89f676461d",
-      sig.signedMessage,
-      progressCallback
-    );
-    console.log(uploadResponse);
+//   /* Deploy file along with encryption */
+//   const deployEncrypted = async (e) => {
 
-    const cid = uploadResponse.Hash;
-    const fileSize = uploadResponse.Size;
-    const fileName = uploadResponse.Name;
+//     const sig = await encryptionSignature();
+//     const uploadResponse = await lighthouse.uploadEncrypted(
+//       e,
+//       sig.publicKey,
+//       process.env.REACT_APP_LIGHTHOUSE_API_KEY, //process.e
+//       sig.signedMessage,
+//       progressCallback
+//     );
+//     console.log(uploadResponse);
 
-    //upload the accessToken contract for this project
+//     const cid = uploadResponse.Hash;
+//     const fileSize = uploadResponse.Size;
+//     const fileName = uploadResponse.Name;
 
-    uploadAccessContract(contractUploadData);
-    uploadDataOnDB(projectData);
+//     //upload the accessToken contract for this project
 
-    //const contractAddress = await marketplace.createProject(name,
-    //symbol,
-    // maxSupply,
-    // tokenPrice,
-    // creators,
-    // shares)
+//     uploadAccessContract(contractUploadData);
+//     uploadDataOnDB(projectData);
 
-    const conditions = [
-      {
-        id: 3141,
-        chain: "Hyperspace",
-        method: "balanceOf",
-        standardContractType: "ERC20",
-        contractAddress: contractAddress,
-        returnValueTest: {
-          comparator: ">=",
-          value: "1",
-        },
-        parameters: [":userAddress"],
-      },
-    ];
+//     //const contractAddress = await marketplace.createProject(name,
+//     //symbol,
+//     // maxSupply,
+//     // tokenPrice,
+//     // creators,
+//     // shares)
 
-    const aggregator = "([1])";
+//     const conditions = [
+//       {
+//         id: 3141,
+//         chain: "Hyperspace",
+//         method: "balanceOf",
+//         standardContractType: "ERC20",
+//         contractAddress: contractAddress,
+//         returnValueTest: {
+//           comparator: ">=",
+//           value: "1",
+//         },
+//         parameters: [":userAddress"],
+//       },
+//     ];
 
-    //dont know if encryptionSignature needs to be done again
+//     const aggregator = "([1])";
 
-    const accessResponse = await lighthouse.accessCondition(
-      publicKey,
-      cid,
-      signedMessage,
-      conditions,
-      aggregator
-    );
+//     //dont know if encryptionSignature needs to be done again
 
-    console.log(accessResponse);
+//     const accessResponse = await lighthouse.accessCondition(
+//       publicKey,
+//       cid,
+//       signedMessage,
+//       conditions,
+//       aggregator
+//     );
 
-    if (accessResponse.data.status === "Success") {
-      // access condition applied successfully
-    } else {
-      //failed
-    }
-  };
+//     console.log(accessResponse);
 
-  const uploadAccessContract = (contractUploadData) => {
+//     if (accessResponse.data.status === "Success") {
+//       // access condition applied successfully
+//     } else {
+//       //failed
+//     }
+//   };
 
-  };
+//   const uploadAccessContract = (contractUploadData) => {
 
-  const uploadDataOnDB = (projectData) =>{
-    const res = fetch('http://localhost:3001/createProject',{
-      method: 'POST',
-      body: JSON.stringify(projectData)
-    })
-  }
+//   };
 
-  const checkCreatorData = () => {
-    //check the data they have entered or add validation in the form itself
-  };
+//   const uploadDataOnDB = (projectData) =>{
+//     const res = fetch('http://localhost:3001/createProject',{
+//       method: 'POST',
+//       body: JSON.stringify(projectData)
+//     })
+//   }
 
-  return (
-    <>
-      <button
-        onSubmit={(e) => deployEncrypted(e)}
-        type="submit"
-        style={{
-          color: hoversub ? "#658BD6" : "white",
-          padding: "7px",
-          background: "none",
-          border: "none",
-          fontFamily: "Montserrat, sans-serif",
-          cursor: "pointer",
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <b>SUBMIT</b>
-      </button>
-    </>
-  );
-}
-export default UploadButton;
+//   const checkCreatorData = () => {
+//     //check the data they have entered or add validation in the form itself
+//   };
+
+//   return (
+//     <>
+//       <button
+//         onSubmit={(e) => deployEncrypted(e)}
+//         type="submit"
+//         style={{
+//           color: hoversub ? "#658BD6" : "white",
+//           padding: "7px",
+//           background: "none",
+//           border: "none",
+//           fontFamily: "Montserrat, sans-serif",
+//           cursor: "pointer",
+//         }}
+//         onMouseEnter={handleMouseEnter}
+//         onMouseLeave={handleMouseLeave}
+//       >
+//         <b>SUBMIT</b>
+//       </button>
+//     </>
+//   );
+// }
+// export default UploadButton;
