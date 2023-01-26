@@ -4,57 +4,69 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./AccessToken.sol";
 
-contract MarketPlace {
-
+contract Marketplace {
     using Counters for Counters.Counter;
     Counters.Counter private projectCounter;
 
     //add creators to list to distribute royalties
 
-    uint private projectCost;
+    uint256 private fee;
     address payable memo;
 
-    struct Project{
-        uint projectId;
-        string CID;
+    struct Project {
+        uint256 projectId;
         AccessToken tokenAddress;
     }
 
+    mapping(uint256 => Project) public projectIdToDetails;
 
-    mapping (uint => Project) public projectIdToDetails;
+    event ProjectCreated(
+        uint256 indexed projectId,
+        AccessToken tokenAddress
+    );
 
-
-    event ProjectCreated(uint indexed projectId, string CID, AccessToken tokenAddress);
-
-    constructor(uint _projectCost) {
+    constructor(uint256 _fee) {
         memo = payable(msg.sender);
-        projectCost = _projectCost;
+        fee = _fee;
     }
 
-    
-    modifier onlyMemo {
+    modifier onlyMemo() {
         require(msg.sender == memo);
         _;
     }
 
-
-    function createProject(string memory name, string memory symbol, string memory CID, uint maxSupply, uint tokenPrice, address[] memory creators, uint[] memory shares) public payable{
-        require(msg.value >= projectCost, "Insufficient Amount");
+    function createProject(
+        string memory name,
+        string memory symbol,
+        uint256 maxSupply,
+        uint256 tokenPrice,
+        address[] memory creators,
+        uint256[] memory shares
+    ) public payable returns(AccessToken) {
+        require(msg.value >= fee, "Insufficient Amount");
         memo.transfer(msg.value);
 
         //deploy the access token
-        AccessToken newAccessTokenContract = new AccessToken(name, symbol, maxSupply, tokenPrice, creators, shares);
+        AccessToken newAccessTokenContract = new AccessToken(
+            name,
+            symbol,
+            maxSupply,
+            tokenPrice,
+            creators,
+            shares
+        );
 
-        uint currentId = projectCounter.current();
+        uint256 currentId = projectCounter.current();
         projectCounter.increment();
         projectIdToDetails[currentId] = Project(
             currentId,
-            CID,
             newAccessTokenContract
         );
-        emit ProjectCreated(currentId, CID, newAccessTokenContract);
+        emit ProjectCreated(currentId, newAccessTokenContract);
+
+        return newAccessTokenContract;
     }
-    
+
     function getProjects() public view {
         //returns the projectCounter value. Then in front end we can run a loop till that id
     }
@@ -62,7 +74,18 @@ contract MarketPlace {
     function buyProjectToken(uint _projectId) public payable {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // Calls mint function of the token
-        projectIdToDetails[_projectId].tokenAddress.mint();
+        // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.mint.selector));
+        projectIdToDetails[_projectId].tokenAddress.mint{value:msg.value}(msg.sender);
+
     }
 
+    function collectFunds(uint _projectId) public {
+        require(_projectId < projectCounter.current(), "Invalid Project Id");
+        // address(projectIdToDetails[_projectId].tokenAddress).delegatecall(abi.encodeWithSelector(AccessToken.collectFunds.selector));
+        projectIdToDetails[_projectId].tokenAddress.collectFunds(msg.sender);
+    }
+
+    function getMyShareAmount(uint _projectId) public view returns(uint){
+        return projectIdToDetails[_projectId].tokenAddress.getMyShareAmount(msg.sender);
+    }
 }

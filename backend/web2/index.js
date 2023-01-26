@@ -1,60 +1,111 @@
 const express = require("express");
 const cors = require("cors");
-const connecDB = require('./database/connection')
-
+const connecDB = require("./database/connection");
+const Project = require("./models/projectSchema");
+const User = require("./models/UserSchema");
 const app = express();
 
-require("dotenv".config({ path: "./config.env" }));
-const PORT = process.env.PORT;
-
-connecDB()
+const PORT = process.env.PORT || 3001;
+require("dotenv").config({ path: "../config.env" });
+connecDB();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/uploadFile", async (req, res) => {
-  //upload file to the ipfs, then upload the contract
-  //upload file logic
+app.post("/getUserData", async (req, res) => {
+  //when user connects their wallet.
+  //check if the user exists in the db
+  //if not add him
+  //if yes, return their data to the frontend
+});
+
+app.post("/getProjectData", async (req, res) => {
+  const { projectId } = req.body;
+
+  //return all the project details
 });
 
 app.post("/createProject", async (req, res) => {
-  const {
-    projectTitle,
-    projectDescription,
-    creators,
-    tokenPrice,
-    tokenSupply,
-    shares,
-  } = req.body;
+  try {
+    // const {
+    //   projectTitle,
+    //   projectDescription,
+    //   creators,
+    //   tokenPrice,
+    //   tokenSupply,
+    //   shares,
+    // } = req.body;
 
-  //store data in database
+    // create project
+    const project = await Project.create({ ...req.body });
 
-  //call createProject function from marketplace
+    //check conditions, no two projects must have same title, creator and share array, etc in frontend
 
+    //lighthouse uploading logic
+
+    // add project in user db
+    const user = await User.findOne({ address: req.body.creators[0] });
+    user.projectsCreated.push(projectId);
+    await user.save();
+
+    //create project in marketplace contract
+
+    res.status(201).json(project);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-app.get("/listedProjects", async(req,res) => {
+app.post("/projectTokenBought", async (req, res) => {
+  try {
+    const projectId = req.body.projectId;
 
-    //fetch all projects whos status is true from mongodb
-})
+    // Update in user db that ticket has been bought
+    const user = await User.findOne({ address: req.body.address });
+    user.boughtProjects.push(projectId);
+    await user.save();
 
-app.post("/downloadFile", async(req,res) => {
+    // Update in project db that ticket has been bought
+    const project = await Project.updateOne(
+      { projectId },
+      { $inc: { tokensBought: 1 } }
+    );
+    await project.save();
+    res.status(201).json(user);
+    //store data in database
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-    const {projectId} = req.body
+app.get("/listedProjects", async (req, res) => {
+  try {
+    const projects = await Project.find(); //fetch projects that has true status
+    res.status(200).json(projects);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-    //download the content using the cid associated with this projectId
-})
+//call getProjectStatus function after a user buys token
 
-app.get("/boughtProjects", async(req,res)=>{
+app.get("/boughtProjects", async (req, res) => {
+  try {
+    const user = await User.findOne({ address: req.body.address });
+    res.status(200).send(user.projects);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-    //show all projects the user has bought tokens in
-})
-
-app.get("/createdProjects", async(req,res)=>{
-
-    //show all projects the user has created
-})
-
+app.get("/createdProjects", async (req, res) => {
+  try {
+    const user = await User.findOne({ address: req.body.address });
+    res.status(200).send(user.boughtProjects);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
