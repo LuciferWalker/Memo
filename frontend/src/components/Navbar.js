@@ -27,7 +27,7 @@ const Navbar = (props) => {
             style={{ color: props.color }}
             onClick={() => navigate("/post")}
           >
-            POST A MEMO
+            PROFILE
           </span>
         </h4>
       </div>

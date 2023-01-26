@@ -8,7 +8,7 @@ import MarketplaceAbi from '../contractsData/Marketplace.json'
 const ConnectWallet = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [account, setAccount] = React.useState(
+  const [account, setAccount] = useState(
     localStorage.getItem('account') || 'CONNECT WALLET'
   );
   const [signer, setSigner] = useState(null);

@@ -41,7 +41,8 @@ const Post = () => {
                   CREATE
                 </h4>
                 <h4>STORAGE</h4>
-                <h4>MY MEMOS</h4>
+                <h4>CREATED MEMOS</h4>
+                <h4>BOUGHT MEMOS</h4>
                 <h4>ANALYTICS</h4>
                 <h4>ACCOUNT</h4>
               </td>

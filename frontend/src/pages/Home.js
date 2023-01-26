@@ -43,7 +43,7 @@ const Home = () => {
                             style={{color: hover1 ? '#658BD6' : 'white',}} 
                             onClick={()=>navigate("/post")}
                             onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
-                                POST A MEMO
+                                PROFILE
                             </span></h4>
                     </div>
                 </div>

@@ -97,7 +97,8 @@ const CreatePost = () => {
               <ul>
                 <h4 style={{ color: "#658BD6" }}>CREATE</h4>
                 <h4>STORAGE</h4>
-                <h4>MY MEMOS</h4>
+                <h4>CREATED MEMOS</h4>
+                <h4>BOUGHT MEMOS</h4>
                 <h4>ANALYTIC</h4>
                 <h4>ACCOUNT</h4>
               </ul>
@@ -151,30 +152,6 @@ const CreatePost = () => {
                             }}
                             rows="2"
                           ></textarea>
-                        </td>
-                      </tr>
-                    </div>
-                    <div style={{ marginTop: "10px" }}>
-                      <tr>
-                        <td style={{ width: "250px" }}>
-                          <label>Access Token</label>
-                        </td>
-                        <td>
-                          <select
-                            style={{
-                              marginLeft: "40px",
-                              padding: "8px",
-                              width: "320px",
-                            }}
-                          >
-                            <option value="" disabled selected>
-                              Select Token
-                            </option>
-                            <option value="b">Pay Per View</option>
-                            <option value="ch">Download</option>
-                            <option value="v">Buy h4cense</option>
-                            <option value="n">Asset</option>
-                          </select>
                         </td>
                       </tr>
                     </div>
