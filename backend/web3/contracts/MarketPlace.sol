@@ -42,7 +42,7 @@ contract Marketplace {
         uint256 tokenPrice,
         address[] memory creators,
         uint256[] memory shares
-    ) public payable {
+    ) public payable returns(AccessToken) {
         require(msg.value >= fee, "Insufficient Amount");
         memo.transfer(msg.value);
 
@@ -63,6 +63,8 @@ contract Marketplace {
             newAccessTokenContract
         );
         emit ProjectCreated(currentId, newAccessTokenContract);
+
+        return newAccessTokenContract;
     }
 
     function getProjects() public view {

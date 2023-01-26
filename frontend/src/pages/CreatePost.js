@@ -3,10 +3,10 @@ import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import { ethers } from 'ethers';
 import {lighthouse} from '@lighthouse-web3/sdk'
+import UploadButton from "../components/UploadButton";
+
 
 //ADD UPLOAD FILE OPTION IN THE FORM
-
-
 
 const CreatePost = () => {
   const [hoversub, sethoversub] = useState(false);
@@ -289,22 +289,7 @@ const CreatePost = () => {
                     </div>
                   </table>
                   <div style={{ marginLeft: "270px", marginTop: "20px" }}>
-                    <button
-                    onSubmit={uploadFile}
-                      type="submit"
-                      style={{
-                        color: hoversub ? "#658BD6" : "white",
-                        padding: "7px",
-                        background: "none",
-                        border: "none",
-                        fontFamily: "Montserrat, sans-serif",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      <b>SUBMIT</b>
-                    </button>
+                    <UploadButton />
                   </div>
                 </div>
               </form>

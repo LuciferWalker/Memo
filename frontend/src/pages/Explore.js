@@ -55,127 +55,63 @@ const Explore = () => {
     },
   ];
 
+  const ProjectCard = () => {
+    return (
+      <>
+        <table style={tab} onClick={() => navigate("/desc")}>
+          <tr>
+            <td style={{ paddingLeft: "40px" }}>
+              <h5>{sampleProjects[0].Theme}</h5>
+            </td>
+            <td style={{ paddingLeft: "80px" }}>
+              <h5>{sampleProjects[0].Creators}</h5>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ width: "340px", paddingLeft: "40px" }}>
+              <h5>{sampleProjects[0].Description}</h5>
+              <h6>18.05.2023</h6>
+            </td>
+            <td style={{ width: "250px" }}></td>
+            <td style={{ width: "200px" }}>
+              <h5>
+                {" "}
+                $ LISTEN
+                <br /> $ DOWNLOAD
+              </h5>
+            </td>
+          </tr>
+        </table>
+      </>
+    );
+  };
+
   return (
     <div style={explore}>
       <div style={{ padding: "50px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar color1="#658BD6" />
         </div>
-{/* 
+        {/* 
       map the sampleProjects array and render the cards accordingly */}
-
 
         <table>
           <tr>
             <td>
-              <table style={tab} onClick={() => navigate("/desc")}>
-                <tr>
-                  <td style={{ paddingLeft: "40px" }}>
-                    <h5>{sampleProjects.Theme}</h5>
-                  </td>
-                  <td style={{ paddingLeft: "80px" }}>
-                    <h5>{sampleProjects.Creators}</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ width: "340px", paddingLeft: "40px" }}>
-                    <h5>{sampleProjects.Description}</h5>
-                    <h6>18.05.2023</h6>
-                  </td>
-                  <td style={{ width: "250px" }}></td>
-                  <td style={{ width: "200px" }}>
-                    <h5>
-                      {" "}
-                      $ LISTEN
-                      <br /> $ DOWNLOAD
-                    </h5>
-                  </td>
-                </tr>
-              </table>
+              <ProjectCard />
             </td>
             <td style={{ paddingLeft: "20px" }}>
-              <table style={tab} onClick={() => navigate("/desc")}>
-                <tr>
-                  <td style={{ paddingLeft: "40px" }}>
-                    <h5>MUSIC</h5>
-                  </td>
-                  <td style={{ paddingLeft: "80px" }}>
-                    <h5>CREATORS</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ width: "340px", paddingLeft: "40px" }}>
-                    <h5>
-                      This record is made up of music from around the globe.
-                    </h5>
-                    <h6>18.05.2023</h6>
-                  </td>
-                  <td style={{ width: "250px" }}></td>
-                  <td style={{ width: "200px" }}>
-                    <h5>
-                      {" "}
-                      $ LISTEN
-                      <br /> $ DOWNLOAD
-                    </h5>
-                  </td>
-                </tr>
-              </table>
+              <ProjectCard />
             </td>
           </tr>
         </table>
         <table style={{ marginTop: "8px" }}>
           <tr>
             <td>
-              <table style={tab} onClick={() => navigate("/desc")}>
-                <tr>
-                  <td style={{ paddingLeft: "40px" }}>
-                    <h5>ARCHIVES</h5>
-                  </td>
-                  <td style={{ paddingLeft: "80px" }}>
-                    <h5>CREATORS</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ width: "340px", paddingLeft: "40px" }}>
-                    <h5>PROJECT DESCRIPTION</h5>
-                    <h6>18.05.2023</h6>
-                  </td>
-                  <td style={{ width: "250px" }}></td>
-                  <td style={{ width: "200px" }}>
-                    <h5 style={{ marginRight: "20px" }}>
-                      {" "}
-                      $ JOIN COMMUNITY
-                      <br /> $ DOWNLOAD
-                    </h5>
-                  </td>
-                </tr>
-              </table>
+              <ProjectCard />
             </td>
             <td style={{ paddingLeft: "20px" }}>
-              <table style={tab} onClick={() => navigate("/desc")}>
-                <tr>
-                  <td style={{ paddingLeft: "40px" }}>
-                    <h5>ARCHIVES</h5>
-                  </td>
-                  <td style={{ paddingLeft: "80px" }}>
-                    <h5>CREATORS</h5>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ width: "340px", paddingLeft: "40px" }}>
-                    <h5>PROJECT DESCRIPTION</h5>
-                    <h6>18.05.2023</h6>
-                  </td>
-                  <td style={{ width: "250px" }}></td>
-                  <td style={{ width: "200px" }}>
-                    <h5 style={{ marginRight: "20px" }}>
-                      {" "}
-                      $ JOIN COMMUNITY
-                      <br /> $ DOWNLOAD
-                    </h5>
-                  </td>
-                </tr>
-              </table>
+              <ProjectCard />
             </td>
           </tr>
         </table>
