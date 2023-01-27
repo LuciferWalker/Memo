@@ -15,76 +15,82 @@ app.use(express.urlencoded({ extended: false }))
 
 app.post('/getUserData', async (req, res) => {
   //when user connects their wallet.
-  const { address } = req.body;
+  const { address } = req.body
   try {
     //check if the user exists in the db
-    const user = await User.findOne({ address });
+    const user = await User.findOne({ address })
     if (!user) {
       //if not add him
-      const newUser = await User.create({ address });
-      return res.status(201).send(newUser);
+      const newUser = await User.create({ address })
+      return res.status(201).send(newUser)
     }
     //if yes, return their data to the frontend
-    res.status(200).send(user);
+    res.status(200).send(user)
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send(err)
   }
-});
-
+})
 
 app.get('/getProjectData/:projectId', async (req, res) => {
   try {
     //gets called in project description page
-    const { projectId: id } = req.params
-    const project = await Project.findById(id)
-    //return all the project details
+    const { projectId } = req.params
+    const project = await Project.find({ projectId })
+    //return the project details
     res.status(200).json(project)
   } catch (err) {
     console.log(err)
   }
 })
 
+app.post('/createUser', async (req, res) => {
+  //when user connects their wallet.
+
+  const { address } = req.body
+  try {
+    //Create user data if they dont exist, once they connect their wallet
+    let user = await User.findOne({ address: address })
+    if (!user) {
+      user = new User({ address })
+      await user.save()
+    }
+    res.status(200).send(user)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
 app.post('/createProject', async (req, res) => {
   try {
-    // const {
-    //   projectTitle,
-    //   projectDescription,
-    //   creators,
-    //   tokenPrice,
-    //   tokenSupply,
-    //   shares,
-    // } = req.body;
-
     // create project
+    const { creators } = req.body
+    // add project in user db
     const project = await Project.create({ ...req.body })
 
-    //[1,2,3]
-
-    //X->2
-    //Y->1,2,3
-
-    //1 does not exist, thus create
-    //2 exists, then push Y in createdProjects and update the social URL
-    //3 does not exist, thus create
-
-    // add project in user db
-    const user = await User.findOne({ address: req.body.creators[0] }) // assuming first one is the creator in the creator array
-    user.projectsCreated.push(projectId)
-    await user.save()
-
-    //create project in marketplace contract
+    // create user with all the address present in the creators array
+    const users = creators.map(async address => {
+      let user = await User.findOne({ address });
+      if (!user) {
+        user = new User({ address });
+        await user.save();
+      }
+      return user;
+    });
+    await Promise.all(users);
 
     res.status(201).json(project)
   } catch (err) {
     console.log(err)
+    res.status(500).send(err);
   }
-})
+});
+
 
 app.patch('/updateProjectStatus/:id', async (req, res) => {
-  const { projectId: id } = req.params
+  const { projectId } = req.params
   try {
     // find the document by id
-    const project = await Project.findById(id)
+    const project = await Project.find({ projectId })
 
     if (!project) {
       // if no project is found, send a 404 Not Found response
@@ -102,12 +108,10 @@ app.patch('/updateProjectStatus/:id', async (req, res) => {
   }
 })
 
-//Create user data if they dont exist, once they connect their wallet
-
 app.post('/projectTokenBought', async (req, res) => {
   //updates info after user buys a token
   try {
-    const {projectId, address} = req.body
+    const { projectId, address } = req.body
 
     // Update in user db that ticket has been bought
     const user = await User.findOne({ address })
