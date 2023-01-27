@@ -4,7 +4,13 @@ import Navbar from "../components/Navbar";
 import { ethers } from 'ethers';
 import {lighthouse} from '@lighthouse-web3/sdk'
 import UploadButton from "../components/UploadButton";
-
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../firebase";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -12,6 +18,9 @@ const CreatePost = () => {
   const [hoversub, sethoversub] = useState(false);
   const [distribution, setDistribution] = useState();
   const [members, setMembers] = useState([]);
+  const [img, setImg] = useState(null);
+  const [imgPerc, setImgPerc] = useState(0);
+  const [imgUrl, setImgUrl] = useState(null);
 
   const handleMouseEnter = () => {
     sethoversub(true);
@@ -77,6 +86,42 @@ const CreatePost = () => {
     ));
   }
 
+  const uploadImage = () => {
+    if(!img) return alert("First select an Image")
+    const storage = getStorage(app);
+    const fileName = img.name + new Date().getTime();
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, img);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImgPerc(Math.round(progress));
+        console.log(Math.round(progress));
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {console.log(error)},
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log(downloadURL);
+          // This url will be stored in the web2 backend
+          setImgUrl(downloadURL)
+        });
+      }
+    );
+  };
+
   return (
     <div style={createpost}>
       <div style={{ padding: "50px" }}>
@@ -136,6 +181,25 @@ const CreatePost = () => {
                             }}
                           />
                         </td>
+                      </tr>
+                    </div>
+                    <div>
+                      <tr>
+                        <td style={{ width: "250px" }}>
+                          <label>Project Image</label>
+                        </td>
+                        {!imgUrl?<td>
+                          <input
+                            type='file'
+                            onChange={(e)=>setImg(e.target.files[0])}
+                            style={{
+                              marginLeft: "40px",
+                              padding: "8px",
+                              width: "200px",
+                            }}
+                          />
+                          <button type="button" onClick={uploadImage}>Upload Image</button>
+                        </td>:<p>{img?.name}</p>}
                       </tr>
                     </div>
                     <div style={{ marginTop: "10px" }}>
