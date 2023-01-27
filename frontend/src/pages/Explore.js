@@ -54,6 +54,12 @@ const Explore = () => {
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
+    {
+      Theme: "ARCHIVES",
+      Creators: "CREATORS",
+      Description: "This record is made up of music from around the globe.",
+      Date: "18.05.2023",
+    },
   ];
 
   return (
@@ -65,7 +71,7 @@ const Explore = () => {
         {/* 
       map the sampleProjects array and render the cards accordingly */}
         
-          <div style={{margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr'}}>
+          <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
             {sampleProjects.map((card,index) => (
               <table key={index} style={tab} onClick={() => navigate(`/${index}`)}>
                 <tr>
