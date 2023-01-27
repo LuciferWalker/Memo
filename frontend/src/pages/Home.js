@@ -30,41 +30,32 @@ const Home = () => {
     backgroundPosition: "center",
   };
 
-  return (
-    <div style={Bg}>
-      <div style={{ padding: "50px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {/* <SignIn /> */}
-          <div>
-            <h1>MEMO</h1>
-            <h5>01.01.2023</h5>
-          </div>
-          <div style={{ cursor: "pointer" }}>
-            <h4>
-              <span
-                onClick={() => navigate("/explore")}
-                style={{ color: hover ? "#658BD6" : "white" }}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                EXPLORE MEMOS
-              </span>
-              <br />
-              <span
-                style={{ color: hover1 ? "#658BD6" : "white" }}
-                onClick={() => navigate("/post")}
-                onMouseEnter={handleMouseEnter1}
-                onMouseLeave={handleMouseLeave1}
-              >
-                POST A MEMO
-              </span>
-            </h4>
-          </div>
-        </div>
-        <h3 style={{ textAlign: "center", marginTop: "30px" }}>
-          MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES &
-          MEMORIES.
-        </h3>
+    return(
+        <div style={Bg}>
+            <div style={{padding:'50px'}}>
+                <div style={{display:'flex',justifyContent: 'space-between'}}>
+                    {/* <SignIn /> */}
+                    <div>
+                        <h1>MEMO</h1>
+                        <h5>01.01.2023</h5>
+                    </div>
+                    <div style={{cursor: 'pointer'}}>
+                        <h4>
+                            <span 
+                            onClick={()=>navigate("/explore")}
+                            style={{color: hover ? '#658BD6' : 'white',}}
+                            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                EXPLORE MEMOS
+                            </span><br/>
+                            <span 
+                            style={{color: hover1 ? '#658BD6' : 'white',}} 
+                            onClick={()=>navigate("/post")}
+                            onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
+                                PROFILE
+                            </span></h4>
+                    </div>
+                </div>
+                <h3 style={{textAlign:'center',marginTop:'30px'}}>MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES & MEMORIES.</h3>
 
         <table style={{ marginTop: "70px" }}>
           <tr>

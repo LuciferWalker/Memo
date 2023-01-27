@@ -6,6 +6,7 @@ import Post from "./pages/Post";
 import CreatePost from "./pages/CreatePost";
 import PostDescription from "./pages/PostDescription";
 import Download from "./pages/Download";
+import Display from "./pages/Display";
 // import {ethers} from 'ethers';
 // import SignIn  from "./components/SignIn";
 // import UploadContent from "./pages/UploadContent";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/createpost" element={<CreatePost />} />
         <Route path="/:projectId" element={<PostDescription/>} />
         <Route path="/download" element={<Download/>} />
+        <Route path="/display" element={<Display/>} />
         {/* <Route path="/uploadcontent" element={<UploadContent/>}/>
       <Route path="/getprotected" element={<GetProtected/>}/>
       <Route path="/protectedContent" element={<ProtectedContent/>}/> */}
