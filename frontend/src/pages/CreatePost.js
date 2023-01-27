@@ -1,10 +1,9 @@
 import { useState } from "react";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar";
-import { ethers } from 'ethers';
-import {lighthouse} from '@lighthouse-web3/sdk'
+import { ethers } from "ethers";
+import { lighthouse } from "@lighthouse-web3/sdk";
 import UploadButton from "../components/UploadButton";
-
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -248,6 +247,5 @@ const CreatePost = () => {
     </div>
   );
 };
-
 
 export default CreatePost;

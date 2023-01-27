@@ -13,7 +13,7 @@ const Explore = () => {
   const getListedProjects = async () => {
     const res = await fetch("http://localhost:3001/listedProjects");
     const projects = await res.json();
-    setListedProjects(listedProjects);
+    setListedProjects(pojects);
     setLoading(false);
   };
 
@@ -61,7 +61,10 @@ const Explore = () => {
   const ProjectCard = () => {
     return (
       <>
-        <table style={tab} onClick={() => navigate(`/${sampleProjects[0].ProjectId}`)}>
+        <table
+          style={tab}
+          onClick={() => navigate(`/${sampleProjects[0].ProjectId}`)}
+        >
           <tr>
             <td style={{ paddingLeft: "40px" }}>
               <h5>{sampleProjects[0].Theme}</h5>
