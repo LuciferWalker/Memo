@@ -9,19 +9,15 @@ const ConnectWallet = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState(
-    localStorage.getItem('account') || 'CONNECT WALLET'
+    sessionStorage.getItem('account') || 'CONNECT WALLET'
   );
   const [signer, setSigner] = useState(null);
   const [marketplaceContract, setMarketplaceContract] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [provider, setProvider] = useState(null);
 
-  // useEffect(() => {
-  //   setAccount(JSON.parse(window.localStorage.getItem('account')));
-  // }, []);
-
   useEffect(() => {
-    window.localStorage.setItem('account', account);
+    window.sessionStorage.setItem('account', account);
   }, [account]);
 
   const connectWalletHandler = async () => {

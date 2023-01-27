@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import { ethers } from 'ethers';
 import {lighthouse} from '@lighthouse-web3/sdk'
 import UploadButton from "../components/UploadButton";
+import { Form } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   getStorage,
   ref,
@@ -16,8 +18,14 @@ import app from "../firebase";
 
 const CreatePost = () => {
   const [hoversub, sethoversub] = useState(false);
-  const [distribution, setDistribution] = useState();
+  const [distribution, setDistribution] = useState(0);
   const [members, setMembers] = useState([]);
+
+  const [projTitle, setprojTitle] = useState('');
+  const [projDesc, setprojDesc] = useState('');
+  const [price, setPrice] = useState(0);
+  const [supply, setSupply] = useState('');
+  const [royalDist, setRoyalDist] = useState(0);
   const [img, setImg] = useState(null);
   const [imgPerc, setImgPerc] = useState(0);
   const [imgUrl, setImgUrl] = useState(null);
@@ -37,6 +45,7 @@ const CreatePost = () => {
 
   const handleChange = (event) => {
     const creators = event.target.value;
+
     setDistribution(event.target.value);
 
     if (creators > 0) {
@@ -80,47 +89,13 @@ const CreatePost = () => {
           <input
             type="text"
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
+            onChange={(e) => setRoyalDist(e.target.value)}
+            value={royalDist}
           />
         </tr>
       </div>
     ));
   }
-
-  const uploadImage = () => {
-    if(!img) return alert("First select an Image")
-    const storage = getStorage(app);
-    const fileName = img.name + new Date().getTime();
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, img);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImgPerc(Math.round(progress));
-        console.log(Math.round(progress));
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {console.log(error)},
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL);
-          // This url will be stored in the web2 backend
-          setImgUrl(downloadURL)
-        });
-      }
-    );
-  };
 
   return (
     <div style={createpost}>
@@ -157,7 +132,7 @@ const CreatePost = () => {
                 float: "left",
               }}
             >
-              <form action="/">
+              <form action="">
                 <div
                   style={{
                     padding: "20px 0px 20px 60px",
@@ -174,11 +149,9 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            style={{
-                              marginLeft: "40px",
-                              padding: "8px",
-                              width: "300px",
-                            }}
+                            style={inputTag}
+                            value={projTitle}
+                            onChange={(e) => setprojTitle(e.target.value)}
                           />
                         </td>
                       </tr>
@@ -209,12 +182,10 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <textarea
-                            style={{
-                              marginLeft: "40px",
-                              padding: "8px",
-                              width: "302px",
-                            }}
+                            style={inputTag}
                             rows="2"
+                            value={projDesc}
+                            onChange={(e) => setprojDesc(e.target.value)}
                           ></textarea>
                         </td>
                       </tr>
@@ -226,11 +197,9 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            style={{
-                              padding: "8px",
-                              width: "300px",
-                              marginLeft: "40px",
-                            }}
+                            style={inputTag}
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
                           />
                         </td>
                       </tr>
@@ -242,11 +211,9 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            style={{
-                              padding: "8px",
-                              width: "300px",
-                              marginLeft: "40px",
-                            }}
+                            style={inputTag}
+                            value={supply}
+                            onChange={(e) => setSupply(e.target.value)}
                           />
                         </td>
                       </tr>
@@ -260,11 +227,7 @@ const CreatePost = () => {
                           <input
                             id="creator"
                             value={distribution}
-                            style={{
-                              padding: "8px",
-                              width: "300px",
-                              marginLeft: "40px",
-                            }}
+                            style={inputTag}
                             onChange={handleChange}
                           />
                         </td>
@@ -278,7 +241,7 @@ const CreatePost = () => {
                     </div>
                   </table>
                   <div style={{ marginLeft: "270px", marginTop: "20px" }}>
-                    {/* <UploadButton /> */}
+                    {/* <UploadButton /> */}<button type="submit" onClick={handleSubmit}>SUBMIT</button>
                   </div>
                 </div>
               </form>
