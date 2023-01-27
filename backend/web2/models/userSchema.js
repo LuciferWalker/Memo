@@ -1,18 +1,22 @@
 const mongoose = require("mongoose");
 
 const UserSchema = mongoose.Schema({
-    address: {
-        type:String,
-        required:true
-    },
-    boughtProjects:{
-        type:[Number],
-    },
-    createdProjects:{
-        type:[Number],
-    },
-    // 2 arrays to store the project Ids of invested and created
-})
+  address: {
+    type: String,
+    required: true,
+  },
+  socialURL: {
+    type: String,
+  },
+  boughtProjects: {
+    type: [Number],
+    default: [],
+  },
+  createdProjects: {
+    type: [Number], 
+    default: [],
+  },
+});
 
-const User = mongoose.model('User', UserSchema)
-module.exports = User
+const User = mongoose.model("User", UserSchema);
+module.exports = User;

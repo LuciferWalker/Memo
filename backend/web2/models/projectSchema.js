@@ -19,8 +19,8 @@ const ProjectSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  creatorIds: {
-    type: [String], //[1,2,3]
+  creatorAddresses: {
+    type: [String], 
   },
   cid: {
     type: String,
@@ -40,9 +40,11 @@ const ProjectSchema = mongoose.Schema({
   },
   tokensBought: {
     type: Number,
+    default: 0,
   },
   tokenPrice: {
     type: Number,
+    required: true,
   },
 });
 

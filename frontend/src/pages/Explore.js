@@ -13,7 +13,7 @@ const Explore = () => {
   const getListedProjects = async () => {
     const res = await fetch("http://localhost:3001/listedProjects");
     const projects = await res.json();
-    setListedProjects(pojects);
+    setListedProjects(projects);
     setLoading(false);
   };
 

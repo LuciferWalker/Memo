@@ -58,6 +58,15 @@ app.post('/createProject', async (req, res) => {
     // create project
     const project = await Project.create({ ...req.body })
 
+    //[1,2,3]
+
+    //X->2
+    //Y->1,2,3
+
+    //1 does not exist, thus create
+    //2 exists, then push Y in createdProjects and update the social URL
+    //3 does not exist, thus create
+
     // add project in user db
     const user = await User.findOne({ address: req.body.creators[0] }) // assuming first one is the creator in the creator array
     user.projectsCreated.push(projectId)
@@ -92,6 +101,8 @@ app.patch('/updateProjectStatus/:id', async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+//Create user data if they dont exist, once they connect their wallet
 
 app.post('/projectTokenBought', async (req, res) => {
   //updates info after user buys a token
