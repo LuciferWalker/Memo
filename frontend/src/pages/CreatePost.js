@@ -12,6 +12,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase";
+// React Notification
+import { NotificationManager } from 'react-notifications';
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -58,14 +60,16 @@ const CreatePost = () => {
   };
 
   function addQuestion() {
-    return members.map((quest) => (
-      <div style={{ fontSize: "12px", marginTop: "5px" }}>
+
+    return members.map((input,index) => (
+      <div key={index} style={{ fontSize: "12px", marginTop: "5px" }}>
         <tr>
           <label style={{ marginLeft: "130px" }}>
-            Creator Name {quest + 1}
+            Creator Name {index+ 1}
           </label>
           <input
             type="text"
+            value={input.name}
             style={{ marginLeft: "56px", padding: "4px", width: "160px" }}
           />
         </tr>
@@ -148,7 +152,9 @@ const CreatePost = () => {
           desc: projDesc,
           price:price,
           creators:distribution,
-      }})
+          royal:royalDist,
+      }});
+      NotificationManager.success('Form Submitted!', 'Successful!', 2000);
   };
 
   return (
@@ -251,6 +257,7 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
+                            type="number"
                             style={inputTag}
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}

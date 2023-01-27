@@ -44,7 +44,10 @@ const ConnectWallet = () => {
   };
 
   const accountChangeHandler = (newAccount) => {
-    setAccount(newAccount);
+    const addfirst = newAccount.slice(0,5);
+    const addlast = newAccount.slice(-4);
+    const add = addfirst + '...' + addlast;
+    setAccount(add);
     updateEthers();
   };
 
