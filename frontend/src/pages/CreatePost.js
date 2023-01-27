@@ -1,10 +1,9 @@
-import { useState,useRef } from "react";
+import { useState } from "react";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import { ethers } from 'ethers';
 import {lighthouse} from '@lighthouse-web3/sdk'
 import UploadButton from "../components/UploadButton";
-import { Form } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   getStorage,
@@ -96,6 +95,61 @@ const CreatePost = () => {
       </div>
     ));
   }
+
+  const uploadImage = () => {
+    if(!img) return alert("First select an Image")
+    const storage = getStorage(app);
+    const fileName = img.name + new Date().getTime();
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, img);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImgPerc(Math.round(progress));
+        console.log(Math.round(progress));
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {console.log(error)},
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log(downloadURL);
+          // This url will be stored in the web2 backend
+          setImgUrl(downloadURL)
+        });
+      }
+    );
+  };
+
+  const inputTag = {
+    padding: "8px",
+    width: "300px",
+    marginLeft: "40px",
+  }
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/display", {
+      state: {
+          title: projTitle,
+          desc: projDesc,
+          price:price,
+          creators:distribution,
+      }})
+  };
 
   return (
     <div style={createpost}>
