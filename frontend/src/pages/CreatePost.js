@@ -90,7 +90,7 @@ const CreatePost = () => {
         <tr>
           <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
           <input
-            type="text"
+            type="number"
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
             onChange={(e) => setRoyalDist(e.target.value)}
             value={royalDist}
@@ -146,6 +146,7 @@ const CreatePost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    NotificationManager.success('Form Submitted!', 'Successful!', 2000);
     navigate("/display", {
       state: {
           title: projTitle,
@@ -154,7 +155,6 @@ const CreatePost = () => {
           creators:distribution,
           royal:royalDist,
       }});
-      NotificationManager.success('Form Submitted!', 'Successful!', 2000);
   };
 
   return (
@@ -287,6 +287,7 @@ const CreatePost = () => {
                         <td>
                           <input
                             id="creator"
+                            type="number"
                             value={distribution}
                             style={inputTag}
                             onChange={handleChange}
