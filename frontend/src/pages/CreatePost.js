@@ -14,13 +14,12 @@ import {
 import app from "../firebase";
 import { parse } from "@ethersproject/transactions";
 // React Notification
-// import { NotificationManager } from "react-notifications";
+import { NotificationManager } from "react-notifications";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
 const CreatePost = () => {
   //Styles
-
   const createpost = {
     backgroundImage: `url(${image})`,
     backgroundRepeat: "no-repeat",
@@ -33,32 +32,7 @@ const CreatePost = () => {
     marginLeft: "40px",
   };
 
-  const [hoversub, sethoversub] = useState(false);
-  const [distribution, setDistribution] = useState(0);
-
-  const [formData, setFormData] = useState({
-    projectName: "",
-    projectSymbol: "",
-    projectDescription: "",
-    projectImage: "",
-    tokenPrice: "",
-    tokenSupply: "",
-    numberOfCreators: "",
-    creators: [],
-  });
-
-  const [creator, setCreator] = useState({});
-
-  const [projectName, setProjectName] = useState("");
-  const [projectSymbol, setProjectSymbol] = useState("");
-  const [projectDescription, setProjectDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [supply, setSupply] = useState("");
-  const [royalDist, setRoyalDist] = useState(0);
-  const [img, setImg] = useState(null);
-  const [imgPerc, setImgPerc] = useState(0);
-  const [imgUrl, setImgUrl] = useState(null);
-
+  //Unused
   const handleMouseEnter = () => {
     sethoversub(true);
   };
@@ -66,20 +40,20 @@ const CreatePost = () => {
     sethoversub(false);
   };
 
-  // const handleChange = (event) => {
-  //   const creators = event.target.value;
+  const [hoversub, sethoversub] = useState(false);
 
-  //   setDistribution(event.target.value);
+  const [formData, setFormData] = useState({
+    projectName: "",
+    projectSymbol: "",
+    projectDescription: "",
+    projectImageUrl: "",
+    tokenPrice: "",
+    tokenSupply: "",
+    numberOfCreators: "",
+    creators: [],
+  });
 
-  //   if (creators > 0) {
-  //     const generateArrays = Array.from(
-  //       Array(Number(event.target.value)).keys()
-  //     );
-  //     setMembers(generateArrays);
-  //   } else {
-  //     setMembers([]);
-  //   }
-  // };
+  const [projectImage, setProjectImage] = useState(null);
 
   function addQuestion() {
     return formData.creators?.map((creator, index) => (
@@ -88,7 +62,7 @@ const CreatePost = () => {
         key={index}
         style={{ fontSize: "12px", marginTop: "5px" }}
       >
-        <tr>
+        {/* <tr>
           <label style={{ marginLeft: "130px" }}>
             Creator Name {index + 1}
           </label>
@@ -101,7 +75,7 @@ const CreatePost = () => {
             name="creatorName"
             style={{ marginLeft: "56px", padding: "4px", width: "160px" }}
           />
-        </tr>
+        </tr> */}
         <tr>
           <label style={{ marginLeft: "130px" }}>Social Login</label>
           <input
@@ -145,19 +119,17 @@ const CreatePost = () => {
   }
 
   const uploadImage = () => {
-    // if (!img) return alert("First select an Image");
+    if (!projectImage) return alert("First select an Image");
     const storage = getStorage(app);
-    const fileName = img.name + new Date().getTime();
+    const fileName = projectImage.name + new Date().getTime();
     const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, img);
+    const uploadTask = uploadBytesResumable(storageRef, projectImage);
 
     uploadTask.on(
       "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImgPerc(Math.round(progress));
-        console.log(Math.round(progress));
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -174,9 +146,8 @@ const CreatePost = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log(downloadURL);
           // This url will be stored in the web2 backend
-          setImgUrl(downloadURL);
+          setFormData({ ...formData, projectImageUrl: downloadURL });
         });
       }
     );
@@ -185,19 +156,19 @@ const CreatePost = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    uploadImage(); //upload image
-
+    //verify data
     e.preventDefault();
-    NotificationManager.success('Form Submitted!', 'Successful!', 2000);
-    navigate("/display", {
-      state: {
-        title: projectName,
-        desc: projectDescription,
-        price: price,
-        creators: distribution,
-        royal: royalDist,
-      },
-    });
+    uploadImage(); //upload image
+    NotificationManager.success("Form Submitted!", "Successful!", 2000);
+    // navigate("/display", {
+    //   state: {
+    //     title: projectName,
+    //     desc: projectDescription,
+    //     price: price,
+    //     creators: distribution,
+    //     royal: royalDist,
+    //   },
+    // });
     // NotificationManager.success("Form Submitted!", "Successful!", 2000);
   };
 
@@ -212,17 +183,15 @@ const CreatePost = () => {
       //not creators data
       let value;
 
-      key === "projectImage"
-        ? (value = e.target.files[0])
-        : (value = e.target.value);
-
-      if (key === "numberOfCreators") {
-        //value not equal to empty string
+      if (key === "projectImage") {
+        setProjectImage(e.target.files[0]);
+      } else if (key === "numberOfCreators") {
         let arr;
+        let value = e.target.value;
         if (value === "") {
           arr = Array.from(Array(parseInt("0")), () => ({}));
         } else {
-          arr = Array.from(Array(parseInt(value)), () => ({}));
+          arr = Array.from(Array(parseInt(value)), () => ({})); //[]
         }
         setFormData({
           ...formData,
@@ -230,6 +199,7 @@ const CreatePost = () => {
           creators: arr,
         });
       } else {
+        let value = e.target.value;
         setFormData({ ...formData, [key]: value });
       }
     } else {
@@ -328,7 +298,7 @@ const CreatePost = () => {
                         <td style={{ width: "250px" }}>
                           <label>Project Image</label>
                         </td>
-                        {!imgUrl ? (
+                        {!projectImage ? (
                           <td>
                             <input
                               name="projectImage"
@@ -343,7 +313,7 @@ const CreatePost = () => {
                             />
                           </td>
                         ) : (
-                          <p>{img?.name}</p>
+                          <p>{projectImage?.name}</p>
                         )}
                       </tr>
                     </div>
@@ -420,7 +390,7 @@ const CreatePost = () => {
                     </div>
                   </table>
                   <div style={{ marginLeft: "270px", marginTop: "20px" }}>
-                    {/* <UploadButton /> */}
+                    {/* <UploadButton formData={formData} /> */}
                     <button type="submit" onClick={handleSubmit}>
                       SUBMIT
                     </button>

@@ -2,7 +2,7 @@
 // import { ethers } from "ethers";
 // import lighthouse from "@lighthouse-web3/sdk";
 
-// function UploadButton() {
+// function UploadButton({formData}) {
 
 //   const [loader, setLoader] = useState(null);
 //   //FLOW
@@ -120,7 +120,8 @@
 //   return (
 //     <>
 //       <button
-//         onSubmit={(e) => deployEncrypted(e)}
+//         onSubmit= {(e) => handleSubmit(e)}
+//         // {(e) => deployEncrypted(e)}
 //         type="submit"
 //         style={{
 //           color: hoversub ? "#658BD6" : "white",

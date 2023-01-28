@@ -21,6 +21,9 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    creators:{
+      //[{},{}]
+    },
     creatorAddresses: {
       type: [String],
       required: true,
