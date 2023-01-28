@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const ProjectSchema = mongoose.Schema(
   {
@@ -6,14 +6,39 @@ const ProjectSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: {
-      type: String,
-    },
-    title: {
+    projectName: {
       type: String,
       required: true,
     },
-    description: {
+    projectSymbol: {
+      type: String,
+      required: true,
+    },
+    projectDescription: {
+      type: String,
+      required: true,
+    },
+    projectImageUrl: {
+      type: String,
+    },
+    projectStatus: {
+      type: Boolean,
+      default: true,
+    },
+    numberOfCreators: {
+      type: Number,
+      required: true,
+    },
+    creators: {
+      //[{},{}]
+    },
+    fileName: {
+      type: String,
+    },
+    fileSize: {
+      type: Number,
+    },
+    fileCid: {
       type: String,
       required: true,
     },
@@ -21,32 +46,7 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    creators:{
-      //[{},{}]
-    },
-    creatorAddresses: {
-      type: [String],
-      required: true,
-    },
-    creatorShares: {
-      type: [Number],
-      required: true,
-    },
-    cid: {
-      type: String,
-      required: true,
-    },
-    projectStatus: {
-      type: Boolean,
-      default: true,
-    },
-    fileSize: {
-      type: Number,
-    },
-    fileName: {
-      type: String,
-    },
-    totalTokens: {
+    totalTokenSupply: {
       type: Number,
       required: true,
     },
@@ -59,8 +59,8 @@ const ProjectSchema = mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true },
-)
+  { timestamps: true }
+);
 
-const Project = mongoose.model('Project', ProjectSchema)
-module.exports = Project
+const Project = mongoose.model("Project", ProjectSchema);
+module.exports = Project;

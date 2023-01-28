@@ -42,7 +42,7 @@ const CreatePost = () => {
     projectDescription: "",
     projectImageUrl: "",
     tokenPrice: "",
-    tokenSupply: "",
+    totalTokenSupply: "",
     numberOfCreators: "",
     creators: [],
   });
@@ -71,19 +71,7 @@ const CreatePost = () => {
           />
         </tr> */}
         <tr>
-          <label style={{ marginLeft: "130px" }}>Social Login</label>
-          <input
-            name="creatorSocial"
-            onChange={(e) => {
-              handleInputs(e, index);
-            }}
-            value={creator.creatorSocial}
-            type="text"
-            style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
-          />
-        </tr>
-        <tr>
-          <label style={{ marginLeft: "130px" }}>Wallet Add</label>
+          <label style={{ marginLeft: "130px" }}>Wallet Address</label>
           <input
             name="creatorAddress"
             onChange={(e) => {
@@ -95,7 +83,7 @@ const CreatePost = () => {
           />
         </tr>
         <tr>
-          <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
+          <label style={{ marginLeft: "130px" }}>Share (in %)</label>
           <input
             onChange={(e) => {
               handleInputs(e, index);
@@ -106,6 +94,18 @@ const CreatePost = () => {
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
             // onChange={(e) => setRoyalDist(e.target.value)}
             // value={royalDist}
+          />
+        </tr>
+        <tr>
+          <label style={{ marginLeft: "130px" }}>Social URL</label>
+          <input
+            name="socialURL"
+            onChange={(e) => {
+              handleInputs(e, index);
+            }}
+            value={creator.socialURL}
+            type="text"
+            style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
           />
         </tr>
       </div>
@@ -330,9 +330,9 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            name="tokenSupply"
+                            name="totalTokenSupply"
                             style={inputTag}
-                            value={formData.tokenSupply}
+                            value={formData.totalTokenSupply}
                             onChange={handleInputs}
                           />
                         </td>
