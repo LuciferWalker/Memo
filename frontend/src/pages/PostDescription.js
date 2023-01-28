@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Navbar from "../components/Navbar.js";
 
 const PostDescription = () => {
 
-  const fetchProjectDetails = () =>{
+  const [projectDetail, setprojectDetail] = useState(null)
+  let { projectId } = useParams();
 
+  const fetchProjectDetails = async () =>{
+    const res = await fetch("http://localhost:3001/getProjectData/"+projectId);
+    const project = await res.json();
+    setprojectDetail(project[0])
   }
 
   useEffect(()=>{
     fetchProjectDetails();
   },[])
-
   const [hover, sethover] = useState(false);
   const navigate = useNavigate();
 
@@ -44,6 +48,7 @@ const PostDescription = () => {
     //after successful purchase, redirect them to download page
   }
 
+  console.log(projectDetail);
   return (
     <div style={post}>
       <div style={{ padding: "50px" }}>
@@ -61,9 +66,13 @@ const PostDescription = () => {
               >
                 <div style={{ paddingLeft: "30px" }}>
                   <h4>PROJECT TITLE</h4>
-                  <img src={Img1} style={{ width: "55%" }} />
+                  <img src={projectDetail?.img || Img1} style={{ height: "55%" }} />
                   <h4>PROJECT DESCRIPTION</h4>
+                  {projectDetail && projectDetail.description || ''}
                   <h4>CREATORS</h4>
+                  {projectDetail?
+                  projectDetail.creatorAddresses.map(item=><h5 style={{ margin: "10px" }}>{item}</h5 >)
+                  :""}
                 </div>
               </td>
               <td style={{ paddingLeft: "20px" }}>
