@@ -19,12 +19,6 @@ import { NotificationManager } from "react-notifications";
 //ADD UPLOAD FILE OPTION IN THE FORM
 
 const CreatePost = () => {
-  //Styles
-  const createpost = {
-    backgroundImage: `url(${image})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-  };
 
   const inputTag = {
     padding: "8px",
@@ -213,34 +207,11 @@ const CreatePost = () => {
   };
 
   return (
-    <div style={createpost}>
-      <div style={{ padding: "50px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Navbar />
-        </div>
-
         <div>
           <div style={{ overflow: "hidden", width: "100%" }}>
             <div
               style={{
-                width: "25%",
-                height: "auto",
-                overflow: "hidden",
-                float: "left",
-              }}
-            >
-              <ul>
-                <h4 style={{ color: "#658BD6" }}>CREATE</h4>
-                <h4>STORAGE</h4>
-                <h4>CREATED MEMOS</h4>
-                <h4>BOUGHT MEMOS</h4>
-                <h4>ANALYTIC</h4>
-                <h4>ACCOUNT</h4>
-              </ul>
-            </div>
-            <div
-              style={{
-                width: "60%",
+                width: "80%",
                 height: "450px",
                 overflowX: "hidden",
                 overflowY: "auto",
@@ -400,8 +371,6 @@ const CreatePost = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

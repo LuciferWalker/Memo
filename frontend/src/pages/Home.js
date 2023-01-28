@@ -48,9 +48,9 @@ const Home = () => {
                             </span><br/>
                             <span 
                             style={{color: hover1 ? '#658BD6' : 'white',}} 
-                            onClick={()=>navigate("/post")}
+                            onClick={()=>navigate("/createdmemos")}
                             onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
-                                PROFILE
+                                DASHBOARD
                             </span></h4>
                     </div>
                 </div>

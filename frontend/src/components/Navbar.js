@@ -7,7 +7,6 @@ const Navbar = (props) => {
 
   return (
     <>
-      {/* <div style={{display:'flex',justifyContent: 'space-between'}}> */}
       <div style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
         <h1>MEMO</h1>
         <h5>01.01.2023</h5>
@@ -25,13 +24,12 @@ const Navbar = (props) => {
           <br />
           <span
             style={{ color: props.color }}
-            onClick={() => navigate("/post")}
+            onClick={() => navigate("/createdmemos")}
           >
             DASHBOARD
           </span>
         </h4>
       </div>
-      {/* </div> */}
     </>
   );
 };
