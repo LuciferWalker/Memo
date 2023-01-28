@@ -3,8 +3,10 @@ import { useNavigate, useParams } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Navbar from "../components/Navbar.js";
+import { useLocation } from "react-router";
 
 const PostDescription = () => {
+  const location = useLocation();
 
   const [projectDetail, setprojectDetail] = useState(null)
   let { projectId } = useParams();
@@ -60,16 +62,16 @@ const PostDescription = () => {
             <tr>
               <td
                 style={{
-                  width: "700px",
+                  width: "750px",
                   backgroundColor: "rgba(7, 7, 7, 0.5)",
                 }}
               >
                 <div style={{ paddingLeft: "30px" }}>
-                  <h4>PROJECT TITLE</h4>
-                  <img src={projectDetail?.img || Img1} style={{ height: "55%" }} />
-                  <h4>PROJECT DESCRIPTION</h4>
+                  <h4>{location.state.title}</h4>
+                  <img src={projectDetail?.img || Img1}  style={{width:'550px',height:'260px' }}/>
+                  <h4>{location.state.desc}</h4>
                   {projectDetail && projectDetail.description || ''}
-                  <h4>CREATORS</h4>
+                  <h4>{location.state.creators}</h4>
                   {projectDetail?
                   projectDetail.creatorAddresses.map(item=><h5 style={{ margin: "10px" }}>{item}</h5 >)
                   :""}
@@ -81,6 +83,8 @@ const PostDescription = () => {
                     <td style={{ paddingLeft: "20px" }}>
                       <h4>DOWNLOAD</h4>
                     </td>
+                    <td></td>
+                    <td><h4>Token Price: ${location.state.price}</h4></td>
                   </tr>
                   <tr>
                     <td style={{ width: "200px", paddingLeft: "20px" }}>

@@ -37,28 +37,36 @@ const Explore = () => {
 
   const sampleProjects = [
     {
-      Theme: "MUSIC",
+      Title: "MUSIC",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000,
     },
     {
-      Theme: "MUSIC",
+      Title: "MUSIC",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
     {
-      Theme: "ARCHIVES",
+      Title: "ARCHIVES",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
     {
-      Theme: "ARCHIVES",
+      Title: "ARCHIVES",
       Creators: "CREATORS",
+      FileSize: '10MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
   ];
 
@@ -73,10 +81,19 @@ const Explore = () => {
         
           <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
             {sampleProjects.map((card,index) => (
-              <table key={index} style={tab} onClick={() => navigate(`/${index}`)}>
+              <table key={index} style={tab} onClick={() => navigate(`/${index}`,{
+                state: {
+                  title: card.Title,
+                  desc: card.Description,
+                  creators:card.Creators,
+                  price:card.TokenPrice,
+                  size:card.FileSize
+              }
+              })}>
                 <tr>
-                  <td style={{ paddingLeft: "30px" }}><h5>{card.Theme}</h5></td>
-                  <td style={{ paddingLeft: "50px" }}><h5>{card.Creators}</h5></td>
+                  <td style={{ paddingLeft: "30px" }}><h5>{card.Title}</h5></td>
+                  <td style={{ paddingLeft: "50px" }}><h5></h5></td>
+                  <td><h5>File Size: {card.FileSize}</h5></td>
                 </tr>
                 <tr>
                   <td style={{ width: "200px", paddingLeft: "30px" }}>
@@ -87,7 +104,7 @@ const Explore = () => {
                   <td style={{ width: "130px" }}>
                     <h5>
                       {" "}
-                      $ LISTEN
+                      PRICE: ${card.TokenPrice}
                       <br /> $ DOWNLOAD
                     </h5>
                   </td>
