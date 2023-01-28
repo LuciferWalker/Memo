@@ -303,7 +303,7 @@ const CreatePost = () => {
                             <input
                               name="projectImage"
                               type="file"
-                              accept="image/png, image/gif, image/jpeg"
+                              accept="image/png, image/gif, image/jpeg, image/jpg"
                               onChange={handleInputs}
                               style={{
                                 marginLeft: "40px",
