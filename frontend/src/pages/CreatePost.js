@@ -188,6 +188,7 @@ const CreatePost = () => {
     uploadImage(); //upload image
 
     e.preventDefault();
+    NotificationManager.success('Form Submitted!', 'Successful!', 2000);
     navigate("/display", {
       state: {
         title: projectName,

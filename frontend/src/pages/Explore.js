@@ -40,29 +40,37 @@ const Explore = () => {
       ProjectId:"0",
       Theme: "MUSIC",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000,
     },
     {
       ProjectId:"1",
       Theme: "MUSIC",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
     {
       ProjectId:"2",
       Theme: "ARCHIVES",
       Creators: "CREATORS",
+      FileSize: '5MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
     {
       ProjectId:"3",
       Theme: "ARCHIVES",
       Creators: "CREATORS",
+      FileSize: '10MB',
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
+      TokenPrice:4000
     },
   ];
 
@@ -79,8 +87,9 @@ const Explore = () => {
             {sampleProjects.map((card) => (
               <table key={card.ProjectId} style={tab} onClick={() => navigate(`/${card.ProjectId}`)}>
                 <tr>
-                  <td style={{ paddingLeft: "30px" }}><h5>{card.Theme}</h5></td>
-                  <td style={{ paddingLeft: "50px" }}><h5>{card.Creators}</h5></td>
+                  <td style={{ paddingLeft: "30px" }}><h5>{card.Title}</h5></td>
+                  <td style={{ paddingLeft: "50px" }}><h5></h5></td>
+                  <td><h5>File Size: {card.FileSize}</h5></td>
                 </tr>
                 <tr>
                   <td style={{ width: "200px", paddingLeft: "30px" }}>
@@ -91,7 +100,7 @@ const Explore = () => {
                   <td style={{ width: "130px" }}>
                     <h5>
                       {" "}
-                      $ LISTEN
+                      PRICE: ${card.TokenPrice}
                       <br /> $ DOWNLOAD
                     </h5>
                   </td>
