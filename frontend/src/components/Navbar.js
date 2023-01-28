@@ -12,7 +12,7 @@ const Navbar = (props) => {
         <h1>MEMO</h1>
         <h5>01.01.2023</h5>
       </div>
-      <div style={{ cursor: "pointer" }}>
+      <div style={{ cursor: "pointer", textAlign:'right' }}>
         <h4>
           <ConnectWallet />
           <br />
@@ -27,7 +27,7 @@ const Navbar = (props) => {
             style={{ color: props.color }}
             onClick={() => navigate("/post")}
           >
-            PROFILE
+            DASHBOARD
           </span>
         </h4>
       </div>
