@@ -67,11 +67,11 @@ const PostDescription = () => {
                 }}
               >
                 <div style={{ paddingLeft: "30px" }}>
-                  <h4>{location.state.title}</h4>
-                  <img src={projectDetail?.img || Img1}  style={{width:'550px',height:'260px' }}/>
-                  <h4>{location.state.desc}</h4>
+                  <h4>{projectDetail?.title ||""}</h4>
+                  <img src={projectDetail?.image || Img1}  style={{width:'550px',height:'260px' }}/>
+                  <h4>DESCRIPTION</h4>
                   {projectDetail && projectDetail.description || ''}
-                  <h4>{location.state.creators}</h4>
+                  <h4>CREATORS</h4>
                   {projectDetail?
                   projectDetail.creatorAddresses.map(item=><h5 style={{ margin: "10px" }}>{item}</h5 >)
                   :""}

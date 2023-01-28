@@ -21,6 +21,7 @@ const Explore = () => {
     getListedProjects();
   }, []);
 
+  console.log(listedProjects);
   const tab = {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
@@ -80,31 +81,31 @@ const Explore = () => {
       map the sampleProjects array and render the cards accordingly */}
         
           <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
-            {sampleProjects.map((card,index) => (
-              <table key={index} style={tab} onClick={() => navigate(`/${index}`,{
+            {listedProjects?.map((card,index) => (
+              <table key={index} style={tab} onClick={() => navigate(`/${card.projectId}`,{
                 state: {
-                  title: card.Title,
-                  desc: card.Description,
-                  creators:card.Creators,
-                  price:card.TokenPrice,
-                  size:card.FileSize
+                  title: card.title,
+                  desc: card.description,
+                  creators:card.creatorsAddresses,
+                  price:card.tokenPrice,
+                  size:card.fileSize
               }
               })}>
                 <tr>
-                  <td style={{ paddingLeft: "30px" }}><h5>{card.Title}</h5></td>
+                  <td style={{ paddingLeft: "30px" }}><h4>{card.title}</h4></td>
                   <td style={{ paddingLeft: "50px" }}><h5></h5></td>
-                  <td><h5>File Size: {card.FileSize}</h5></td>
+                  <td><h5>File Size: {card.fileSize || "50MB"}</h5></td>
                 </tr>
                 <tr>
                   <td style={{ width: "200px", paddingLeft: "30px" }}>
-                    <h5>{card.Description}</h5>
-                    <h6>{card.Date}</h6>
+                    <h5>{card.description}</h5>
+                    <h6>{card.Date ||""}</h6>
                   </td>
                   <td style={{ width: "220px" }}></td>
                   <td style={{ width: "130px" }}>
                     <h5>
                       {" "}
-                      PRICE: ${card.TokenPrice}
+                      PRICE: ${card.tokenPrice}
                       <br /> $ DOWNLOAD
                     </h5>
                   </td>

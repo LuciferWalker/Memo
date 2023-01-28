@@ -21,7 +21,6 @@ const Home = () => {
   };
 
   const Bg = {
-    width: "196.5vh",
     height: "100vh",
     background:
       "linear-gradient(180deg, rgba(129, 0, 0, 0) 0%, rgba(99, 111, 128, 0.6) 50%, rgba(29, 0, 208, 0) 100%)",
@@ -39,7 +38,7 @@ const Home = () => {
                         <h1>MEMO</h1>
                         <h5>01.01.2023</h5>
                     </div>
-                    <div style={{cursor: 'pointer'}}>
+                    <div style={{cursor: 'pointer', textAlign:"right"}}>
                         <h4>
                             <span 
                             onClick={()=>navigate("/explore")}
