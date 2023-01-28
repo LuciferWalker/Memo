@@ -10,11 +10,9 @@ const UserSchema = mongoose.Schema({
   },
   boughtProjects: {
     type: [Number],
-    default: [],
   },
   createdProjects: {
-    type: [Number], 
-    default: [],
+    type: [Number],
   },
 });
 

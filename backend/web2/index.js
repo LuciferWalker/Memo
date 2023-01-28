@@ -13,24 +13,20 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// Gets user Data
 app.post('/getUserData', async (req, res) => {
   //when user connects their wallet.
   const { address } = req.body
   try {
     //check if the user exists in the db
     const user = await User.findOne({ address })
-    if (!user) {
-      //if not add him
-      const newUser = await User.create({ address })
-      return res.status(201).send(newUser)
-    }
-    //if yes, return their data to the frontend
     res.status(200).send(user)
   } catch (err) {
     res.status(500).send(err)
   }
 })
 
+// Gets project details 
 app.get('/getProjectData/:projectId', async (req, res) => {
   try {
     //gets called in project description page
@@ -43,6 +39,7 @@ app.get('/getProjectData/:projectId', async (req, res) => {
   }
 })
 
+// creates new user
 app.post('/createUser', async (req, res) => {
   //when user connects their wallet.
 
@@ -60,20 +57,22 @@ app.post('/createUser', async (req, res) => {
   }
 })
 
+// Creates new project
 app.post('/createProject', async (req, res) => {
   try {
     // create project
-    const { creators } = req.body
+    let { creatorAddresses } = req.body
     // add project in user db
     const project = await Project.create({ ...req.body })
 
-    // create user with all the address present in the creators array
-    const users = creators.map(async address => {
+    // create user with all the address present in the creatorAddresses Array 
+    const users = creatorAddresses.map(async address => {
       let user = await User.findOne({ address });
       if (!user) {
-        user = new User({ address });
-        await user.save();
+        user = await User.create({ address });
       }
+      user.createdProjects.push(req.body.projectId)
+      await user.save()
       return user;
     });
     await Promise.all(users);
@@ -85,34 +84,22 @@ app.post('/createProject', async (req, res) => {
   }
 });
 
-
-app.patch('/updateProjectStatus/:id', async (req, res) => {
-  const { projectId } = req.params
+// Updates the projectStatus to false since the token is exhausted
+app.post('/updateProjectStatus/:projectId', async (req, res) => {
+    const { projectId } = req.params
   try {
-    // find the document by id
-    const project = await Project.find({ projectId })
-
-    if (!project) {
-      // if no project is found, send a 404 Not Found response
-      return res.status(404).send('Project not found')
-    }
-    // update the status
-    project.projectStatus = false
-    await project.save()
-
-    // if successful, send a 200 OK response with the updated document
-    res.status(200).send(doc)
+    const project = await Project.findOneAndUpdate({ projectId }, { $set: { projectStatus: false }}, { new: true });
+    res.status(200).send(project)
   } catch (err) {
-    // if an error occurs, send a 500 Internal Server Error response
     res.status(500).send(err)
   }
 })
 
+// increment the number of token bought in project and adds project to user
 app.post('/projectTokenBought', async (req, res) => {
   //updates info after user buys a token
   try {
     const { projectId, address } = req.body
-
     // Update in user db that ticket has been bought
     const user = await User.findOne({ address })
     user.boughtProjects.push(projectId)
@@ -127,16 +114,17 @@ app.post('/projectTokenBought', async (req, res) => {
     res.status(200).json(user)
     //store data in database
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   }
 })
 
+// Gets all active project
 app.get('/listedProjects', async (req, res) => {
   try {
     const projects = await Project.find({ projectStatus: true }) //fetch projects that has true status, - After every mint, call getstatus function, and set status to false once we get it
     res.status(200).json(projects)
   } catch (err) {
-    console.log(err)
+    res.status(500).send(err)
   }
 })
 
@@ -145,7 +133,7 @@ app.get('/listedProjects', async (req, res) => {
 app.get('/boughtProjects', async (req, res) => {
   try {
     const user = await User.findOne({ address: req.body.address })
-    res.status(200).send(user.projects)
+    res.status(200).send(user.boughtProjects)
   } catch (err) {
     console.log(err)
   }
@@ -154,10 +142,17 @@ app.get('/boughtProjects', async (req, res) => {
 app.get('/createdProjects', async (req, res) => {
   try {
     const user = await User.findOne({ address: req.body.address })
-    res.status(200).send(user.boughtProjects)
+    res.status(200).send(user.createdProjects)
   } catch (err) {
     console.log(err)
   }
 })
-
+app.get('/getAllUsers', async (req, res) => {
+  try {
+    const users = await User.find()
+    res.status(200).send(users)
+  } catch (err) {
+    console.log(err)
+  }
+})
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`))
