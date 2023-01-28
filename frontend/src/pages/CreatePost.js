@@ -1,8 +1,8 @@
 import { useState } from "react";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar";
-import { ethers } from 'ethers';
-import {lighthouse} from '@lighthouse-web3/sdk'
+import { ethers } from "ethers";
+import { lighthouse } from "@lighthouse-web3/sdk";
 import UploadButton from "../components/UploadButton";
 import { useNavigate } from "react-router-dom";
 import {
@@ -314,6 +314,5 @@ const CreatePost = () => {
     </div>
   );
 };
-
 
 export default CreatePost;

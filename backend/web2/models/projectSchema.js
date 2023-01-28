@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ProjectSchema = mongoose.Schema({
   projectId: {
     type: Number,
+    required: true,
   },
   image: {
     type: String,
@@ -19,11 +20,17 @@ const ProjectSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  creatorIds: {
-    type: [String], //[1,2,3]
+  creatorAddresses: {
+    type: [String],
+    required: true, 
+  },
+  creatorShares:{
+    type: [Number],
+    required: true, 
   },
   cid: {
     type: String,
+    required: true,
   },
   projectStatus: {
     type: Boolean,
@@ -37,12 +44,15 @@ const ProjectSchema = mongoose.Schema({
   },
   totalTokens: {
     type: Number,
+    required: true,
   },
   tokensBought: {
     type: Number,
+    default: 0,
   },
   tokenPrice: {
     type: Number,
+    required: true,
   },
 });
 

@@ -1,36 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract AccessToken is ERC20 {
-    uint256 MAX_SUPPLY;
-    uint256 public tokenCounter;
+    using Counters for Counters.Counter;
+    Counters.Counter private tokenCounter;
+    
+    uint256 public MAX_TOKEN_SUPPLY;
     uint256 public TOKEN_PRICE;
-    address[] creators;
-    uint256[] shares;
-    bool projectStatus = true;
-
-    //add creators to list to distribute royalties
+    address[] public creators;
+    uint256[] public shares;
+    bool public projectStatus = true;
 
     constructor(
         string memory _name,
         string memory _symbol,
-        uint256 _maxSupply,
+        uint256 _maxTokenSupply,
         uint256 _tokenPrice,
         address[] memory _creators,
         uint256[] memory _shares
     ) ERC20(_name, _symbol) {
-        require(
-            creators.length == shares.length,
-            "Length of creators and royalties array must be equal"
-        );
-        MAX_SUPPLY = _maxSupply;
+        MAX_TOKEN_SUPPLY = _maxTokenSupply;
         TOKEN_PRICE = _tokenPrice;
         creators = _creators;
         shares = _shares;
-
-        //mint a token for all creators
     }
 
     mapping(address => uint256) public creatorBalance;
@@ -49,19 +44,15 @@ contract AccessToken is ERC20 {
         }
     }
 
-    function mint(address minterAddress) public payable returns (bool) {
+    function mint(address minterAddress) public payable {
         require(msg.value >= TOKEN_PRICE, "Insufficient Amount");
-        require(tokenCounter < MAX_SUPPLY, "Tokens are sold out");
-        require(
-            balanceOf(minterAddress) == 0,
-            "You have already bought this token"
-        );
-        _mint(minterAddress, 1000000000000000000); //1 token
+        require(tokenCounter.current() < MAX_TOKEN_SUPPLY, "Tokens are sold out");
+        require(balanceOf(minterAddress) == 0, "You have already bought this token");
+        _mint(minterAddress, 1000000000000000000);
         distributeFunds(msg.value);
-        tokenCounter++;
-        if (tokenCounter == MAX_SUPPLY) {
-            //stops the project if all tokens are sold out
-            updateProjectStatus(false);
+        tokenCounter.increment();
+        if (tokenCounter.current() == MAX_TOKEN_SUPPLY) {
+            updateProjectStatus(false); //stops the project if all tokens are sold out
         }
     }
 
@@ -69,9 +60,9 @@ contract AccessToken is ERC20 {
         projectStatus = _status;
     }
 
-    function getProjectStatus() public view returns (bool) {
-        return projectStatus;
-    }
+    // function getProjectStatus() public view returns (bool) {
+    //     return projectStatus;
+    // }
 
     function _transfer(
         address _from,
@@ -88,8 +79,6 @@ contract AccessToken is ERC20 {
     {
         return creatorBalance[userAddress];
     }
-
-    // function _maxSupply
 }
 
 //2. use function parameter
