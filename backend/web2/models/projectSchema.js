@@ -24,6 +24,10 @@ const ProjectSchema = mongoose.Schema({
     type: [String],
     required: true, 
   },
+  creatorShares:{
+    type: [Number],
+    required: true, 
+  },
   cid: {
     type: String,
     required: true,
