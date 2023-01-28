@@ -37,24 +37,28 @@ const Explore = () => {
 
   const sampleProjects = [
     {
+      ProjectId:"0",
       Theme: "MUSIC",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
     {
+      ProjectId:"1",
       Theme: "MUSIC",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
     {
+      ProjectId:"2",
       Theme: "ARCHIVES",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
       Date: "18.05.2023",
     },
     {
+      ProjectId:"3",
       Theme: "ARCHIVES",
       Creators: "CREATORS",
       Description: "This record is made up of music from around the globe.",
@@ -72,8 +76,8 @@ const Explore = () => {
       map the sampleProjects array and render the cards accordingly */}
         
           <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
-            {sampleProjects.map((card,index) => (
-              <table key={index} style={tab} onClick={() => navigate(`/${index}`)}>
+            {sampleProjects.map((card) => (
+              <table key={card.ProjectId} style={tab} onClick={() => navigate(`/${card.ProjectId}`)}>
                 <tr>
                   <td style={{ paddingLeft: "30px" }}><h5>{card.Theme}</h5></td>
                   <td style={{ paddingLeft: "50px" }}><h5>{card.Creators}</h5></td>

@@ -12,6 +12,10 @@
 //   // 3. Create Contract and Store Data in DB
 //   // 4. Apply Access condition
 
+//   //VALIDATE DATA
+
+
+
 //   const encryptionSignature = async () => {
 //     const provider = new ethers.providers.Web3Provider(window.ethereum);
 //     const signer = provider.getSigner();

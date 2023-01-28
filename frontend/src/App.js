@@ -12,8 +12,8 @@ import Display from "./pages/Display";
 // import UploadContent from "./pages/UploadContent";
 // import ProtectedContent from "./pages/Content";
 // import GetProtected from "./components/GetProtected";
-import 'react-notifications/lib/notifications.css';
-import { NotificationContainer } from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
+// import { NotificationContainer } from 'react-notifications';
 
 import "./styles/App.css";
 
@@ -32,7 +32,7 @@ function App() {
       <Route path="/getprotected" element={<GetProtected/>}/>
       <Route path="/protectedContent" element={<ProtectedContent/>}/> */}
       </Routes>
-      <NotificationContainer/>
+      {/* <NotificationContainer/> */}
     </>
   );
 }
