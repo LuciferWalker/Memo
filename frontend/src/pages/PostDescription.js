@@ -77,7 +77,9 @@ const PostDescription = () => {
                   :""}
                 </div>
               </td>
+              
               <td style={{ paddingLeft: "20px" }}>
+              {/* <div style={{backgroundColor:'black'}}>
                 <table style={tab}>
                   <tr>
                     <td style={{ paddingLeft: "20px" }}>
@@ -152,6 +154,25 @@ const PostDescription = () => {
                     </td>
                   </tr>
                 </table>
+              </div> */}
+              <div style={{backgroundColor:'black'}}>
+                <table style={{width:'100%'}}>
+                  <tr style={{textAlign:'left'}}>
+                    <td >File Size</td>
+                    <td>Token Price</td>
+                    <td>Total Tokens</td>
+                  </tr>
+                  <tr style={{textAlign:'left'}}>
+                    <td>Tokens Bought</td>
+                    <td>Token Contract Address</td>
+                  </tr>
+                  <tr style={{textAlign:'left'}}>
+                    <td>Creators Share</td>
+                    <td>Amount Collected</td>
+                    <td><button>Claim Money</button></td>
+                  </tr>
+                </table>
+              </div>
               </td>
             </tr>
           </table>

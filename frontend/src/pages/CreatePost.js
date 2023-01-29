@@ -42,10 +42,18 @@ const CreatePost = () => {
     projectDescription: "",
     projectImageUrl: "",
     tokenPrice: "",
-    totalTokenSupply: "",
+    tokenSupply: "",
     numberOfCreators: "",
     creators: [],
   });
+
+  const [errorn, setErrorN] = useState('');
+  const [error, setError] = useState('');
+  const [errord, setErrorD] = useState('');
+  const [errorp, setErrorP] = useState('');
+  const [errors, setErrorS] = useState('');
+  const [errorc, setErrorC] = useState('');
+  const [errorr, setErrorR] = useState('');
 
   const [projectImage, setProjectImage] = useState(null);
 
@@ -71,7 +79,19 @@ const CreatePost = () => {
           />
         </tr> */}
         <tr>
-          <label style={{ marginLeft: "130px" }}>Wallet Address</label>
+          <label style={{ marginLeft: "130px" }}>Social Login</label>
+          <input
+            name="creatorSocial"
+            onChange={(e) => {
+              handleInputs(e, index);
+            }}
+            value={creator.creatorSocial}
+            type="text"
+            style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
+          />
+        </tr>
+        <tr>
+          <label style={{ marginLeft: "130px" }}>Wallet Add</label>
           <input
             name="creatorAddress"
             onChange={(e) => {
@@ -81,32 +101,22 @@ const CreatePost = () => {
             type="text"
             style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
           />
+          <span style={errorStyle}></span>
         </tr>
         <tr>
-          <label style={{ marginLeft: "130px" }}>Share (in %)</label>
+          <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
           <input
             onChange={(e) => {
               handleInputs(e, index);
             }}
             name="creatorShare"
-            type="text"
+            type="number"
             value={creator.creatorShare}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
             // onChange={(e) => setRoyalDist(e.target.value)}
             // value={royalDist}
           />
-        </tr>
-        <tr>
-          <label style={{ marginLeft: "130px" }}>Social URL</label>
-          <input
-            name="socialURL"
-            onChange={(e) => {
-              handleInputs(e, index);
-            }}
-            value={creator.socialURL}
-            type="text"
-            style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
-          />
+          <span style={errorStyle}>{errorr}</span>
         </tr>
       </div>
     ));
@@ -182,6 +192,7 @@ const CreatePost = () => {
       } else if (key === "numberOfCreators") {
         let arr;
         let value = e.target.value;
+        validation(key,e)
         if (value === "") {
           arr = Array.from(Array(parseInt("0")), () => ({}));
         } else {
@@ -195,6 +206,7 @@ const CreatePost = () => {
       } else {
         let value = e.target.value;
         setFormData({ ...formData, [key]: value });
+        validation(key,e);
       }
     } else {
       //creators data
@@ -203,15 +215,46 @@ const CreatePost = () => {
       let updatedCreatorObject = { ...creatorObject, [key]: value };
       formData.creators[index] = updatedCreatorObject;
       setFormData({ ...formData, creators: formData.creators });
+      validation(key,e);
     }
   };
+
+  function validation(k,e){
+    let value = e.target.value;
+    // let key = k;
+    if(k == 'projectName'){
+      if(value == ''){setErrorN('Should Not be Empty');}else{setErrorN('')}
+    }
+    if(k == 'projectSymbol'){
+      if(value == ''){setError('Should Not be Empty');}else{setError('')}
+    }
+    if(k == 'projectDescription'){
+      if(value == ''){setErrorD('Should Not be Empty');}else{setErrorD('')}
+    }
+    if(k == 'tokenPrice'){
+      if(value == ''){setErrorP('Should Not be Empty');}else{setErrorP('')}
+    }
+    if(k == 'tokenSupply'){
+      if(value == ''){setErrorS('Should Not be Empty');}else{setErrorS('')}
+    }
+    if(k == 'numberOfCreators'){
+      if(value == ''){setErrorC('Should Not be Empty');}else{setErrorC('')}
+    } 
+    if(k == 'creatorShare'){
+      if(value == ''){setErrorR('Should Not be Empty');}else{setErrorR('')}
+    }  
+  }
+
+  const errorStyle = {
+    color:'red', verticalAlign:'center',marginLeft:'5px'
+  }
 
   return (
         <div>
           <div style={{ overflow: "hidden", width: "100%" }}>
             <div
               style={{
-                width: "80%",
+                width: "90%",
                 height: "450px",
                 overflowX: "hidden",
                 overflowY: "auto",
@@ -226,7 +269,7 @@ const CreatePost = () => {
                     padding: "20px 0px 20px 60px",
                     color: "white",
                     backgroundColor: "rgba(0, 0, 0, 0.7)",
-                    width: "800px",
+                    width: "100%",
                   }}
                 >
                   <table>
@@ -244,6 +287,7 @@ const CreatePost = () => {
                             onChange={handleInputs}
                             // (e) => setFormData(e.target.value)
                           />
+                          <span style={errorStyle}>{errorn}</span>
                         </td>
                       </tr>
                     </div>
@@ -261,6 +305,7 @@ const CreatePost = () => {
                             onChange={handleInputs}
                           />
                         </td>
+                        <span style={errorStyle}>{error}</span>
                       </tr>
                     </div>
                     {/* Project Image */}
@@ -302,6 +347,7 @@ const CreatePost = () => {
                             value={formData.projectDescription}
                             onChange={handleInputs}
                           ></textarea>
+                          <span style={errorStyle}>{errord}</span>
                         </td>
                       </tr>
                     </div>
@@ -319,6 +365,7 @@ const CreatePost = () => {
                             value={formData.tokenPrice}
                             onChange={handleInputs}
                           />
+                          <span style={errorStyle}>{errorp}</span>
                         </td>
                       </tr>
                     </div>
@@ -330,11 +377,13 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            name="totalTokenSupply"
+                            type="number"
+                            name="tokenSupply"
                             style={inputTag}
-                            value={formData.totalTokenSupply}
+                            value={formData.tokenSupply}
                             onChange={handleInputs}
                           />
+                          <span style={errorStyle}>{errors}</span>
                         </td>
                       </tr>
                     </div>
@@ -351,6 +400,7 @@ const CreatePost = () => {
                             style={inputTag}
                             onChange={handleInputs}
                           />
+                          <span style={errorStyle}>{errorc}</span>
                         </td>
                       </tr>
                     </div>

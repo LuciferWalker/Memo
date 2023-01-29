@@ -58,7 +58,7 @@ const Home = () => {
 
         <table style={{ marginTop: "70px" }}>
           <tr>
-            <td style={{ width: "40%" }}>
+            <td style={{width:'45%'}}>
               <h4>
                 Memo is inspired by the golden record sent out to space on
                 Voyager 2 in 1997. The record contained information about our
@@ -71,8 +71,8 @@ const Home = () => {
                 space as a window into our everyday lives.{" "}
               </h4>
             </td>
-            <td style={{ width: "15%" }}></td>
-            <td>
+            <td style={{width:'10%'}}></td>
+            <td style={{width:'45%'}}>
               <h4>
                 What is a memo ? <br />
                 A memo is an expression made up of words, images or audio. It
