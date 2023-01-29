@@ -1,20 +1,8 @@
 import { useState } from "react";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar";
-import { ethers } from "ethers";
-import { lighthouse } from "@lighthouse-web3/sdk";
 import UploadButton from "../components/UploadButton";
 import { useNavigate } from "react-router-dom";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import app from "../firebase";
-import { parse } from "@ethersproject/transactions";
-// React Notification
-import { NotificationManager } from "react-notifications";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -54,6 +42,7 @@ const CreatePost = () => {
   });
 
   const [projectImage, setProjectImage] = useState(null);
+  const [projectFileEvent, setProjectFileEvent] = useState(null);
 
   function addQuestion() {
     return formData.creators?.map((creator, index) => (
@@ -118,60 +107,6 @@ const CreatePost = () => {
     ));
   }
 
-  const uploadImage = () => {
-    if (!projectImage) return alert("First select an Image");
-    const storage = getStorage(app);
-    const fileName = projectImage.name + new Date().getTime();
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, projectImage);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          // This url will be stored in the web2 backend
-          setFormData({ ...formData, projectImageUrl: downloadURL });
-        });
-      }
-    );
-  };
-
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    //verify data
-    e.preventDefault();
-    uploadImage(); //upload image
-    NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    // navigate("/display", {
-    //   state: {
-    //     title: projectName,
-    //     desc: projectDescription,
-    //     price: price,
-    //     creators: distribution,
-    //     royal: royalDist,
-    //   },
-    // });
-    // NotificationManager.success("Form Submitted!", "Successful!", 2000);
-  };
-
   const showData = () => {
     console.log(formData);
   };
@@ -185,6 +120,8 @@ const CreatePost = () => {
 
       if (key === "projectImage") {
         setProjectImage(e.target.files[0]);
+      } else if (key === "projectFileEvent") {
+        setProjectFileEvent(e);
       } else if (key === "numberOfCreators") {
         let arr;
         let value = e.target.value;
@@ -298,23 +235,40 @@ const CreatePost = () => {
                         <td style={{ width: "250px" }}>
                           <label>Project Image</label>
                         </td>
-                        {!projectImage ? (
-                          <td>
-                            <input
-                              name="projectImage"
-                              type="file"
-                              accept="image/png, image/gif, image/jpeg, image/jpg"
-                              onChange={handleInputs}
-                              style={{
-                                marginLeft: "40px",
-                                padding: "8px",
-                                width: "200px",
-                              }}
-                            />
-                          </td>
-                        ) : (
-                          <p>{projectImage?.name}</p>
-                        )}
+                        <td>
+                          <input
+                            name="projectImage"
+                            type="file"
+                            accept="image/png, image/gif, image/jpeg, image/jpg"
+                            onChange={handleInputs}
+                            style={{
+                              marginLeft: "40px",
+                              padding: "8px",
+                              width: "200px",
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    </div>
+                    {/* Project File */}
+                    <div style={{ marginTop: "10px" }}>
+                      <tr style={{ verticalAlign: "middle" }}>
+                        <td style={{ width: "250px" }}>
+                          <label>Project File (.zip format)</label>
+                        </td>
+                        <td>
+                          <input
+                            name="projectFileEvent"
+                            style={{
+                              marginLeft: "40px",
+                              padding: "8px",
+                              width: "200px",
+                            }}
+                            accept="application/zip"
+                            type="file"
+                            onChange={handleInputs}
+                          />
+                        </td>
                       </tr>
                     </div>
                     {/* Project Description */}
@@ -390,10 +344,14 @@ const CreatePost = () => {
                     </div>
                   </table>
                   <div style={{ marginLeft: "270px", marginTop: "20px" }}>
-                    {/* <UploadButton formData={formData} /> */}
-                    <button type="submit" onClick={handleSubmit}>
+                    <UploadButton
+                      formData={formData}
+                      projectImage={projectImage}
+                      projectFileEvent={projectFileEvent}
+                    />
+                    {/* <button type="submit" onClick={handleSubmit}>
                       SUBMIT
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </form>
