@@ -17,7 +17,7 @@ import { NotificationManager } from "react-notifications";
 function UploadButton({ formData, projectImage, projectFileEvent }) {
   const [loader, setLoader] = useState(null);
   const [marketplaceContract, setMarketplaceContract] = useState(null);
-
+  const [provider, setProvider] = useState();
   const FLOW = {
     1: "Encrypting and Uplaoding File to IPFS",
     2: "Deploying a New Access Token Contract",
@@ -34,10 +34,6 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const [hoversub, sethoversub] = useState(false);
-
-  useEffect(()=>{
-    console.log(formData)
-  },[])
 
   //FLOW
 
@@ -112,7 +108,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
 
   const loadContracts = () => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
-
+    setProvider(provider);
     let signer = provider.getSigner();
 
     let marketplaceContract = new ethers.Contract(
@@ -143,6 +139,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const deployAccessTokenContract = async () => {
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
     let marketplaceContract = loadContracts();
     let creators = [];
     let shares = [];
@@ -152,27 +149,38 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
       creators.push(creator.creatorAddress);
       shares.push(creator.creatorShare);
     });
-    console.log( projectName, projectSymbol, totalTokenSupply, tokenPrice, fileCid)
-    console.log(creators)
-    console.log(shares)
+    console.log(
+      projectName,
+      projectSymbol,
+      totalTokenSupply,
+      tokenPrice,
+      fileCid
+    );
+    console.log(creators);
+    console.log(shares);
 
     // const projectCreationFee = await marketplaceContract.getProjectCreationFee();
 
-    const uploadedContract = await marketplaceContract.createProject(
+    const tx = await marketplaceContract.createProject(
       projectName,
       projectSymbol,
       totalTokenSupply,
       tokenPrice,
       creators,
       shares,
-      fileCid,{value: ethers.utils.parseEther("0.2")} //projectCreationFee
+      fileCid,
+      { value: ethers.utils.parseEther("0.2") } //projectCreationFee
     );
 
-    console.log(uploadedContract);
+    console.log(tx)
+    
+    const receipt = await provider.waitForTransaction(tx.hash,1,150000)
+    
+    console.log(receipt)
+    // console.log(receipt)
 
-    formData.tokenContractAddress = uploadedContract;
+    // formData.tokenContractAddress = uploadedContract;
   };
-
   //   const uploadDataOnDB = (projectData) => {
   //     const res = fetch("http://localhost:3001/createProject", {
   //       method: "POST",
@@ -221,7 +229,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    console.log(formData);
     await uploadProjectImage(); //upload image to firebase
     handleLoader(1);
     await deployEncrypted(e); //
