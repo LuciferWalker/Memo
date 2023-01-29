@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
-import Post from "./pages/Post";
-import CreatePost from "./pages/CreatePost";
+import CreatedMemos from "./pages/CreatedMemos";
 import PostDescription from "./pages/PostDescription";
 import Download from "./pages/Download";
 import Display from "./pages/Display";
@@ -23,8 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/createdmemos" element={<CreatedMemos />} />
         <Route path="/:projectId" element={<PostDescription/>} />
         <Route path="/download" element={<Download/>} />
         <Route path="/display" element={<Display/>} />
