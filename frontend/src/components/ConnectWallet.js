@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
-import MarketplaceAddress from '../contractsData/Marketplace-address.json'
-import MarketplaceAbi from '../contractsData/Marketplace.json'
-//import contract address, abi from contractsData
+import MarketplaceAddress from "../contractsData/Marketplace-address.json";
+import MarketplaceAbi from "../contractsData/Marketplace.json";
 
 const ConnectWallet = () => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [account, setAccount] = useState(
-    sessionStorage.getItem('account') || 'CONNECT WALLET'
-  );
-  const [signer, setSigner] = useState(null);
-  const [marketplaceContract, setMarketplaceContract] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
-  const [provider, setProvider] = useState(null);
+  const [account, setAccount] = useState(localStorage.getItem("account") || "Connect Wallet");
+  // sessionStorage.getItem("account") ||
+  const [userBalance, setUserBalance] = useState(null);
+
+  // const [provider, setProvider] = useState(null);
+  // const [signer, setSigner] = useState(null);
+  const [marketplaceContract, setMarketplaceContract] = useState(null);
 
   useEffect(() => {
-    window.sessionStorage.setItem('account', account);
-  }, [account]);
+    localStorage.setItem("account", account);
+  }, [account, marketplaceContract]);
+
+  // const networks = {
+  //   hyperspace: {
+  //     chainId: `0x${Number(3141)}`,
+  //     chainName: "Hyperspace testnet",
+  //     nativeCurrency: {
+  //       name: "",
+  //       symbol: "",
+  //       decimals: 18
+  //     },
+  //     rpcUrls: [""],
+  //     blockExplorerUrls: [""]
+  //   }
+  // }
 
   const connectWalletHandler = async () => {
-
     //check if metmask exists
     if (window.ethereum) {
       try {
@@ -30,48 +40,84 @@ const ConnectWallet = () => {
           method: "eth_requestAccounts",
         });
 
-        accountChangeHandler(accounts[0]);
-
-        loadContracts(signer);
+        await accountChangeHandler(accounts[0]);
 
         // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
         console.log(error);
       }
     } else {
-      setErrorMessage("Need to install Metamask");
+      //NOTIFICATIONS.SHOW("Need to install Metamask");
     }
   };
 
-  const accountChangeHandler = (newAccount) => {
-    const addfirst = newAccount.slice(0,5);
-    const addlast = newAccount.slice(-4);
-    const add = addfirst + '...' + addlast;
-    setAccount(add);
-    updateEthers();
+  const accountChangeHandler = async (newAccount) => {
+    setAccount(newAccount.slice(0, 6) + "..." + newAccount.slice(-4));
+    await getUserBalance(newAccount.toString());
+    // updateEthers();
   };
 
-  const updateEthers = () => {
-    let provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider);
-
-    let signer = provider.getsigner();
-    setSigner(signer);
-  };
-
-  const loadContracts = async(signer) =>{
-    let marketplaceContract = new ethers.Contract(
-      MarketplaceAddress.address,
-      MarketplaceAbi.abi,
-      signer
+  const getUserBalance = async (userAddress) => {
+    const userBalance = await window.ethereum.request({
+      method: "eth_getBalance",
+      params: [userAddress, "latest"],
+    });
+    let formatedUserBalance = ethers.utils.formatEther(userBalance);
+    let approxUserBalance = formatedUserBalance.slice(
+      0,
+      formatedUserBalance.indexOf(".") + 4
     );
-    setMarketplaceContract(marketplaceContract);
-    setLoading(false);
-  }
+
+    setUserBalance(approxUserBalance);
+  };
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
+
+  //reload page if chain or account is changed
+  window.ethereum.on("accountsChanged", refreshPage);
+  window.ethereum.on("chainChanged", refreshPage);
+
+  // const updateEthers = () => {
+  //   let provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   // setProvider(provider);
+
+  //   let signer = provider.getsigner();
+  //   localStorage.setItem("signer", signer);
+  //   console.log(signer)
+
+  //   let marketplaceContract = new ethers.Contract(
+  //     MarketplaceAddress,
+  //     MarketplaceAbi,
+  //     signer
+  //   );
+  //   setMarketplaceContract(marketplaceContract);
+  // };
 
   return (
     <>
-      <span onClick={connectWalletHandler}>{account}</span>
+      <button
+        onClick={connectWalletHandler}
+        style={{
+          width: "100%",
+          height: "35px",
+          fontSize: "15px",
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src="https://chainlist.org/connectors/icn-metamask.svg"
+          alt=""
+          width="20"
+          height="20"
+        />
+        <span>{account}</span>
+      </button>
+      {userBalance && <div>Balance: {userBalance}</div>}
+
       {/* <h3>{walletAddress}</h3> */}
     </>
   );
