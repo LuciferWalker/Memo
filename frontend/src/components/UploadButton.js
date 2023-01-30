@@ -159,7 +159,9 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(creators);
     console.log(shares);
 
-    // const projectCreationFee = await marketplaceContract.getProjectCreationFee();
+    const currentProjectId = await marketplaceContract.getCurrentProjectCounter();
+    const projectCreationFee =
+      await marketplaceContract.getProjectCreationFee();
 
     const tx = await marketplaceContract.createProject(
       projectName,
@@ -172,60 +174,64 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
       { value: ethers.utils.parseEther("0.2") } //projectCreationFee
     );
 
-    console.log(tx)
-    
-    const receipt = await provider.waitForTransaction(tx.hash,1,150000)
-    
-    console.log(receipt)
-    // console.log(receipt)
+    console.log(tx);
 
-    // formData.tokenContractAddress = uploadedContract;
+    const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
+
+    console.log(receipt);
+
+    const projectDetails = await marketplaceContract.projectIdToDetails(
+      currentProjectId
+    );
+
+    formData.tokenContractAddress = projectDetails[2];
   };
-  //   const uploadDataOnDB = (projectData) => {
-  //     const res = fetch("http://localhost:3001/createProject", {
-  //       method: "POST",
-  //       body: JSON.stringify(projectData),
-  //     });
-  //   };
 
-  //   const applyAccessCondition = async () => {
-  //     let { publicKey, accessSignedMessage } = await encryptionSignature();
+    const uploadDataOnDB = async () => {
+      const res = await fetch("http://localhost:3001/createProject", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+    };
 
-  //     const conditions = [
-  //       {
-  //         id: 3141,
-  //         chain: "Hyperspace",
-  //         method: "balanceOf",
-  //         standardContractType: "ERC20",
-  //         contractAddress: contractAddress,
-  //         returnValueTest: {
-  //           comparator: ">=",
-  //           value: "1",
-  //         },
-  //         parameters: [":userAddress"],
-  //       },
-  //     ];
+    const applyAccessCondition = async () => {
+      let { publicKey, signedMessage: accessSignedMessage } = await encryptionSignature();
 
-  //     const aggregator = "([1])";
+      const conditions = [
+        {
+          id: 3141,
+          chain: "Hyperspace",
+          method: "balanceOf",
+          standardContractType: "ERC20",
+          contractAddress: formData.tokenContractAddress,
+          returnValueTest: {
+            comparator: ">=",
+            value: "1",
+          },
+          parameters: [":userAddress"],
+        },
+      ];
 
-  //     //dont know if encryptionSignature needs to be done again
+      const aggregator = "([1])";
 
-  //     const accessResponse = await lighthouse.accessCondition(
-  //       publicKey,
-  //       cid,
-  //       accessSignedMessage,
-  //       conditions,
-  //       aggregator
-  //     );
+      //dont know if encryptionSignature needs to be done again
 
-  //     console.log(accessResponse);
+      const accessResponse = await lighthouse.accessCondition(
+        publicKey,
+        formData.fileCid,
+        accessSignedMessage,
+        conditions,
+        aggregator
+      );
 
-  //     if (accessResponse.data.status === "Success") {
-  //       setLoader(5);
-  //     } else {
-  //       //failed
-  //     }
-  //   };
+      console.log(accessResponse);
+
+      if (accessResponse.data.status === "Success") {
+        setLoader(5);
+      } else {
+        //failed
+      }
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -235,10 +241,10 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     await deployEncrypted(e); //
     handleLoader(2);
     await deployAccessTokenContract();
-    // handleLoader(3);
-    // uploadDataOnDB();
-    // handleLoader(4);
-    // applyAccessCondition();
+    handleLoader(3);
+    await uploadDataOnDB();
+    handleLoader(4);
+    applyAccessCondition();
     // handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
     // navigate("/display", {
