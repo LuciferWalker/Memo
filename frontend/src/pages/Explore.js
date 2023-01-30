@@ -77,7 +77,7 @@ const Explore = () => {
 
   return (
     <div style={explore}>
-      <div style={{ padding: "50px"}}>
+      <div style={{ padding: "40px"}}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar color1="#658BD6" />
         </div>

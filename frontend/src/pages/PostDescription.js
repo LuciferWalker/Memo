@@ -48,8 +48,24 @@ const PostDescription = () => {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
     padding: "0px",
-    cursor:'pointer'
+    cursor:'pointer',
   };
+
+  const gridStyle = {
+      
+      display: 'grid',
+      gridTemplateColumns: 'auto auto auto auto',
+      gridGap: '20px',
+      padding: '20px',
+      fontWeight:'bolder'
+  }
+  const gridStyle1 = {
+    
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto auto',
+    gridGap: '20px',
+    padding: '0px 20px 20px 20px'
+}
 
   const purchaseToken = ()=>{
     //call mint function from marketplace contract
@@ -64,7 +80,7 @@ const PostDescription = () => {
 
   return (
     <div style={post}>
-      <div style={{ padding: "50px" }}>
+      <div style={{ padding: "40px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar />
         </div>
