@@ -86,30 +86,22 @@ const Explore = () => {
         
           <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
             {listedProjects?.map((card,index) => (
-              <table key={index} style={tab} onClick={() => navigate(`/${card.projectId}`,{
-                state: {
-                  title: card.title,
-                  desc: card.description,
-                  creators:card.creatorsAddresses,
-                  price:card.tokenPrice,
-                  size:card.fileSize
-              }
-              })}>
+              <table key={index} style={tab} onClick={() => navigate(`/${card.projectId}`)}>
                 <tr>
-                  <td style={{ paddingLeft: "30px" }}><h4>{card.title}</h4></td>
+                  <td style={{ paddingLeft: "30px" }}><h4>{card.projectName}</h4></td>
                   <td style={{ paddingLeft: "50px" }}><h5></h5></td>
-                  <td><h5>File Size: {card.fileSize || "50MB"}</h5></td>
+                  <td><h5>File Size: {card.fileSize || "50"} MB</h5></td>
                 </tr>
                 <tr>
                   <td style={{ width: "200px", paddingLeft: "30px" }}>
-                    <h5>{card.description}</h5>
+                    <h5>{card.projectDescription}</h5>
                     <h6>{card.Date ||""}</h6>
                   </td>
-                  <td style={{ width: "220px" }}></td>
+                  <td style={{ width: "100px" }}></td>
                   <td style={{ width: "130px" }}>
                     <h5>
                       {" "}
-                      PRICE: ${card.tokenPrice}
+                      PRICE: {card.tokenPrice} FIL
                       <br /> $ DOWNLOAD
                     </h5>
                   </td>

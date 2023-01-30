@@ -31,7 +31,7 @@ app.get("/getProjectData/:projectId", async (req, res) => {
   try {
     //gets called in project description page
     const { projectId } = req.params;
-    const project = await Project.find({ projectId });
+    const project = await Project.findOne({ projectId });
     //return the project details
     res.status(200).json(project);
   } catch (err) {
@@ -48,8 +48,7 @@ app.post("/createUser", async (req, res) => {
     //Create user data if they dont exist, once they connect their wallet
     let user = await User.findOne({ address: address });
     if (!user) {
-      user = new User({ address });
-      await user.save();
+      user = await User.create({ address });
     }
     res.status(200).send(user);
   } catch (err) {
