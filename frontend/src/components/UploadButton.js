@@ -170,7 +170,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
       projectName,
       tokenSymbol,
       totalTokenSupply,
-      tokenPrice,
+      ethers.utils.parseEther(tokenPrice.toString()),
       creators,
       shares,
       fileCid,
@@ -192,7 +192,6 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const uploadDataOnDB = async () => {
-    formData.tokenPrice = ethers.utils.parseEther(formData.tokenPrice.toString());
     const res = await fetch("http://localhost:3001/createProject", {
       method: "POST",
       headers: {
