@@ -138,7 +138,13 @@ app.get("/listedProjects", async (req, res) => {
 app.get("/boughtProjects", async (req, res) => {
   try {
     const user = await User.findOne({ address: req.query.address });
-    res.status(200).send(user.boughtProjects);
+    const projects = await Promise.all(
+      user.boughtProjects.map(async projectId => {
+        const project = await Project.findOne({projectId});
+        return project;
+      })
+    );
+    res.status(200).send(projects);
   } catch (err) {
     console.log(err);
   }
