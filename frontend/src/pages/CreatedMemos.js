@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router";
 import image from "../images/star.png";
 import Navbar from "../components/Navbar.js";
@@ -16,6 +16,9 @@ const CreatedMemos = () => {
   const [colorb, setColorb] = useState('#658BD6');
   const [colorc, setColorc] = useState('white');
 
+  const [createdProjects, setCreatedProjects] = useState(null);
+  const [boughtProjects, setBoughtProjects] = useState(null);
+
   const handleMouseEnter = () => {
     setHover(true);
   };
@@ -29,6 +32,24 @@ const CreatedMemos = () => {
     backgroundPosition: "center",
   };
 
+  const getCreatedProjects = async () => {
+    const response = await fetch(`http://localhost:3001/createdProjects?address=${localStorage.getItem('account')}`);
+    const projects = await response.json();
+    setCreatedProjects(projects);
+  };
+
+  const getBoughtProjects = async () => {
+    const response = await fetch(`http://localhost:3001/boughtProjects?address=${localStorage.getItem('account')}`);
+    const projects = await response.json();
+    setBoughtProjects(projects);
+  };
+
+  useEffect(() => {
+    getCreatedProjects();
+    getBoughtProjects();
+  }, []);
+
+  console.log(boughtProjects, createdProjects)
   return (
     <div style={post}>
       <div style={{ padding: "40px" }}>
@@ -62,7 +83,9 @@ const CreatedMemos = () => {
               {creatememo && <div style={{height:'400px',overflowY:'auto'}}>
               <td style={{ width: "80%", padding: "10px" }}>
                 <h3>CREATED PROJECTS</h3>
-                <table
+                {createdProjects?.map((card,index) => (
+                  
+                  <table key={index} onClick={() => navigate(`/${card.projectId}`)}
                   style={{
                   background:
                       "linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)",
@@ -71,33 +94,35 @@ const CreatedMemos = () => {
               >
                   <tr>
                   <td style={{ paddingLeft: "40px" }}>
-                      <h5>MUSIC</h5>
+                      <h5>{card.projectName}</h5>
                   </td>
                   <td style={{ paddingLeft: "80px" }}></td>
-                  <td><h5>File Size: 50MB</h5></td>
+                  <td><h5>File Size: {card.fileSize}</h5></td>
                   </tr>
                   <tr>
                   <td style={{ width: "340px", paddingLeft: "40px" }}>
                       <h5>
-                      This record is made up of music from around the globe.
+                      {card.projectDescription}
                       </h5>
-                      <h5>18. 05. 2020</h5>
+                      <h5>{card.Date ||""}</h5>
                   </td>
                   <td style={{ width: "270px" }}></td>
                   <td style={{ width: "200px" }}>
                       <h5>
                       {" "}
-                      Price: $4000
+                      PRICE: {card.tokenPrice} FIL
                       <br /> $ DOWNLOAD
                       </h5>
                   </td>
                   </tr>
               </table>
+                ))}
+                
               </td>
               </div>
               }   
               {boughtmemo &&
-                <BoughtMemos/>
+                <BoughtMemos project = {boughtProjects}/>
               }
               {createpost &&
                 <CreatePost/>

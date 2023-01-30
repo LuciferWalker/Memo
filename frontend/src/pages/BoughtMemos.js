@@ -1,8 +1,9 @@
-const BoughtMemos = () => {
+const BoughtMemos = (props) => {
     return(
     <div style={{height:'400px',overflowY:'auto'}}>
         <td style={{ width: "80%", padding: "10px" }}>
         <h3>BOUGHT PROJECTS</h3>
+        {props.project?.map((card,index) => (
         <table
             style={{
             background:
@@ -12,28 +13,28 @@ const BoughtMemos = () => {
         >
             <tr>
             <td style={{ paddingLeft: "40px" }}>
-                <h5>MUSIC</h5>
+                <h5>{card.projectName}</h5>
             </td>
             <td style={{ paddingLeft: "80px" }}></td>
-            <td><h5>File Size: 50MB</h5></td>
+            <td><h5>File Size: {card.fileSize}</h5></td>
             </tr>
             <tr>
             <td style={{ width: "340px", paddingLeft: "40px" }}>
-                <h5>
-                This record is made up of music from around the globe.
+                <h5>{card.Description}
                 </h5>
-                <h5>18. 05. 2020</h5>
+                <h5>{card.Date ||""}</h5>
             </td>
             <td style={{ width: "270px" }}></td>
             <td style={{ width: "200px" }}>
                 <h5>
                 {" "}
-                Price: $4000
+                PRICE: {card.tokenPrice} FIL
                 <br /> $ DOWNLOAD
                 </h5>
             </td>
             </tr>
         </table>
+        ))}
         </td>
     </div>
 );
