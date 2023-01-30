@@ -34,7 +34,7 @@ const Dashboard = () => {
 
               <h4>STORAGE</h4>
 
-              <Link to="/dashboard">
+              <Link to="/dashboard/createdMemos">
                 {" "}
                 <h4
                   onClick={() => {
