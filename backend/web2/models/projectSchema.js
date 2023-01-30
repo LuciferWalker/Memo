@@ -10,7 +10,7 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    projectSymbol: {
+    tokenSymbol: {
       type: String,
       required: true,
     },
