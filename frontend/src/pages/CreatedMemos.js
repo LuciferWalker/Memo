@@ -31,7 +31,7 @@ const CreatedMemos = () => {
 
   return (
     <div style={post}>
-      <div style={{ padding: "50px" }}>
+      <div style={{ padding: "40px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar color="#658BD6" />
         </div>
@@ -54,7 +54,7 @@ const CreatedMemos = () => {
                   onClick={()=>{
                     setCreateMemo(true); setBoughtMemo(false); setColor('white'); setColorb('#658BD6'); setCreatePost(false); setColorc('white')}} 
                     style={{color:colorb}}>CREATED MEMOS</h4>
-                <h4 onClick={()=>{setCreateMemo(false); setBoughtMemo(true); setColor('#658BD6'); setColorb('white');setColorc('white')}} 
+                <h4 onClick={()=>{setCreateMemo(false); setBoughtMemo(true); setColor('#658BD6'); setCreatePost(false);setColorb('white');setColorc('white')}} 
                 style={{color:color}} >BOUGHT MEMOS</h4>
                 <h4>ANALYTICS</h4>
                 <h4>ACCOUNT</h4>

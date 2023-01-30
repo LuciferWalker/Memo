@@ -15,6 +15,7 @@ import Display from "./pages/Display";
 // import { NotificationContainer } from 'react-notifications';
 
 import "./styles/App.css";
+import BoughtMemos from "./pages/BoughtMemos";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/createdmemos" element={<CreatedMemos />} />
+        <Route path="/boughtmemos" element={<BoughtMemos />} />
         <Route path="/:projectId" element={<PostDescription/>} />
         <Route path="/download" element={<Download/>} />
         <Route path="/display" element={<Display/>} />
