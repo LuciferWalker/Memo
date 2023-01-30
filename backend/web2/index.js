@@ -137,7 +137,7 @@ app.get("/listedProjects", async (req, res) => {
 
 app.get("/boughtProjects", async (req, res) => {
   try {
-    const user = await User.findOne({ address: req.body.address });
+    const user = await User.findOne({ address: req.query.address });
     res.status(200).send(user.boughtProjects);
   } catch (err) {
     console.log(err);
@@ -146,12 +146,22 @@ app.get("/boughtProjects", async (req, res) => {
 
 app.get("/createdProjects", async (req, res) => {
   try {
-    const user = await User.findOne({ address: req.body.address });
-    res.status(200).send(user.createdProjects);
+    const user = await User.findOne({ address: req.query.address });
+    // user.createdProjects is an array that contains the project IDs in the project database
+    const projects = await Promise.all(
+      user.createdProjects.map(async projectId => {
+        const project = await Project.findOne({projectId});
+        return project;
+      })
+    );
+    res.status(200).json(projects);
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).send("An error occurred");
   }
 });
+
+
 app.get("/getAllUsers", async (req, res) => {
   try {
     const users = await User.find();
