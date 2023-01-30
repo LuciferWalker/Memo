@@ -33,14 +33,14 @@ const CreatedMemos = () => {
   };
 
   const getCreatedProjects = async () => {
-    const res = await fetch("http://localhost:3001/createdProjects");
-    const projects = await res.json();
+    const response = await fetch(`http://localhost:3001/createdProjects?address=${localStorage.getItem('account')}`);
+    const projects = await response.json();
     setCreatedProjects(projects);
   };
 
   const getBoughtProjects = async () => {
-    const res = await fetch("http://localhost:3001/boughtProjects");
-    const projects = await res.json();
+    const response = await fetch(`http://localhost:3001/boughtProjects?address=${localStorage.getItem('account')}`);
+    const projects = await response.json();
     setBoughtProjects(projects);
   };
 
@@ -49,6 +49,7 @@ const CreatedMemos = () => {
     getBoughtProjects();
   }, []);
 
+  console.log(boughtProjects, createdProjects)
   return (
     <div style={post}>
       <div style={{ padding: "40px" }}>
@@ -91,7 +92,6 @@ const CreatedMemos = () => {
                   padding: "0px",
                   }}
               >
-                {console.log('okay')}
                   <tr>
                   <td style={{ paddingLeft: "40px" }}>
                       <h5>{card.projectName}</h5>
