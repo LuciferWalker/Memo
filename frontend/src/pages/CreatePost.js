@@ -26,7 +26,7 @@ const CreatePost = () => {
 
   const [formData, setFormData] = useState({
     projectName: "",
-    projectSymbol: "",
+    tokenSymbol: "",
     projectDescription: "",
     projectImageUrl: "",
     tokenPrice: "",
@@ -162,7 +162,7 @@ const CreatePost = () => {
     if(k == 'projectName'){
       if(value == ''){setErrorN('Should Not be Empty');}else{setErrorN('')}
     }
-    if(k == 'projectSymbol'){
+    if(k == 'tokenSymbol'){
       if(value == ''){setError('Should Not be Empty');}else{setError('')}
     }
     if(k == 'projectDescription'){
@@ -236,9 +236,9 @@ const CreatePost = () => {
                         </td>
                         <td>
                           <input
-                            name="projectSymbol"
+                            name="tokenSymbol"
                             style={inputTag}
-                            value={formData.projectSymbol}
+                            value={formData.tokenSymbol}
                             onChange={handleInputs}
                           />
                         </td>

@@ -52,7 +52,7 @@ const ConnectWallet = () => {
   };
 
   const accountChangeHandler = async (newAccount) => {
-    setAccount(newAccount.slice(0, 6) + "..." + newAccount.slice(-4));
+    setAccount(newAccount);
     await getUserBalance(newAccount.toString());
     // updateEthers();
   };
@@ -73,6 +73,7 @@ const ConnectWallet = () => {
 
   const refreshPage = () => {
     window.location.reload();
+    window.localStorage.clear();
   };
 
   //reload page if chain or account is changed
