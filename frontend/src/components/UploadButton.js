@@ -68,8 +68,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const handleLoader = (flowStage) => {
-    setLoader(flowStage);
-    console.log(FLOW.flowStage);
+    console.log(FLOW[flowStage]);
   };
   const uploadProjectImage = async () => {
     if (!projectImage) return alert("First select an Image");
@@ -252,7 +251,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     handleLoader(3);
     await uploadDataOnDB();
     handleLoader(4);
-    applyAccessCondition();
+    await applyAccessCondition();
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
     // navigate("/display", {

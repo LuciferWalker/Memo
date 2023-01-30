@@ -6,32 +6,32 @@ import CreatedMemos from "./pages/CreatedMemos";
 import PostDescription from "./pages/PostDescription";
 import Download from "./pages/Download";
 import Display from "./pages/Display";
-// import {ethers} from 'ethers';
-// import SignIn  from "./components/SignIn";
-// import UploadContent from "./pages/UploadContent";
-// import ProtectedContent from "./pages/Content";
-// import GetProtected from "./components/GetProtected";
-// import 'react-notifications/lib/notifications.css';
-// import { NotificationContainer } from 'react-notifications';
+import Dashboard from "./components/Dashboard";
+import Navbar from "./components/Navbar";
+import CreatePosttry from "./pages/CreatePosttry";
 
 import "./styles/App.css";
 import BoughtMemos from "./pages/BoughtMemos";
+import CreatePost from "./pages/CreatePost";
 
 function App() {
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/projects" element={<CreatedMemos />} />
-        <Route path="/:projectId" element={<PostDescription/>} />
-        <Route path="/download" element={<Download/>} />
-        <Route path="/display" element={<Display/>} />
-        {/* <Route path="/uploadcontent" element={<UploadContent/>}/>
-      <Route path="/getprotected" element={<GetProtected/>}/>
-      <Route path="/protectedContent" element={<ProtectedContent/>}/> */}
+        <Route path="/explore" element={<Explore />}>
+          <Route path=":projectId" element={<PostDescription />} />
+        </Route>
+        <Route path="/download" element={<Download />} />
+        <Route path="/display" element={<Display />} />
+
+        <Route path="dashboard" element={<Dashboard />}>
+          <Route path="createProject" element={<CreatePost />} />
+          <Route path="createdMemos" element={<CreatedMemos />} />
+          <Route path="boughtMemos" element={<BoughtMemos />} />
+        </Route>
       </Routes>
-      {/* <NotificationContainer/> */}
     </>
   );
 }
