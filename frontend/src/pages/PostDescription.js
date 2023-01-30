@@ -106,7 +106,7 @@ const PostDescription = () => {
               </td>
               
               {!isCreator && <td style={{ paddingLeft: "20px" }}>
-              <div style={{backgroundColor:'black'}}>
+              <div>
                 <table style={tab}>
                   <tr>
                     <td style={{ paddingLeft: "20px" }}>
