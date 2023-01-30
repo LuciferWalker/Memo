@@ -8,7 +8,7 @@ const Explore = () => {
   const [listedProjects, setListedProjects] = useState(null);
   const navigate = useNavigate();
 
-  //call listedProjects api from backeend
+  //call listedProjects api from backend
 
   const getListedProjects = async () => {
     const res = await fetch("http://localhost:3001/listedProjects");
