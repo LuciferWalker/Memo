@@ -3,7 +3,7 @@ import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import UploadButton from "../components/UploadButton";
 import { useNavigate } from "react-router-dom";
-import WAValidator from 'multicoin-address-validator'
+import Web3 from 'web3/dist/web3.min.js'
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -43,6 +43,7 @@ const CreatePost = () => {
   const [errors, setErrorS] = useState('');
   const [errorc, setErrorC] = useState('');
   const [errorr, setErrorR] = useState('');
+  const [erroradd, setErrorAdd] = useState('');
 
   const [projectImage, setProjectImage] = useState(null);
   const [projectFileEvent, setProjectFileEvent] = useState(null);
@@ -91,7 +92,7 @@ const CreatePost = () => {
             type="text"
             style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
           />
-          <span style={errorStyle}></span>
+          <span style={errorStyle}>{erroradd}</span>
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
@@ -164,14 +165,8 @@ const CreatePost = () => {
       // if(k == 'creatorShare'){
         // console.log(e.creators);
         if(e.creatorShare < 100){setErrorR('Contribution < 100');}else{setErrorR('')}
-        if(e.creatorAddress == ''){ console.log(e.creatorAddress); setErrorR('Contribution < 100');}else{setErrorR('')}
-      // }  var valid = WAValidator.validate('1KFzzGtDdnq5hrwxXGjwVnKzRbvf8WVxck', 'BTC');
-      let validAdd = WAValidator.validate(e.creatorAddress, 'ETH');
-     console.log(validAdd)
-      // if(valid)
-      //   console.log('This is a valid address');
-      // else
-      //   console.log('Address INVALID');
+        if(Web3.utils.isAddress(e.creatorAddress)){ setErrorAdd('Valid');}else{setErrorAdd('Not Valid')}
+      // }  
     }else{
     let value = e.target.value;
     // let key = k;
