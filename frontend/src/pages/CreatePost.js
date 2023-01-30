@@ -113,10 +113,6 @@ const CreatePost = () => {
     ));
   }
 
-  const showData = () => {
-    console.log(formData);
-  };
-
   const handleInputs = (e, index = -1) => {
     let key = e.target.name;
 
@@ -155,7 +151,7 @@ const CreatePost = () => {
       formData.creators[index] = updatedCreatorObject;
       
       setFormData({ ...formData, creators: formData.creators });
-      // console.log(formData.creators[index].creatorAddress);
+      console.log(formData.creators[index]);
       validation(key,formData.creators[index]);
     }
   };
@@ -164,7 +160,7 @@ const CreatePost = () => {
     if(k == 'creatorShare' || k == 'creatorAddress'){
       // if(k == 'creatorShare'){
         // console.log(e.creators);
-        if(e.creatorShare < 100){setErrorR('Contribution < 100');}else{setErrorR('')}
+        if(e.creatorShare < 100){setErrorR('Empty');}else{setErrorR('')}
         if(Web3.utils.isAddress(e.creatorAddress)){ setErrorAdd('Valid');}else{setErrorAdd('Not Valid')}
       // }  
     }else{
@@ -207,7 +203,7 @@ const CreatePost = () => {
                 float: "left",
               }}
             >
-              <button onClick={showData}>Show form data</button>
+              {/* <button onClick={showData}>Show form data</button> */}
 
               <form action="">
                 <div

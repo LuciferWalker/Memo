@@ -24,7 +24,7 @@ const Navbar = (props) => {
           <br />
           <span
             style={{ color: props.color }}
-            onClick={() => navigate("/createdmemos")}
+            onClick={() => navigate("/projects")}
           >
             DASHBOARD
           </span>

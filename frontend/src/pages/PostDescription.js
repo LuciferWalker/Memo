@@ -4,6 +4,7 @@ import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Navbar from "../components/Navbar.js";
 import { useLocation } from "react-router";
+import { checkUser } from "../utils";
 
 const PostDescription = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const PostDescription = () => {
   
   useEffect(()=>{
     fetchProjectDetails();
+    checkUser(projectId);
   },[])
   
   useEffect(()=>{

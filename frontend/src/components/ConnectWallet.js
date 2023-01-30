@@ -77,7 +77,7 @@ const ConnectWallet = () => {
   };
 
   //reload page if chain or account is changed
-  window.ethereum.on("accountsChanged", refreshPage);
+  // window.ethereum.on("accountsChanged", refreshPage);
   window.ethereum.on("chainChanged", refreshPage);
 
   // const updateEthers = () => {
