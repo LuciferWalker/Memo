@@ -242,7 +242,6 @@ const CreatePost = () => {
             float: "left",
           }}
         >
-          <button onClick={showData}>Show form data</button>
 
           <form action="">
             <div
