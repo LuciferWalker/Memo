@@ -113,10 +113,6 @@ const CreatePost = () => {
     ));
   }
 
-  const showData = () => {
-    console.log(formData);
-  };
-
   const handleInputs = (e, index = -1) => {
     let key = e.target.name;
 
@@ -207,7 +203,6 @@ const CreatePost = () => {
                 float: "left",
               }}
             >
-              <button onClick={showData}>Show form data</button>
 
               <form action="">
                 <div

@@ -83,7 +83,8 @@ const CreatedMemos = () => {
               {creatememo && <div style={{height:'400px',overflowY:'auto'}}>
               <td style={{ width: "80%", padding: "10px" }}>
                 <h3>CREATED PROJECTS</h3>
-                {createdProjects?.map((card,index) => (
+                 
+                {createdProjects == null ? <h2 style={{color:'black'}}>Create a Project</h2>: createdProjects?.map((card,index) => (
                   
                   <table key={index} onClick={() => navigate(`/${card.projectId}`)}
                   style={{
@@ -116,7 +117,8 @@ const CreatedMemos = () => {
                   </td>
                   </tr>
               </table>
-                ))}
+                ))
+                }{createdProjects}
                 
               </td>
               </div>

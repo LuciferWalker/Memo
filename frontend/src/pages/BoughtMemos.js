@@ -3,8 +3,8 @@ const BoughtMemos = (props) => {
     <div style={{height:'400px',overflowY:'auto'}}>
         <td style={{ width: "80%", padding: "10px" }}>
         <h3>BOUGHT PROJECTS</h3>
-        {props.project?.map((card,index) => (
-        <table
+        {props.project == null ? <h2 style={{color:'black'}}>Buy a Project</h2>: props.project?.map((card,index) => (
+        <table key={index}
             style={{
             background:
                 "linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)",
