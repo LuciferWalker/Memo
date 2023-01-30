@@ -36,8 +36,24 @@ const PostDescription = () => {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
     padding: "0px",
-    cursor:'pointer'
+    cursor:'pointer',
   };
+
+  const gridStyle = {
+      
+      display: 'grid',
+      gridTemplateColumns: 'auto auto auto auto',
+      gridGap: '20px',
+      padding: '20px',
+      fontWeight:'bolder'
+  }
+  const gridStyle1 = {
+    
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto auto',
+    gridGap: '20px',
+    padding: '0px 20px 20px 20px'
+}
 
   const purchaseToken = ()=>{
     //call mint function from marketplace contract
@@ -53,7 +69,7 @@ const PostDescription = () => {
   console.log(projectDetail);
   return (
     <div style={post}>
-      <div style={{ padding: "50px" }}>
+      <div style={{ padding: "40px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar />
         </div>
@@ -79,7 +95,8 @@ const PostDescription = () => {
               </td>
               
               <td style={{ paddingLeft: "20px" }}>
-              {/* <div style={{backgroundColor:'black'}}>
+                {/* for user view when wallet not connected */}
+              <div>
                 <table style={tab}>
                   <tr>
                     <td style={{ paddingLeft: "20px" }}>
@@ -154,25 +171,45 @@ const PostDescription = () => {
                     </td>
                   </tr>
                 </table>
-              </div> */}
-              <div style={{backgroundColor:'black'}}>
-                <table style={{width:'100%'}}>
-                  <tr style={{textAlign:'left'}}>
-                    <td >File Size</td>
-                    <td>Token Price</td>
-                    <td>Total Tokens</td>
-                  </tr>
-                  <tr style={{textAlign:'left'}}>
-                    <td>Tokens Bought</td>
-                    <td>Token Contract Address</td>
-                  </tr>
-                  <tr style={{textAlign:'left'}}>
-                    <td>Creators Share</td>
-                    <td>Amount Collected</td>
-                    <td><button>Claim Money</button></td>
-                  </tr>
-                </table>
               </div>
+
+              {/* for creator view when wallet is connected*/}
+              {/* <div style={tab}>
+                <div style={gridStyle}>
+                  <div class="item1">File Size</div>
+                  <div class="item2">Token Price</div>
+                  <div class="item3">Total Tokens</div>  
+                  <div class="item4">Tokens Bought</div>
+                  <div class="item5">5 MB</div>
+                  <div class="item6">$4000</div>
+                  <div class="item7">5</div>
+                  <div class="item8">3</div>
+                </div>
+                <div style={gridStyle}>
+                  <div class="item1">Token Contract Address</div>
+                  <div class="item2">Creators Share</div>
+                </div>
+                <div style={gridStyle1}>
+                  <div class="item1">0x21B5e4...242714A70</div>
+                  <div class="item2">50%</div>
+                </div>
+                <div style={gridStyle}>
+                  <div class="item1">Token Contract Address</div>
+                  <div class="item2">Creators Share</div>
+                </div>
+                <div style={gridStyle1}>
+                  <div class="item1">0x21B5e4...242714A70</div>
+                  <div class="item2">50%</div>
+                </div>
+                <div style={gridStyle}>
+                  <div class="item1">Amount Collected</div>
+                  <div class="item2"></div>
+                </div>
+                <div style={gridStyle1}>
+                  <div class="item1">$2000</div>
+                  <div class="item2"><button>Claim Money</button></div>
+                </div>
+              </div> */}
               </td>
             </tr>
           </table>

@@ -31,7 +31,7 @@ const CreatedMemos = () => {
 
   return (
     <div style={post}>
-      <div style={{ padding: "50px" }}>
+      <div style={{ padding: "40px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar color="#658BD6" />
         </div>
