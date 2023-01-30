@@ -3,6 +3,7 @@ import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import UploadButton from "../components/UploadButton";
 import { useNavigate } from "react-router-dom";
+import WAValidator from 'multicoin-address-validator'
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -151,12 +152,27 @@ const CreatePost = () => {
       let creatorObject = formData.creators[index];
       let updatedCreatorObject = { ...creatorObject, [key]: value };
       formData.creators[index] = updatedCreatorObject;
+      
       setFormData({ ...formData, creators: formData.creators });
-      validation(key,e);
+      // console.log(formData.creators[index].creatorAddress);
+      validation(key,formData.creators[index]);
     }
   };
 
   function validation(k,e){
+    if(k == 'creatorShare' || k == 'creatorAddress'){
+      // if(k == 'creatorShare'){
+        // console.log(e.creators);
+        if(e.creatorShare < 100){setErrorR('Contribution < 100');}else{setErrorR('')}
+        if(e.creatorAddress == ''){ console.log(e.creatorAddress); setErrorR('Contribution < 100');}else{setErrorR('')}
+      // }  var valid = WAValidator.validate('1KFzzGtDdnq5hrwxXGjwVnKzRbvf8WVxck', 'BTC');
+      let validAdd = WAValidator.validate(e.creatorAddress, 'ETH');
+     console.log(validAdd)
+      // if(valid)
+      //   console.log('This is a valid address');
+      // else
+      //   console.log('Address INVALID');
+    }else{
     let value = e.target.value;
     // let key = k;
     if(k == 'projectName'){
@@ -177,9 +193,7 @@ const CreatePost = () => {
     if(k == 'numberOfCreators'){
       if(value == ''){setErrorC('Should Not be Empty');}else{setErrorC('')}
     } 
-    if(k == 'creatorShare'){
-      if(value == ''){setErrorR('Should Not be Empty');}else{setErrorR('')}
-    }  
+  }
   }
 
   const errorStyle = {
