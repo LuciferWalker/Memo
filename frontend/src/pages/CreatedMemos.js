@@ -91,6 +91,7 @@ const CreatedMemos = () => {
                   background:
                       "linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)",
                   padding: "0px",
+                  cursor:'pointer'
                   }}
               >
                   <tr>
@@ -118,7 +119,7 @@ const CreatedMemos = () => {
                   </tr>
               </table>
                 ))
-                }{createdProjects}
+                }
                 
               </td>
               </div>
