@@ -143,7 +143,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     let marketplaceContract = loadContracts();
     let creators = [];
     let shares = [];
-    let { projectName, projectSymbol, totalTokenSupply, tokenPrice, fileCid } =
+    let { projectName, tokenSymbol, totalTokenSupply, tokenPrice, fileCid } =
       formData;
     formData.creators.map((creator) => {
       creators.push(creator.creatorAddress);
@@ -151,7 +151,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     });
     console.log(
       projectName,
-      projectSymbol,
+      tokenSymbol,
       totalTokenSupply,
       tokenPrice,
       fileCid
@@ -159,19 +159,21 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(creators);
     console.log(shares);
 
-    const currentProjectId = await marketplaceContract.getCurrentProjectCounter();
+    let {hex: currentProjectId} = await marketplaceContract.getCurrentProjectCounter();
+    console.log(currentProjectId)
+    currentProjectId = parseInt(currentProjectId.toString())
     const projectCreationFee =
       await marketplaceContract.getProjectCreationFee();
 
     const tx = await marketplaceContract.createProject(
       projectName,
-      projectSymbol,
+      tokenSymbol,
       totalTokenSupply,
       tokenPrice,
       creators,
       shares,
       fileCid,
-      { value: ethers.utils.parseEther("0.2") } //projectCreationFee
+      { value: ethers.utils.parseEther("0.2") } //projectCreationFee in ether
     );
 
     console.log(tx);
@@ -185,11 +187,15 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     );
 
     formData.tokenContractAddress = projectDetails[2];
+    formData.projectId = currentProjectId;
   };
 
     const uploadDataOnDB = async () => {
       const res = await fetch("http://localhost:3001/createProject", {
         method: "POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
         body: JSON.stringify(formData),
       });
     };

@@ -55,7 +55,7 @@ const ProjectSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    tokenPrice: {
+    tokenPrice: { 
       type: Number,
       required: true,
     },

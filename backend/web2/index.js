@@ -59,18 +59,20 @@ app.post("/createUser", async (req, res) => {
 // Creates new project
 app.post("/createProject", async (req, res) => {
   try {
+
+    console.log(req.body)
     // create project
-    let { creatorAddresses } = req.body;
+    let formData = req.body;
     // add project in user db
-    const project = await Project.create({ ...req.body });
+    const project = await Project.create({ ...formData });
 
     // create user with all the address present in the creatorAddresses Array
-    const users = creatorAddresses.map(async (address) => {
-      let user = await User.findOne({ address });
+    const users = formData.creators.map(async (creator) => {
+      let user = await User.findOne({ address:creator.creatorAddress });
       if (!user) {
-        user = await User.create({ address });
+        user = await User.create({ address:creator.creatorAddress });
       }
-      user.createdProjects.push(req.body.projectId);
+      user.createdProjects.push(formData.projectId);
       await user.save();
       return user;
     });

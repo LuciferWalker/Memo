@@ -30,7 +30,7 @@ const CreatePost = () => {
     projectDescription: "",
     projectImageUrl: "",
     tokenPrice: "",
-    tokenSupply: "",
+    totalTokenSupply: "",
     numberOfCreators: "",
     creators: [],
   });
@@ -171,7 +171,7 @@ const CreatePost = () => {
     if(k == 'tokenPrice'){
       if(value == ''){setErrorP('Should Not be Empty');}else{setErrorP('')}
     }
-    if(k == 'tokenSupply'){
+    if(k == 'totalTokenSupply'){
       if(value == ''){setErrorS('Should Not be Empty');}else{setErrorS('')}
     }
     if(k == 'numberOfCreators'){
@@ -332,9 +332,9 @@ const CreatePost = () => {
                         <td>
                           <input
                             type="number"
-                            name="tokenSupply"
+                            name="totalTokenSupply"
                             style={inputTag}
-                            value={formData.tokenSupply}
+                            value={formData.totalTokenSupply}
                             onChange={handleInputs}
                           />
                           <span style={errorStyle}>{errors}</span>
