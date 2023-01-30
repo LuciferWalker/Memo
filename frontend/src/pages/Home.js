@@ -48,7 +48,7 @@ const Home = () => {
                             </span><br/>
                             <span 
                             style={{color: hover1 ? '#658BD6' : 'white',}} 
-                            onClick={()=>navigate("/createdmemos")}
+                            onClick={()=>navigate("/projects")}
                             onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
                                 DASHBOARD
                             </span></h4>

@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/createdmemos" element={<CreatedMemos />} />
+        <Route path="/projects" element={<CreatedMemos />} />
         <Route path="/boughtmemos" element={<BoughtMemos />} />
         <Route path="/:projectId" element={<PostDescription/>} />
         <Route path="/download" element={<Download/>} />
