@@ -56,6 +56,7 @@ const CreatedMemos = () => {
   useEffect(() => {
     getCreatedProjects();
     getBoughtProjects();
+    if(localStorage.getItem('account') == 'Connect Wallet'){navigate("/")}
   }, []);
 
   console.log(boughtProjects, createdProjects);

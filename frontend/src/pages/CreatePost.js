@@ -118,10 +118,6 @@ const CreatePost = () => {
     ));
   }
 
-  const showData = () => {
-    console.log(formData);
-  };
-
   const handleInputs = (e, index = -1) => {
     let key = e.target.name;
 
