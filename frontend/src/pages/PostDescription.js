@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+  import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
@@ -25,7 +25,7 @@ const PostDescription = () => {
   useEffect(()=>{
     if(projectDetail){
       for(let i=0;i<projectDetail.creators.length;i++){
-        if(projectDetail.creators[i].CreatorAddress.toLowerCase()===window.localStorage.getItem('account').toLocaleLowerCase()){
+        if(projectDetail.creators[i].creatorAddress.toLocaleLowerCase()===window.localStorage.getItem('account').toLocaleLowerCase()){
           setIsCreator(true)
           break;
         }
@@ -100,7 +100,7 @@ const PostDescription = () => {
                   {projectDetail && projectDetail.projectDescription || ''}
                   <h4>CREATORS</h4>
                   {projectDetail?
-                  projectDetail.creators.map(item=><h5 style={{ margin: "10px" }}>{item.CreatorAddress}</h5 >)
+                  projectDetail.creators.map(item=><h5 style={{ margin: "10px" }}>{item.creatorAddress}{item.creatorSocial}</h5 >)
                   :""}
                 </div>
               </td>
