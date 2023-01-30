@@ -109,6 +109,7 @@ const CreatePost = () => {
             name="creatorShare"
             type="number"
             value={creator.creatorShare}
+            onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
             // onChange={(e) => setRoyalDist(e.target.value)}
             // value={royalDist}
@@ -161,6 +162,8 @@ const CreatePost = () => {
       validation(key, formData.creators[index]);
     }
   };
+
+  const blockInvalidChar = e => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault();
 
   function validation(k, e) {
     if (k == "creatorShare" || k == "creatorAddress") {
@@ -365,6 +368,7 @@ const CreatePost = () => {
                         type="number"
                         style={inputTag}
                         value={formData.tokenPrice}
+                        onKeyDown={blockInvalidChar}
                         onChange={handleInputs}
                       />
                       <span style={errorStyle}>{errorp}</span>
@@ -384,6 +388,7 @@ const CreatePost = () => {
                         name="totalTokenSupply"
                         style={inputTag}
                         value={formData.totalTokenSupply}
+                        onKeyDown={blockInvalidChar}
                         onChange={handleInputs}
                       />
                       <span style={errorStyle}>{errors}</span>
@@ -398,9 +403,11 @@ const CreatePost = () => {
                     </td>
                     <td>
                       <input
+                        type="number"
                         placeholder="2"
                         name="numberOfCreators"
                         value={formData.numberOfCreators}
+                        onKeyDown={blockInvalidChar}
                         style={inputTag}
                         onChange={handleInputs}
                       />
