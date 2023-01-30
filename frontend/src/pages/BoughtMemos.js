@@ -1,9 +1,9 @@
 const BoughtMemos = (props) => {
     return(
-    <div style={{height:'400px',overflowY:'auto'}}>
-        <td style={{ width: "80%", padding: "10px" }}>
+    <div style={{display:'flex',flexDirection:'column',height:'440px',overflowY:'auto'}}>
         <h3>BOUGHT PROJECTS</h3>
         {props.project == null ? <h2 style={{color:'black'}}>Buy a Project</h2>: props.project?.map((card,index) => (
+        <>
         <table key={index}
             style={{
             background:
@@ -34,8 +34,8 @@ const BoughtMemos = (props) => {
             </td>
             </tr>
         </table>
+        <br/></>
         ))}
-        </td>
     </div>
 );
 }

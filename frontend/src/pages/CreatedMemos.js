@@ -13,9 +13,6 @@ const CreatedMemos = () => {
   const [creatememo, setCreateMemo] = useState(true);
   const [boughtmemo, setBoughtMemo] = useState(false);
   const [createpost, setCreatePost] = useState(false);
-  const [color, setColor] = useState("white");
-  const [colorb, setColorb] = useState("#658BD6");
-  const [colorc, setColorc] = useState("white");
 
   const [createdProjects, setCreatedProjects] = useState(null);
   const [boughtProjects, setBoughtProjects] = useState(null);
@@ -62,13 +59,12 @@ const CreatedMemos = () => {
   console.log(boughtProjects, createdProjects);
 
   return (
-    <table style={{ width: "100%" }}>
-      <tr>
+    <>
         {creatememo && (
-          <div style={{ height: "400px", overflowY: "auto" }}>
-            <td style={{ width: "80%", padding: "10px" }}>
+          <div style={{ display:'flex',flexDirection:'column',height: "440px", overflowY: "auto" }}>
               <h3>CREATED PROJECTS</h3>
-              {createdProjects?.map((card, index) => (
+              {createdProjects == null ? <h2 style={{color:'black'}}>Create a Project</h2>:createdProjects?.map((card, index) => (
+                <>
                 <table
                   key={index}
                   onClick={() => navigate(`/${card.projectId}`)}
@@ -102,12 +98,11 @@ const CreatedMemos = () => {
                     </td>
                   </tr>
                 </table>
+                <br/></>
               ))}
-            </td>
           </div>
         )}
-      </tr>
-    </table>
+        </>
   );
 };
 export default CreatedMemos;

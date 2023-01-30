@@ -17,7 +17,7 @@ import CreatePost from "./pages/CreatePost";
 function App() {
   return (
     <>
-      <Navbar />
+      <Navbar color="red" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />}>

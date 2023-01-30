@@ -56,7 +56,7 @@ const CreatePost = () => {
       <div
         id="creator"
         key={index}
-        style={{ fontSize: "12px", marginTop: "5px" }}
+        style={{ fontSize: "12px", marginTop: "5px",marginLeft:'170px' }}
       >
         {/* <tr>
           <label style={{ marginLeft: "130px" }}>
@@ -239,14 +239,13 @@ const CreatePost = () => {
       <div style={{ overflow: "hidden", width: "100%" }}>
         <div
           style={{
-            width: "90%",
-            height: "450px",
+            width: "1000px",
+            height: "500px",
             overflowX: "hidden",
             overflowY: "auto",
             float: "left",
           }}
         >
-
           <form action="">
             <div
               style={{
@@ -319,7 +318,7 @@ const CreatePost = () => {
                 <div style={{ marginTop: "10px" }}>
                   <tr style={{ verticalAlign: "middle" }}>
                     <td style={{ width: "250px" }}>
-                      <label>Project File (.zip format)</label>
+                      <label class="custom-file-upload">Project File (.zip format)</label>
                     </td>
                     <td>
                       <input
@@ -328,6 +327,7 @@ const CreatePost = () => {
                           marginLeft: "40px",
                           padding: "8px",
                           width: "200px",
+                          size:"100"
                         }}
                         accept="application/zip"
                         type="file"
@@ -421,7 +421,7 @@ const CreatePost = () => {
                   </tr>
                 </div>
               </table>
-              <div style={{ marginLeft: "270px", marginTop: "20px" }}>
+              <div style={{ textAlign:'center', marginTop: "10px" }}>
                 <UploadButton
                   formData={formData}
                   projectImage={projectImage}

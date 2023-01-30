@@ -77,11 +77,10 @@ const Explore = () => {
 
   return (
     <div style={explore}>
-      <div style={{ padding: "40px"}}>
+      <div style={{ padding: "20px"}}>
         {/* 
       map the sampleProjects array and render the cards accordingly */}
-        
-          <div style={{height:'455px',margin:"1px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
+          <div style={{height:'455px',margin:"0px",display: 'grid',gridTemplateColumns: '1fr 1fr',overflowY: "auto",}}>
             {listedProjects?.map((card,index) => (
               <table key={index} style={tab} onClick={() => navigate(`/${card.projectId}`)}>
                 <tr>
