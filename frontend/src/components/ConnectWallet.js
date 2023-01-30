@@ -115,7 +115,7 @@ const ConnectWallet = () => {
           width="20"
           height="20"
         />
-        <span>{account}</span>
+        <span>{account==="Connect Wallet"? "Connect Wallet" : account.slice(0,6)+'...'+account.slice(-4)}</span>
       </button>
       {userBalance && <div>Balance: {userBalance}</div>}
 
