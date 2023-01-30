@@ -14,12 +14,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Gets user Data
-app.post("/getUserData", async (req, res) => {
+app.get("/getUserData/:userAddress", async (req, res) => {
   //when user connects their wallet.
-  const { address } = req.body;
+  const { userAddress } = req.params;
   try {
     //check if the user exists in the db
-    const user = await User.findOne({ address });
+    const user = await User.findOne({ userAddress });
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send(err);

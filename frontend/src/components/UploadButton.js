@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
-import MarketplaceAddress from "../contractsData/Marketplace-address.json";
-import MarketplaceAbi from "../contractsData/Marketplace.json";
+// import MarketplaceAddress from "../contractsData/Marketplace-address.json";
+// import MarketplaceAbi from "../contractsData/Marketplace.json";
 import {
   getStorage,
   ref,
@@ -13,11 +13,10 @@ import app from "../firebase";
 import { parse } from "@ethersproject/transactions";
 // React Notification
 import { NotificationManager } from "react-notifications";
+import { loadContracts } from "../utils";
 
 function UploadButton({ formData, projectImage, projectFileEvent }) {
   const [loader, setLoader] = useState(null);
-  const [marketplaceContract, setMarketplaceContract] = useState(null);
-  const [provider, setProvider] = useState();
   const FLOW = {
     1: "Encrypting and Uplaoding File to IPFS",
     2: "Deploying a New Access Token Contract",
@@ -79,7 +78,9 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, projectImage);
 
-    uploadTask.on("state_changed", (snapshot) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         switch (snapshot.state) {
@@ -105,19 +106,19 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     );
   };
 
-  const loadContracts = () => {
-    let provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider);
-    let signer = provider.getSigner();
+  // const loadContracts = () => {
+  //   let provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   setProvider(provider);
+  //   let signer = provider.getSigner();
 
-    let marketplaceContract = new ethers.Contract(
-      MarketplaceAddress.address,
-      MarketplaceAbi.abi,
-      signer
-    );
-    setMarketplaceContract(marketplaceContract);
-    return marketplaceContract;
-  };
+  //   let marketplaceContract = new ethers.Contract(
+  //     MarketplaceAddress.address,
+  //     MarketplaceAbi.abi,
+  //     signer
+  //   );
+  //   setMarketplaceContract(marketplaceContract);
+  //   return marketplaceContract;
+  // };
 
   /* Deploy file along with encryption */
   const deployEncrypted = async (e) => {
@@ -158,9 +159,10 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(creators);
     console.log(shares);
 
-    let {_hex:currentProjectId} = await marketplaceContract.getCurrentProjectCounter();
-    console.log(currentProjectId)
-    currentProjectId = parseInt(currentProjectId.toString())
+    let { _hex: currentProjectId } =
+      await marketplaceContract.getCurrentProjectCounter();
+    console.log(currentProjectId);
+    currentProjectId = parseInt(currentProjectId.toString());
     const projectCreationFee =
       await marketplaceContract.getProjectCreationFee();
 
@@ -189,54 +191,56 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     formData.projectId = currentProjectId;
   };
 
-    const uploadDataOnDB = async () => {
-      const res = await fetch("http://localhost:3001/createProject", {
-        method: "POST",
-        headers:{
-          'Content-Type':'application/json'
+  const uploadDataOnDB = async () => {
+    formData.tokenPrice = ethers.utils.parseEther(formData.tokenPrice.toString());
+    const res = await fetch("http://localhost:3001/createProject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+  };
+
+  const applyAccessCondition = async () => {
+    let { publicKey, signedMessage: accessSignedMessage } =
+      await encryptionSignature();
+
+    const conditions = [
+      {
+        id: 3141,
+        chain: "Hyperspace",
+        method: "balanceOf",
+        standardContractType: "ERC20",
+        contractAddress: formData.tokenContractAddress,
+        returnValueTest: {
+          comparator: ">=",
+          value: "1",
         },
-        body: JSON.stringify(formData),
-      });
-    };
+        parameters: [":userAddress"],
+      },
+    ];
 
-    const applyAccessCondition = async () => {
-      let { publicKey, signedMessage: accessSignedMessage } = await encryptionSignature();
+    const aggregator = "([1])";
 
-      const conditions = [
-        {
-          id: 3141,
-          chain: "Hyperspace",
-          method: "balanceOf",
-          standardContractType: "ERC20",
-          contractAddress: formData.tokenContractAddress,
-          returnValueTest: {
-            comparator: ">=",
-            value: "1",
-          },
-          parameters: [":userAddress"],
-        },
-      ];
+    //dont know if encryptionSignature needs to be done again
 
-      const aggregator = "([1])";
+    const accessResponse = await lighthouse.accessCondition(
+      publicKey,
+      formData.fileCid,
+      accessSignedMessage,
+      conditions,
+      aggregator
+    );
 
-      //dont know if encryptionSignature needs to be done again
+    console.log(accessResponse);
 
-      const accessResponse = await lighthouse.accessCondition(
-        publicKey,
-        formData.fileCid,
-        accessSignedMessage,
-        conditions,
-        aggregator
-      );
-
-      console.log(accessResponse);
-
-      if (accessResponse.data.status === "Success") {
-        setLoader(5);
-      } else {
-        //failed
-      }
-    };
+    if (accessResponse.data.status === "Success") {
+      setLoader(5);
+    } else {
+      //failed
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
