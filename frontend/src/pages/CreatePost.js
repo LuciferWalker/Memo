@@ -43,6 +43,7 @@ const CreatePost = () => {
   const [errors, setErrorS] = useState('');
   const [errorc, setErrorC] = useState('');
   const [errorr, setErrorR] = useState('');
+  const [errorsocial, setErrorSocial] = useState('');
   const [erroradd, setErrorAdd] = useState('');
 
   const [projectImage, setProjectImage] = useState(null);
@@ -80,6 +81,7 @@ const CreatePost = () => {
             type="text"
             style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
           />
+          <span style={errorStyle}>{errorsocial}</span>
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>Wallet Add</label>
@@ -151,19 +153,26 @@ const CreatePost = () => {
       formData.creators[index] = updatedCreatorObject;
       
       setFormData({ ...formData, creators: formData.creators });
-      console.log(formData.creators[index]);
-      validation(key,formData.creators[index]);
+      console.log(updatedCreatorObject,index,formData.creators);
+      validationSecond(key,formData.creators,index);
     }
   };
 
+  function validationSecond(key,e,index){
+    if(key == 'creatorAddress' || key == 'creatorShare' || key == 'creatorSocial' || key == 'creator'){
+      console.log(e.creator)
+      if(index){
+      if(e[index].creatorAddress == ''){setErrorAdd('Should Not be Empty');}else{if(Web3.utils.isAddress(e[index].creatorAddress)){ setErrorAdd('Valid Address');
+    }else{setErrorAdd('InValid Address')}  }}
+      // if(e.creatorSocial == ''){setErrorSocial('Should Not be Empty')}else{setErrorSocial('')}
+      // if(e.creatorShare == ''){setErrorR('Should Not be Empty')}else{setErrorR('')}
+      
+    }
+  }
+
+  const blockInvalidChar = e => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault();
+
   function validation(k,e){
-    if(k == 'creatorShare' || k == 'creatorAddress'){
-      // if(k == 'creatorShare'){
-        // console.log(e.creators);
-        if(e.creatorShare < 100){setErrorR('Empty');}else{setErrorR('')}
-        if(Web3.utils.isAddress(e.creatorAddress)){ setErrorAdd('Valid');}else{setErrorAdd('Not Valid')}
-      // }  
-    }else{
     let value = e.target.value;
     // let key = k;
     if(k == 'projectName'){
@@ -184,7 +193,6 @@ const CreatePost = () => {
     if(k == 'numberOfCreators'){
       if(value == ''){setErrorC('Should Not be Empty');}else{setErrorC('')}
     } 
-  }
   }
 
   const errorStyle = {
@@ -338,6 +346,8 @@ const CreatePost = () => {
                           <input
                             type="number"
                             name="totalTokenSupply"
+                            min="0"
+                            onKeyDown={blockInvalidChar}
                             style={inputTag}
                             value={formData.totalTokenSupply}
                             onChange={handleInputs}
