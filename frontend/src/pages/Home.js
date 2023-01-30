@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import Navbar from "../components/Navbar";
 import image from "../images/star.png";
 
 const Home = () => {
@@ -33,8 +34,7 @@ const Home = () => {
         <div style={Bg}>
             <div style={{padding:'40px'}}>
                 <div style={{display:'flex',justifyContent: 'space-between'}}>
-                    {/* <SignIn /> */}
-                    <div>
+                    {/* <div>
                         <h1>MEMO</h1>
                         <h5>01.01.2023</h5>
                     </div>
@@ -52,7 +52,8 @@ const Home = () => {
                             onMouseEnter={handleMouseEnter1} onMouseLeave={handleMouseLeave1}>
                                 DASHBOARD
                             </span></h4>
-                    </div>
+                    </div> */}
+                    <Navbar/>
                 </div>
                 <h3 style={{textAlign:'center',marginTop:'30px'}}>MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES & MEMORIES.</h3>
 

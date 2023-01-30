@@ -273,16 +273,16 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     <>
       <button
         onClick={(e) => handleSubmit(e)}
-        // style={{
-        //   color: hoversub ? "#658BD6" : "white",
-        //   padding: "7px",
-        //   background: "none",
-        //   border: "none",
-        //   fontFamily: "Montserrat, sans-serif",
-        //   cursor: "pointer",
-        // }}
-        // onMouseEnter={handleMouseEnter}
-        // onMouseLeave={handleMouseLeave}
+        style={{
+          color: hoversub ? "#658BD6" : "white",
+          padding: "7px",
+          background: "none",
+          border: "none",
+          fontFamily: "Montserrat, sans-serif",
+          cursor: "pointer",
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <b>SUBMIT</b>
       </button>

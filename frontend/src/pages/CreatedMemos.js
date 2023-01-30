@@ -47,11 +47,15 @@ const CreatedMemos = () => {
   useEffect(() => {
     getCreatedProjects();
     getBoughtProjects();
+    if(localStorage.getItem('account') == 'Connect Wallet'){navigate("/")}
   }, []);
 
-  console.log(boughtProjects, createdProjects)
+  // console.log(boughtProjects, createdProjects)
   return (
+     
     <div style={post}>
+      {console.log(localStorage.getItem('account'))}
+      {/* {localStorage.getItem('account') == 'Connect Wallet' ? navigate("/") : */}
       <div style={{ padding: "40px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar color="#658BD6" />
@@ -134,6 +138,7 @@ const CreatedMemos = () => {
           </table>
         </div>
       </div>
+    {/* } */}
     </div>
   );
 };
