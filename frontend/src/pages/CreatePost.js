@@ -3,6 +3,7 @@ import image from "../images/star.png";
 import Navbar from "../components/Navbar";
 import UploadButton from "../components/UploadButton";
 import { useNavigate } from "react-router-dom";
+import Web3 from 'web3/dist/web3.min.js'
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
@@ -42,6 +43,7 @@ const CreatePost = () => {
   const [errors, setErrorS] = useState('');
   const [errorc, setErrorC] = useState('');
   const [errorr, setErrorR] = useState('');
+  const [erroradd, setErrorAdd] = useState('');
 
   const [projectImage, setProjectImage] = useState(null);
   const [projectFileEvent, setProjectFileEvent] = useState(null);
@@ -90,7 +92,7 @@ const CreatePost = () => {
             type="text"
             style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
           />
-          <span style={errorStyle}></span>
+          <span style={errorStyle}>{erroradd}</span>
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
@@ -151,12 +153,21 @@ const CreatePost = () => {
       let creatorObject = formData.creators[index];
       let updatedCreatorObject = { ...creatorObject, [key]: value };
       formData.creators[index] = updatedCreatorObject;
+      
       setFormData({ ...formData, creators: formData.creators });
-      validation(key,e);
+      // console.log(formData.creators[index].creatorAddress);
+      validation(key,formData.creators[index]);
     }
   };
 
   function validation(k,e){
+    if(k == 'creatorShare' || k == 'creatorAddress'){
+      // if(k == 'creatorShare'){
+        // console.log(e.creators);
+        if(e.creatorShare < 100){setErrorR('Contribution < 100');}else{setErrorR('')}
+        if(Web3.utils.isAddress(e.creatorAddress)){ setErrorAdd('Valid');}else{setErrorAdd('Not Valid')}
+      // }  
+    }else{
     let value = e.target.value;
     // let key = k;
     if(k == 'projectName'){
@@ -177,9 +188,7 @@ const CreatePost = () => {
     if(k == 'numberOfCreators'){
       if(value == ''){setErrorC('Should Not be Empty');}else{setErrorC('')}
     } 
-    if(k == 'creatorShare'){
-      if(value == ''){setErrorR('Should Not be Empty');}else{setErrorR('')}
-    }  
+  }
   }
 
   const errorStyle = {

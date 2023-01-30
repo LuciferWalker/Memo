@@ -25,7 +25,7 @@ const PostDescription = () => {
   useEffect(()=>{
     if(projectDetail){
       for(let i=0;i<projectDetail.creators.length;i++){
-        if(projectDetail.creators[i].address.toLowerCase()===window.localStorage.getItem('account').toLocaleLowerCase()){
+        if(projectDetail.creators[i].CreatorAddress.toLowerCase()===window.localStorage.getItem('account').toLocaleLowerCase()){
           setIsCreator(true)
           break;
         }
@@ -100,13 +100,13 @@ const PostDescription = () => {
                   {projectDetail && projectDetail.projectDescription || ''}
                   <h4>CREATORS</h4>
                   {projectDetail?
-                  projectDetail.creators.map(item=><h5 style={{ margin: "10px" }}>{item.address}</h5 >)
+                  projectDetail.creators.map(item=><h5 style={{ margin: "10px" }}>{item.CreatorAddress}</h5 >)
                   :""}
                 </div>
               </td>
               
               {!isCreator && <td style={{ paddingLeft: "20px" }}>
-              <div style={{backgroundColor:'black'}}>
+              <div>
                 <table style={tab}>
                   <tr>
                     <td style={{ paddingLeft: "20px" }}>
