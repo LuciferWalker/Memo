@@ -72,16 +72,14 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     setLoader(flowStage);
     console.log(FLOW.flowStage);
   };
-  const uploadProjectImage = () => {
+  const uploadProjectImage = async () => {
     if (!projectImage) return alert("First select an Image");
     const storage = getStorage(app);
     const fileName = projectImage.name + new Date().getTime();
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, projectImage);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
+    uploadTask.on("state_changed", (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         switch (snapshot.state) {
@@ -98,8 +96,9 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
       (error) => {
         console.log(error);
       },
-      () => {
-        let projectImageUrl = getDownloadURL(uploadTask.snapshot.ref);
+      async () => {
+        let projectImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+        console.log(projectImageUrl);
         // This url will be stored in the web2 backend
         formData.projectImageUrl = projectImageUrl;
       }
@@ -159,7 +158,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(creators);
     console.log(shares);
 
-    let {hex: currentProjectId} = await marketplaceContract.getCurrentProjectCounter();
+    let {_hex:currentProjectId} = await marketplaceContract.getCurrentProjectCounter();
     console.log(currentProjectId)
     currentProjectId = parseInt(currentProjectId.toString())
     const projectCreationFee =
@@ -251,7 +250,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     await uploadDataOnDB();
     handleLoader(4);
     applyAccessCondition();
-    // handleLoader(5);
+    handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
     // navigate("/display", {
     //   state: {
