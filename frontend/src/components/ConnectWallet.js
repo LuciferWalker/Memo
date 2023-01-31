@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import MarketplaceAddress from "../contractsData/Marketplace-address.json";
-import MarketplaceAbi from "../contractsData/Marketplace.json";
+import { loadContracts, updateAccount } from "../utils";
 
 const ConnectWallet = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [account, setAccount] = useState(localStorage.getItem("account") || "Connect Wallet");
-  // sessionStorage.getItem("account") ||
+  const [account, setAccount] = useState("Connect Wallet");
   const [userBalance, setUserBalance] = useState(null);
 
-  // const [provider, setProvider] = useState(null);
-  // const [signer, setSigner] = useState(null);
-  const [marketplaceContract, setMarketplaceContract] = useState(null);
-
-  useEffect(() => {
-    localStorage.setItem("account", account);
-  }, [account, marketplaceContract]);
+  // useEffect(() => {
+  //   localStorage.setItem("account", account);
+  // }, [account, marketplaceContract]);
 
   // const networks = {
   //   hyperspace: {
@@ -35,12 +29,12 @@ const ConnectWallet = () => {
     //check if metmask exists
     if (window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({
+        await window.ethereum.request({
           //returns an array of accounts
           method: "eth_requestAccounts",
         });
 
-        await accountChangeHandler(accounts[0]);
+        await accountChangeHandler();
 
         // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
@@ -51,9 +45,11 @@ const ConnectWallet = () => {
     }
   };
 
-  const accountChangeHandler = async (newAccount) => {
-    setAccount(newAccount);
-    await getUserBalance(newAccount.toString());
+  const accountChangeHandler = async () => {
+    const { provider, signer, userAddress } = await updateAccount();
+    setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
+    loadContracts();
+    await getUserBalance(userAddress.toString());
     // updateEthers();
   };
 
@@ -74,10 +70,11 @@ const ConnectWallet = () => {
   const refreshPage = () => {
     window.location.reload();
     window.localStorage.clear();
+    //clear the address and all the user state
   };
 
   //reload page if chain or account is changed
-  // window.ethereum.on("accountsChanged", refreshPage);
+  // window.ethereum.on("accountsChanged", accountChangeHandler); should we update account details if user connectes another account from metamask
   window.ethereum.on("chainChanged", refreshPage);
 
   // const updateEthers = () => {
@@ -115,7 +112,7 @@ const ConnectWallet = () => {
           width="20"
           height="20"
         />
-        <span>{account==="Connect Wallet"? "Connect Wallet" : account.slice(0,6)+'...'+account.slice(-4)}</span>
+        <span>{account}</span>
       </button>
       {userBalance && <div>Balance: {userBalance}</div>}
 

@@ -1,34 +1,31 @@
 import React from "react";
-import { checkUser } from "../utils";
+import { checkUser, loadContracts } from "../utils";
+import { ethers } from "ethers";
 
 export const BuyTokenButton = ({ projectData }) => {
-  const loadContracts = () => {
-    let provider = new ethers.providers.Web3Provider(window.ethereum);
-    let signer = provider.getSigner();
-
-    let marketplaceContract = new ethers.Contract(
-      MarketplaceAddress.address,
-      MarketplaceAbi.abi,
-      signer
-    );
-
-    return marketplaceContract;
+  const sampleProjectData = {
+    projectId: 1,
+    tokenPrice: "1000000000000000000",
   };
 
   const handleBuyToken = async () => {
-    const validation = await checkUser(projectData.projectId);
+    // const validation = await checkUser(sampleProjectData.projectId);
 
-    if (!validation) {
-      let marketplaceContract = loadContracts();
+    if (1) {
+      let { marketplaceContract, provider, signer } = loadContracts();
 
       const tx = await marketplaceContract.buyProjectToken(
-        projectData.projectId,
+        sampleProjectData.projectId,
         {
-          value: ethers.utils.parseEther(projectData.tokenPrice.toString()), //in ethers
+          value: ethers.utils.parseEther((sampleProjectData.tokenPrice / 10 ** 18).toString()), //in ethers
         }
       );
 
+      console.log(tx)
+
       const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
+
+      console.log(receipt)
 
       //check if transaction is successful logic
 

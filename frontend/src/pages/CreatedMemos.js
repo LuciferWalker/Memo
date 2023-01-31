@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
-
+import { getUserWalletDetails } from "../utils";
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
@@ -10,41 +10,51 @@ const CreatedMemos = () => {
   const [createdProjects, setCreatedProjects] = useState(null);
   const [boughtProjects, setBoughtProjects] = useState(null);
 
-  const getCreatedProjects = async () => {
+  const getCreatedProjects = async (userAddress) => {
     const response = await fetch(
-      `http://localhost:3001/createdProjects?address=${localStorage.getItem(
-        "account"
-      )}`
+      `http://localhost:3001/createdProjects?address=${userAddress}`
     );
     const projects = await response.json();
     setCreatedProjects(projects);
   };
 
-  const getBoughtProjects = async () => {
+  const getBoughtProjects = async (userAddress) => {
     const response = await fetch(
-      `http://localhost:3001/boughtProjects?address=${localStorage.getItem(
-        "account"
-      )}`
+      `http://localhost:3001/boughtProjects?address=${userAddress}`
     );
     const projects = await response.json();
     setBoughtProjects(projects);
   };
 
   useEffect(() => {
-    getCreatedProjects();
-    getBoughtProjects();
-    if(localStorage.getItem('account') == 'Connect Wallet'){navigate("/")}
+    let { userAddress } = getUserWalletDetails();
+    getCreatedProjects(userAddress);
+    getBoughtProjects(userAddress);
+
+    if (!userAddress) {
+      navigate("/");
+    }
   }, []);
 
   console.log(boughtProjects, createdProjects);
 
   return (
     <>
-        {creatememo && (
-          <div style={{ display:'flex',flexDirection:'column',height: "440px", overflowY: "auto" }}>
-              <h3>CREATED PROJECTS</h3>
-              {createdProjects == null ? <h2 style={{color:'black'}}>Create a Project</h2>:createdProjects?.map((card, index) => (
-                <>
+      {creatememo && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "440px",
+            overflowY: "auto",
+          }}
+        >
+          <h3>CREATED PROJECTS</h3>
+          {createdProjects == null ? (
+            <h2 style={{ color: "black" }}>Create a Project</h2>
+          ) : (
+            createdProjects?.map((card, index) => (
+              <>
                 <table
                   key={index}
                   onClick={() => navigate(`/${card.projectId}`)}
@@ -78,11 +88,13 @@ const CreatedMemos = () => {
                     </td>
                   </tr>
                 </table>
-                <br/></>
-              ))}
-          </div>
-        )}
-        </>
+                <br />
+              </>
+            ))
+          )}
+        </div>
+      )}
+    </>
   );
 };
 export default CreatedMemos;

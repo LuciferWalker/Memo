@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
-// import MarketplaceAddress from "../contractsData/Marketplace-address.json";
-// import MarketplaceAbi from "../contractsData/Marketplace.json";
+import { marketplaceContract, getUserWalletDetails } from "../utils";
 import {
   getStorage,
   ref,
@@ -10,10 +9,9 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import app from "../firebase";
-import { parse } from "@ethersproject/transactions";
 // React Notification
 import { NotificationManager } from "react-notifications";
-import { loadContracts } from "../utils";
+import { Navigate } from "react-router-dom";
 
 function UploadButton({ formData, projectImage, projectFileEvent }) {
   const [loader, setLoader] = useState(null);
@@ -44,16 +42,19 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   //VALIDATE DATA
 
   const encryptionSignature = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    console.log(address);
-    const messageRequested = (await lighthouse.getAuthMessage(address)).data
+    const { isWalletConnected, provider, signer, userAddress } =
+      getUserWalletDetails();
+
+    if (isWalletConnected == false) {
+      //NOTIFICATION>SHOW("CONNECT YOUR WALLET FIRST")
+    }
+    console.log(userAddress);
+    const messageRequested = (await lighthouse.getAuthMessage(userAddress)).data
       .message;
     const signedMessage = await signer.signMessage(messageRequested);
     return {
       signedMessage: signedMessage,
-      publicKey: address,
+      publicKey: userAddress,
     };
   };
 
@@ -138,8 +139,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const deployAccessTokenContract = async () => {
-    let provider = new ethers.providers.Web3Provider(window.ethereum);
-    let marketplaceContract = loadContracts();
+    let { provider } = getUserWalletDetails();
     let creators = [];
     let shares = [];
     let { projectName, tokenSymbol, totalTokenSupply, tokenPrice, fileCid } =

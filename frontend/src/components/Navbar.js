@@ -1,10 +1,9 @@
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom'
-import image from "../images/star.png";
 import ConnectWallet from "./ConnectWallet";
 
 
-const Navbar = (props) => {
+const Navbar = () => {
     const navigate = useNavigate();
 
     const [color,setColor] = useState('white')
