@@ -126,6 +126,18 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   // };
 
   /* Deploy file along with encryption */
+  function formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+  }
+
   const deployEncrypted = async (e) => {
     let { publicKey, signedMessage: uploadSignedMessage } =
       await encryptionSignature();
@@ -139,7 +151,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(uploadResponse);
 
     formData.fileCid = uploadResponse.data.Hash;
-    formData.fileSize = uploadResponse.data.Size/1000000; // converting fileSize to MB
+    formData.fileSize = formatBytes(uploadResponse.data.Size);//uploadResponse.data.Size/1000000; // converting fileSize to MB
     formData.fileName = uploadResponse.data.Name;
   };
 
