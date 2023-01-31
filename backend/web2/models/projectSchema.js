@@ -31,7 +31,7 @@ const ProjectSchema = mongoose.Schema(
     },
     creators: {
       type: Array,
-      required: true
+      required: true 
     },
     fileName: {
       type: String,

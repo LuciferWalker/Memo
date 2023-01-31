@@ -1,7 +1,6 @@
 import React, { useEffect, useState , useContext} from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
-import { marketplaceContract, getUserWalletDetails } from "../utils";
 import {
   getStorage,
   ref,

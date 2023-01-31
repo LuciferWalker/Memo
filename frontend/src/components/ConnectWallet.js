@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { updateAccount } from "../utils";
 import { MemoContext } from "../context/MemoContext";
 const ConnectWallet = () => {
-  const [errorMessage, setErrorMessage] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
   const { account, setAccount } = useContext(MemoContext);
 
@@ -46,7 +44,9 @@ const ConnectWallet = () => {
   };
 
   const accountChangeHandler = async () => {
-    const { provider, signer, userAddress } = await updateAccount();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const userAddress = await signer.getAddress();
     setAccount(userAddress);
     const res = await fetch("http://localhost:3001/createUser", {
       method: "POST",
@@ -81,7 +81,7 @@ const ConnectWallet = () => {
   };
 
   //reload page if chain or account is changed
-  // window.ethereum.on("accountsChanged", accountChangeHandler); should we update account details if user connectes another account from metamask
+  window.ethereum.on("accountsChanged", accountChangeHandler); //should we update account details if user connectes another account from metamask
   window.ethereum.on("chainChanged", refreshPage);
 
   // const updateEthers = () => {

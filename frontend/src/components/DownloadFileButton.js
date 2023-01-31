@@ -76,13 +76,4 @@ const DownloadFileButton = ({ projectData }) => {
 };
 
 export default DownloadFileButton;
-//   return (
-//     <div className="App">
-//       <button onClick={() => decrypt()}>decrypt</button>
-//       {fileURL ? (
-//         <a href={fileURL} target="_blank">
-//           viewFile
-//         </a>
-//       ) : null}
-//     </div>
-//   );
+

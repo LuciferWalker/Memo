@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { MemoContext } from "../context/MemoContext";
 import image from "../images/star.png";
-import { userAddress } from "../utils";
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
@@ -9,6 +9,8 @@ const CreatedMemos = () => {
   const [creatememo, setCreateMemo] = useState(true);
   const [createdProjects, setCreatedProjects] = useState(null);
   const [boughtProjects, setBoughtProjects] = useState(null);
+
+  const { account:userAddress } = useContext(MemoContext);
 
   const getCreatedProjects = async (userAddress) => {
     const response = await fetch(
@@ -28,7 +30,7 @@ const CreatedMemos = () => {
 
   useEffect(() => {
     // let { userAddress } = getUserWalletDetails();
-    console.log(userAddress)
+    // console.log(userAddress)
     getCreatedProjects(userAddress);
     getBoughtProjects(userAddress);
 
