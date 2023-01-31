@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useContext} from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
 import { marketplaceContract, getUserWalletDetails } from "../utils";
@@ -11,9 +11,12 @@ import {
 import app from "../firebase";
 // React Notification
 import { NotificationManager } from "react-notifications";
-import { Navigate } from "react-router-dom";
+import { MemoContext } from "../context/MemoContext";
 
 function UploadButton({ formData, projectImage, projectFileEvent }) {
+
+    const { checkUser, marketplaceContract, account, provider } =
+      useContext(MemoContext);
   const [loader, setLoader] = useState(null);
   const FLOW = {
     1: "Encrypting and Uplaoding File to IPFS",
