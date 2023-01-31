@@ -83,9 +83,9 @@ const PostDescription = () => {
   return (
     <div style={post}>
       <div style={{ padding: "40px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Navbar />
-        </div>
+        </div> */}
         <div style={{display:'flex',justifyContent: 'space-between', gap:'20px'}}>
           <table>
             <tr>
