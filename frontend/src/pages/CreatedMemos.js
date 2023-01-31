@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
-import { getUserWalletDetails } from "../utils";
+import { userAddress } from "../utils";
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
@@ -27,7 +27,8 @@ const CreatedMemos = () => {
   };
 
   useEffect(() => {
-    let { userAddress } = getUserWalletDetails();
+    // let { userAddress } = getUserWalletDetails();
+    console.log(userAddress)
     getCreatedProjects(userAddress);
     getBoughtProjects(userAddress);
 
@@ -49,15 +50,17 @@ const CreatedMemos = () => {
             overflowY: "auto",
           }}
         >
-          <h3>CREATED PROJECTS</h3>
+          <h4>CREATED PROJECTS</h4>
           {createdProjects == null ? (
-            <h2 style={{ color: "black" }}>Create a Project</h2>
+            <h3 style={{ color: "white" }}>
+              No Projects Created, yet &#59;&#41;
+            </h3>
           ) : (
             createdProjects?.map((card, index) => (
               <>
                 <table
                   key={index}
-                  onClick={() => navigate(`/${card.projectId}`)}
+                  onClick={() => navigate(`/explore/${card.projectId}`)}
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(0, 27, 96, 0.7) 0%, rgba(127, 1, 1, 0) 100%)",

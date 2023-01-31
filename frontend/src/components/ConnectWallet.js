@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { loadContracts, updateAccount } from "../utils";
+import { loadContracts, updateAccount, userAddress } from "../utils";
 
 const ConnectWallet = () => {
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [account, setAccount] = useState("Connect Wallet");
+  const [account, setAccount] = useState(userAddress || "Connect Wallet");
   const [userBalance, setUserBalance] = useState(null);
 
   // useEffect(() => {

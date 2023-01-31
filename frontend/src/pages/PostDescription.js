@@ -88,10 +88,7 @@ const PostDescription = () => {
     //after successful purchase, redirect them to download page
   };
   const showAddress = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    console.log("address: ", address);
+    console.log("address: ", userAddress);
   };
   return (
     <>

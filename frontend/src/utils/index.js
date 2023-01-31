@@ -2,8 +2,8 @@ import MarketplaceAddress from "../contractsData/Marketplace-address.json";
 import MarketplaceAbi from "../contractsData/Marketplace.json";
 import { ethers } from "ethers";
 
-let provider, signer, userAddress, isWalletConnected;
-export let marketplaceContract;
+let provider, signer, isWalletConnected;
+export let marketplaceContract,userAddress;
 
 export const updateAccount = async () => {
   provider = new ethers.providers.Web3Provider(window.ethereum);

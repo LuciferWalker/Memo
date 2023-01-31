@@ -11,13 +11,15 @@ export const BuyTokenButton = ({ projectData }) => {
   const handleBuyToken = async () => {
     // const validation = await checkUser(sampleProjectData.projectId);
 
-    if (1) {
+    // if (!validation) {
       let { marketplaceContract, provider, signer } = loadContracts();
 
       const tx = await marketplaceContract.buyProjectToken(
-        sampleProjectData.projectId,
+        projectData.projectId,
         {
-          value: ethers.utils.parseEther((sampleProjectData.tokenPrice / 10 ** 18).toString()), //in ethers
+          value: ethers.utils.parseEther(
+            (projectData.tokenPrice / 10 ** 18).toString()
+          ), //in ethers
         }
       );
 
@@ -30,7 +32,7 @@ export const BuyTokenButton = ({ projectData }) => {
       //check if transaction is successful logic
 
       window.location.reload();
-    }
+    // }
   };
 
   return (
