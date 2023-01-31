@@ -134,7 +134,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(uploadResponse);
 
     formData.fileCid = uploadResponse.data.Hash;
-    formData.fileSize = uploadResponse.data.Size;
+    formData.fileSize = uploadResponse.data.Size/1000000; // converting fileSize to MB
     formData.fileName = uploadResponse.data.Name;
   };
 
