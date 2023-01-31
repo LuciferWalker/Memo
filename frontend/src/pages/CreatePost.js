@@ -301,7 +301,7 @@ const CreatePost = () => {
                 <div style={{ marginTop: "10px" }}>
                   <tr style={{ verticalAlign: "middle" }}>
                     <td style={{ width: "250px" }}>
-                      <label class="custom-file-upload">Project File (.zip format)</label>
+                      <label className="custom-file-upload">Project File (.zip format)</label>
                     </td>
                     <td>
                       <input

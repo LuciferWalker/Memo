@@ -20,9 +20,8 @@ function App() {
       <Navbar color="red" />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />}>
-          <Route path=":projectId" element={<PostDescription />} />
-        </Route>
+        <Route path="explore" element={<Explore />}/>
+          <Route path="/explore/:projectId" element={<PostDescription />} />
         <Route path="/download" element={<Download />} />
         <Route path="/display" element={<Display />} />
 
@@ -32,6 +31,8 @@ function App() {
           <Route path="boughtMemos" element={<BoughtMemos />} />
         </Route>
       </Routes>
+
+      {/* <Route path="*" element={<>error</>} /> */}
     </>
   );
 }
