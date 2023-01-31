@@ -259,7 +259,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     await applyAccessCondition();
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    navigate('/explore');
+    navigate('explore');
     // navigate("/display", {
     //   state: {
     //     title: projectName,
