@@ -1,34 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
-import Navbar from "../components/Navbar.js";
-import BoughtMemos from "./BoughtMemos";
-import CreatePosttry from "./CreatePosttry";
-import Dashboard from "../components/Dashboard";
+
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
 
-  const [hover, setHover] = useState(false);
   const [creatememo, setCreateMemo] = useState(true);
-  const [boughtmemo, setBoughtMemo] = useState(false);
-  const [createpost, setCreatePost] = useState(false);
-
   const [createdProjects, setCreatedProjects] = useState(null);
   const [boughtProjects, setBoughtProjects] = useState(null);
-
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
-
-  const post = {
-    backgroundImage: `url(${image})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-  };
 
   const getCreatedProjects = async () => {
     const response = await fetch(

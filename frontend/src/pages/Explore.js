@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import image from "../images/star.png";
-import Navbar from "../components/Navbar.js";
 import { useEffect, useState } from "react";
 
 const Explore = () => {
