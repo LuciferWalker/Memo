@@ -20,9 +20,9 @@ app.get("/getUserData/:userAddress", async (req, res) => {
   try {
     //check if the user exists in the db
     const user = await User.findOne({ address:userAddress });
-    res.status(200).send(user);
+    res.status(200).json(user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json(err);
   }
 });
 

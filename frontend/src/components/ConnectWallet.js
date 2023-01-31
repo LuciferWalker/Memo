@@ -5,7 +5,7 @@ import { MemoContext } from "../context/MemoContext";
 const ConnectWallet = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
-  const {account, setAccount, } = useContext(MemoContext)
+  const { account, setAccount } = useContext(MemoContext);
 
   // useEffect(() => {
   //   localStorage.setItem("account", account);
@@ -48,6 +48,13 @@ const ConnectWallet = () => {
   const accountChangeHandler = async () => {
     const { provider, signer, userAddress } = await updateAccount();
     setAccount(userAddress);
+    const res = await fetch("http://localhost:3001/createUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ address: userAddress }),
+    });
     // setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
     await getUserBalance(userAddress.toString());
     // updateEthers();
@@ -112,7 +119,11 @@ const ConnectWallet = () => {
           width="20"
           height="20"
         />
-        <span>{account?account.slice(0, 6) + "..." + account.slice(-4):"Connect Wallet"}</span>
+        <span>
+          {account
+            ? account.slice(0, 6) + "..." + account.slice(-4)
+            : "Connect Wallet"}
+        </span>
       </button>
       {userBalance && <div>Balance: {userBalance}</div>}
 

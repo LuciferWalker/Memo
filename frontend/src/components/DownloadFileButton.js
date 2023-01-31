@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { ethers } from "ethers";
+import { MemoContext } from "../context/MemoContext";
+import lighthouse from "@lighthouse-web3/sdk";
 
-export const DownloadFileButton = ({ projectData }) => {
+const DownloadFileButton = ({ projectData }) => {
+  const [hover, sethover] = useState(false);
+  const [fileUrl, setFileUrl] = useState(null);
+  const handleMouseEnter = () => {
+    sethover(true);
+  };
+  const handleMouseLeave = () => {
+    sethover(false);
+  };
   const sign_auth_message = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -33,7 +44,7 @@ export const DownloadFileButton = ({ projectData }) => {
 
     const url = URL.createObjectURL(decrypted);
     console.log(url);
-    setFileURL(url);
+    setFileUrl(url);
   };
 
   const handleDownloadFile = async () => {
@@ -42,13 +53,29 @@ export const DownloadFileButton = ({ projectData }) => {
 
   return (
     <>
-      <button onClick={handleDownloadFile}>Download</button>
+      <span
+        style={{
+          marginLeft: "30px",
+          paddingRight: "10px",
+          color: hover ? "#658BD6" : "white",
+          cursor: "pointer",
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleDownloadFile}
+      >
+        DOWNLOAD
+      </span>
+      {fileUrl ? (
+        <a href={fileUrl} target="_blank">
+          viewFile
+        </a>
+      ) : null}
     </>
   );
 };
 
 export default DownloadFileButton;
-
 //   return (
 //     <div className="App">
 //       <button onClick={() => decrypt()}>decrypt</button>
