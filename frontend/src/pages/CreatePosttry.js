@@ -3,27 +3,36 @@ import UploadButton from "../components/UploadButton";
 import Web3 from "web3/dist/web3.min.js";
 
 import { useFormik } from "formik";
-import Dashboard from "../components/Dashboard";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
+const initialValues = {
+  projectName: "",
+  tokenSymbol: "",
+  projectDescription: "",
+  tokenPrice: "",
+  totalTokenSupply:"",
+};  
 
-const CreatePosttry = () => {
-  const [formData, setFormData] = useState({
-    projectName: "",
-    tokenSymbol: "",
-    projectDescription: "",
-    projectImageUrl: "",
-    tokenPrice: "",
-    totalTokenSupply: "",
-    numberOfCreators: "",
-    creators: [],
+const CreatePost = () => {
+
+  const {values, errors, handleBlur, handleChange, handleSubmit} = useFormik({
+    initialValues:initialValues,
+    // validationSchema: signUpSchema,
+    onSubmit: (values) => {
+      console.log(
+        values
+      );
+      // action.resetForm();
+    },
   });
 
-  const { errors, values, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: formData,
-    onSubmit: (values) => {
-      console.log(values);
-    },
+  console.log(
+    
+  );
+
+  const [formData, setFormData] = useState({
+    numberOfCreators: "",
+    creators: [],
   });
 
   const inputTag = {
@@ -32,194 +41,180 @@ const CreatePosttry = () => {
     marginLeft: "40px",
   };
 
-  //Unused
-  const handleMouseEnter = () => {
-    sethoversub(true);
-  };
-  const handleMouseLeave = () => {
-    sethoversub(false);
-  };
+  // const [errorn, setErrorN] = useState("");
+  // const [error, setError] = useState("");
+  // const [errord, setErrorD] = useState("");
+  // const [errorp, setErrorP] = useState("");
+  // const [errors, setErrorS] = useState("");
+  // const [errorc, setErrorC] = useState("");
+  // const [errorr, setErrorR] = useState("");
+  // const [erroradd, setErrorAdd] = useState("");
 
-  const [hoversub, sethoversub] = useState(false);
-
-  //   const [errorn, setErrorN] = useState("");
-  //   const [error, setError] = useState("");
-  //   const [errord, setErrorD] = useState("");
-  //   const [errorp, setErrorP] = useState("");
-  // //   const [errors, setErrorS] = useState("");
-  //   const [errorc, setErrorC] = useState("");
-  //   const [errorr, setErrorR] = useState("");
-  //   const [erroradd, setErrorAdd] = useState("");
-
-  //   const [projectImage, setProjectImage] = useState(null);
-  //   const [projectFileEvent, setProjectFileEvent] = useState(null);
+  const [projectImage, setProjectImage] = useState(null);
+  const [projectFileEvent, setProjectFileEvent] = useState(null);
 
   function addQuestion() {
     return formData.creators?.map((creator, index) => (
+      <form onSubmit={handleSubmit}>
       <div
         id="creator"
         key={index}
-        style={{ fontSize: "12px", marginTop: "5px" }}
+        style={{ fontSize: "12px", marginTop: "5px",marginLeft:'170px' }}
       >
         <tr>
           <label style={{ marginLeft: "130px" }}>Social Login</label>
           <input
             placeholder="https://github.com/LuciferWalker/Memo"
             name="creatorSocial"
-            value={values.creatorSocial}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            // onChange={(e) => {
-            //   handleInputs(e, index);
-            // }}
+            onChange={(e) => {
+              handleInputs(e, index);
+            }}
+            value={creator.creatorSocial}
             type="text"
             style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
           />
+          {/* <span style={errorStyle}>{errorsocial}</span> */}
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>Wallet Add</label>
           <input
             placeholder="0xbE3450a8E8B3584D7722f040C386efB38913D58C"
             name="creatorAddress"
-            value={values.creatorAddress}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            // onChange={(e) => {
-            //   handleInputs(e, index);
-            // }}
+            onChange={(e) => {
+              handleInputs(e, index);
+            }}
+            value={creator.creatorAddress}
             type="text"
             style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
           />
+          {/* <span style={errorStyle}>{erroradd}</span> */}
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>%Royalty Distribution</label>
           <input
-            // onChange={(e) => {
-            //   handleInputs(e, index);
-            // }}
-            value={values.creatorShare}
-            onChange={handleChange}
-            onBlur={handleBlur}
+            onChange={(e) => {
+              handleInputs(e, index);
+            }}
             name="creatorShare"
             type="number"
+            value={creator.creatorShare}
+            onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
-            // onChange={(e) => setRoyalDist(e.target.value)}
-            // value={royalDist}
           />
+          {/* <span style={errorStyle}>{errorr}</span> */}
         </tr>
       </div>
+      </form>
     ));
   }
 
-  const showData = () => {
-    console.log(formData);
+  const handleInputs = (e, index = -1) => {
+    let key = e.target.name;
+
+    if (index < 0) {
+      //not creators data
+      let value;
+
+      if (key === "projectImage") {
+        setProjectImage(e.target.files[0]);
+      } else if (key === "projectFileEvent") {
+        setProjectFileEvent(e);
+      } else if (key === "numberOfCreators") {
+        let arr;
+        let value = e.target.value;
+        // validation(key, e);
+        if (value === "") {
+          arr = Array.from(Array(parseInt("0")), () => ({}));
+        } else {
+          arr = Array.from(Array(parseInt(value)), () => ({})); //[]
+        }
+        setFormData({
+          ...formData,
+          [key]: value,
+          creators: arr,
+        });
+      } else {
+        let value = e.target.value;
+        setFormData({ ...formData, [key]: value });
+        // validation(key, e);
+      }
+    } else {
+      //creators data
+      let value = e.target.value;
+      let creatorObject = formData.creators[index];
+      let updatedCreatorObject = { ...creatorObject, [key]: value };
+      formData.creators[index] = updatedCreatorObject;
+
+      setFormData({ ...formData, creators: formData.creators });
+      console.log(formData.creators[index]);
+      // validation(key, formData.creators[index]);
+    }
   };
 
-  //   const handleInputs = (e, index = -1) => {
-  //     let key = e.target.name;
+  const blockInvalidChar = e => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault();
 
-  //     if (index < 0) {
-  //       //not creators data
-  //       let value;
-
-  //       if (key === "projectImage") {
-  //         setProjectImage(e.target.files[0]);
-  //       } else if (key === "projectFileEvent") {
-  //         setProjectFileEvent(e);
-  //       } else if (key === "numberOfCreators") {
-  //         let arr;
-  //         let value = e.target.value;
-  //         validation(key, e);
-  //         if (value === "") {
-  //           arr = Array.from(Array(parseInt("0")), () => ({}));
-  //         } else {
-  //           arr = Array.from(Array(parseInt(value)), () => ({})); //[]
-  //         }
-  //         setFormData({
-  //           ...formData,
-  //           [key]: value,
-  //           creators: arr,
-  //         });
-  //       } else {
-  //         let value = e.target.value;
-  //         setFormData({ ...formData, [key]: value });
-  //         validation(key, e);
-  //       }
+  // function validation(k, e) {
+  //   if (k == "creatorShare" || k == "creatorAddress") {
+  //     // if(k == 'creatorShare'){
+  //     // console.log(e.creators);
+  //     if (e.creatorShare < 100) {
+  //       setErrorR("Empty");
   //     } else {
-  //       //creators data
-  //       let value = e.target.value;
-  //       let creatorObject = formData.creators[index];
-  //       let updatedCreatorObject = { ...creatorObject, [key]: value };
-  //       formData.creators[index] = updatedCreatorObject;
-
-  //       setFormData({ ...formData, creators: formData.creators });
-  //       console.log(formData.creators[index]);
-  //       validation(key, formData.creators[index]);
+  //       setErrorR("");
   //     }
-  //   };
-
-  //   function validation(k, e) {
-  //     if (k == "creatorShare" || k == "creatorAddress") {
-  //       // if(k == 'creatorShare'){
-  //       // console.log(e.creators);
-  //       if (e.creatorShare < 100) {
-  //         setErrorR("Empty");
-  //       } else {
-  //         setErrorR("");
-  //       }
-  //       if (Web3.utils.isAddress(e.creatorAddress)) {
-  //         setErrorAdd("Valid");
-  //       } else {
-  //         setErrorAdd("Not Valid");
-  //       }
-  //       // }
+  //     if (Web3.utils.isAddress(e.creatorAddress)) {
+  //       setErrorAdd("Valid");
   //     } else {
-  //       let value = e.target.value;
-  //       // let key = k;
-  //       if (k == "projectName") {
-  //         if (value == "") {
-  //           setErrorN("Should Not be Empty");
-  //         } else {
-  //           setErrorN("");
-  //         }
+  //       setErrorAdd("Not Valid");
+  //     }
+  //     // }
+  //   } else {
+  //     let value = e.target.value;
+  //     // let key = k;
+  //     if (k == "projectName") {
+  //       if (value == "") {
+  //         setErrorN("Should Not be Empty");
+  //       } else {
+  //         setErrorN("");
   //       }
-  //       if (k == "tokenSymbol") {
-  //         if (value == "") {
-  //           setError("Should Not be Empty");
-  //         } else {
-  //           setError("");
-  //         }
+  //     }
+  //     if (k == "tokenSymbol") {
+  //       if (value == "") {
+  //         setError("Should Not be Empty");
+  //       } else {
+  //         setError("");
   //       }
-  //       if (k == "projectDescription") {
-  //         if (value == "") {
-  //           setErrorD("Should Not be Empty");
-  //         } else {
-  //           setErrorD("");
-  //         }
+  //     }
+  //     if (k == "projectDescription") {
+  //       if (value == "") {
+  //         setErrorD("Should Not be Empty");
+  //       } else {
+  //         setErrorD("");
   //       }
-  //       if (k == "tokenPrice") {
-  //         if (value == "") {
-  //           setErrorP("Should Not be Empty");
-  //         } else {
-  //           setErrorP("");
-  //         }
+  //     }
+  //     if (k == "tokenPrice") {
+  //       if (value == "") {
+  //         setErrorP("Should Not be Empty");
+  //       } else {
+  //         setErrorP("");
   //       }
-  //       if (k == "totalTokenSupply") {
-  //         if (value == "") {
-  //           setErrorS("Should Not be Empty");
-  //         } else {
-  //           setErrorS("");
-  //         }
+  //     }
+  //     if (k == "totalTokenSupply") {
+  //       if (value == "") {
+  //         setErrorS("Should Not be Empty");
+  //       } else {
+  //         setErrorS("");
   //       }
-  //       if (k == "numberOfCreators") {
-  //         if (value == "") {
-  //           setErrorC("Should Not be Empty");
-  //         } else {
-  //           setErrorC("");
-  //         }
+  //     }
+  //     if (k == "numberOfCreators") {
+  //       if (value == "") {
+  //         setErrorC("Should Not be Empty");
+  //       } else {
+  //         setErrorC("");
   //       }
   //     }
   //   }
+  // }
 
   const errorStyle = {
     color: "red",
@@ -227,25 +222,18 @@ const CreatePosttry = () => {
     marginLeft: "5px",
   };
 
-  // return(
-  //   <>
-  //     create project
-  //   </>
-  // )
   return (
     <div>
       <div style={{ overflow: "hidden", width: "100%" }}>
         <div
           style={{
-            width: "90%",
-            height: "450px",
+            width: "1000px",
+            height: "500px",
             overflowX: "hidden",
             overflowY: "auto",
             float: "left",
           }}
         >
-          <button onClick={showData}>Show form data</button>
-
           <form onSubmit={handleSubmit}>
             <div
               style={{
@@ -270,8 +258,8 @@ const CreatePosttry = () => {
                         value={values.projectName}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        // (e) => setFormData(e.target.value)
                       />
+                      {/* <span style={errorStyle}>{errorn}</span> */}
                     </td>
                   </tr>
                 </div>
@@ -291,6 +279,7 @@ const CreatePosttry = () => {
                         onBlur={handleBlur}
                       />
                     </td>
+                    {/* <span style={errorStyle}>{error}</span> */}
                   </tr>
                 </div>
                 {/* Project Image */}
@@ -304,7 +293,7 @@ const CreatePosttry = () => {
                         name="projectImage"
                         type="file"
                         accept="image/png, image/gif, image/jpeg, image/jpg"
-                        onChange={handleChange}
+                        onChange={handleInputs}
                         style={{
                           marginLeft: "40px",
                           padding: "8px",
@@ -318,7 +307,7 @@ const CreatePosttry = () => {
                 <div style={{ marginTop: "10px" }}>
                   <tr style={{ verticalAlign: "middle" }}>
                     <td style={{ width: "250px" }}>
-                      <label>Project File (.zip format)</label>
+                      <label className="custom-file-upload">Project File (.zip format)</label>
                     </td>
                     <td>
                       <input
@@ -327,10 +316,11 @@ const CreatePosttry = () => {
                           marginLeft: "40px",
                           padding: "8px",
                           width: "200px",
+                          size:"100"
                         }}
                         accept="application/zip"
                         type="file"
-                        onChange={handleChange}
+                        onChange={handleInputs}
                       />
                     </td>
                   </tr>
@@ -351,6 +341,7 @@ const CreatePosttry = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                       ></textarea>
+                      {/* <span style={errorStyle}>{errord}</span> */}
                     </td>
                   </tr>
                 </div>
@@ -358,18 +349,20 @@ const CreatePosttry = () => {
                 <div style={{ marginTop: "10px" }}>
                   <tr>
                     <td style={{ width: "250px" }}>
-                      <label>Price of each Token (in Wei)</label>
+                      <label>Price of each Token (in FIL)</label>
                     </td>
                     <td>
                       <input
-                        placeholder="100000000000000000"
+                        placeholder="10"
                         name="tokenPrice"
                         type="number"
                         style={inputTag}
+                        onKeyDown={blockInvalidChar}
                         value={values.tokenPrice}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
+                      {/* <span style={errorStyle}>{errorp}</span> */}
                     </td>
                   </tr>
                 </div>
@@ -386,10 +379,11 @@ const CreatePosttry = () => {
                         name="totalTokenSupply"
                         style={inputTag}
                         value={values.totalTokenSupply}
+                        onKeyDown={blockInvalidChar}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      <span style={errorStyle}>{errors}</span>
+                      {/* <span style={errorStyle}>{errors}</span> */}
                     </td>
                   </tr>
                 </div>
@@ -401,12 +395,16 @@ const CreatePosttry = () => {
                     </td>
                     <td>
                       <input
+                        type="number"
                         placeholder="2"
                         name="numberOfCreators"
-                        value={values.numberOfCreators}
-                        onChange={handleChange}
+                        value={formData.numberOfCreators}
+                        onKeyDown={blockInvalidChar}
+                        style={inputTag}
+                        onChange={handleInputs}
                         onBlur={handleBlur}
                       />
+                      {/* <span style={errorStyle}>{errorc}</span> */}
                     </td>
                   </tr>
                 </div>
@@ -416,15 +414,15 @@ const CreatePosttry = () => {
                   </tr>
                 </div>
               </table>
-              <div style={{ marginLeft: "270px", marginTop: "20px" }}>
+              <div style={{ textAlign:'center', marginTop: "10px" }}>
                 {/* <UploadButton
                   formData={formData}
                   projectImage={projectImage}
                   projectFileEvent={projectFileEvent}
                 /> */}
-                {/* <button type="submit" onClick={handleSubmit}>
+                <button type="submit">
                       SUBMIT
-                    </button> */}
+                    </button>
               </div>
             </div>
           </form>
@@ -434,4 +432,4 @@ const CreatePosttry = () => {
   );
 };
 
-export default CreatePosttry;
+export default CreatePost;

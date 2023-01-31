@@ -12,8 +12,10 @@ import app from "../firebase";
 // React Notification
 import { NotificationManager } from "react-notifications";
 import { MemoContext } from "../context/MemoContext";
+import { useNavigate } from "react-router-dom";
 
 function UploadButton({ formData, projectImage, projectFileEvent }) {
+  const navigate = useNavigate();
 
     const { checkUser, marketplaceContract, account, provider } =
       useContext(MemoContext);
@@ -257,6 +259,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     await applyAccessCondition();
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
+    navigate('/explore');
     // navigate("/display", {
     //   state: {
     //     title: projectName,

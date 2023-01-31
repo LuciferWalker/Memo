@@ -9,6 +9,8 @@ import Display from "./pages/Display";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
 import CreatePosttry from "./pages/CreatePosttry";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 import "./styles/App.css";
 import BoughtMemos from "./pages/BoughtMemos";
@@ -31,6 +33,7 @@ function App() {
           <Route path="boughtMemos" element={<BoughtMemos />} />
         </Route>
       </Routes>
+      <NotificationContainer/>
 
       {/* <Route path="*" element={<>error</>} /> */}
     </>
