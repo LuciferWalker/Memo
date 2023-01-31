@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { loadContracts, updateAccount } from "../utils";
-
+import { updateAccount } from "../utils";
+import { MemoContext } from "../context/MemoContext";
 const ConnectWallet = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [account, setAccount] = useState("Connect Wallet");
   const [userBalance, setUserBalance] = useState(null);
+  const {account, setAccount, } = useContext(MemoContext)
 
   // useEffect(() => {
   //   localStorage.setItem("account", account);
@@ -47,8 +47,8 @@ const ConnectWallet = () => {
 
   const accountChangeHandler = async () => {
     const { provider, signer, userAddress } = await updateAccount();
-    setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
-    loadContracts();
+    setAccount(userAddress);
+    // setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
     await getUserBalance(userAddress.toString());
     // updateEthers();
   };
@@ -112,7 +112,7 @@ const ConnectWallet = () => {
           width="20"
           height="20"
         />
-        <span>{account}</span>
+        <span>{account?account.slice(0, 6) + "..." + account.slice(-4):"Connect Wallet"}</span>
       </button>
       {userBalance && <div>Balance: {userBalance}</div>}
 

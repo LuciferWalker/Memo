@@ -40,16 +40,4 @@ export const loadContracts = () => {
   return marketplaceContract;
 };
 
-export const checkUser = async (projectId) => {
-  let userData = await fetch(
-    `http://localhost:3001//getUserData/:${userAddress}`
-  );
 
-  userData = await userData.json();
-  return (
-    projectId in userData.boughtProjects ||
-    projectId in userData.createdProjects
-  );
-  //check if the user already owns the token
-  //check if the user has craeted this project
-};

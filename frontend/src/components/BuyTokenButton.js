@@ -1,23 +1,24 @@
-import React from "react";
-import { checkUser, loadContracts } from "../utils";
+import React, { useContext } from "react";
 import { ethers } from "ethers";
+import { useParams } from "react-router-dom";
+import { MemoContext } from "../context/MemoContext";
 
 export const BuyTokenButton = ({ projectData }) => {
-  const sampleProjectData = {
-    projectId: 1,
-    tokenPrice: "1000000000000000000",
-  };
-
+  // const sampleProjectData = {
+  //   projectId: 1,
+  //   tokenPrice: "1000000000000000000",
+  // };
+  const { checkUser, loadContracts, marketplaceContract, provider, signer  } =useContext(MemoContext)
+  let { projectId } = useParams();
+  console.log(projectData);
   const handleBuyToken = async () => {
-    // const validation = await checkUser(sampleProjectData.projectId);
 
-    if (1) {
-      let { marketplaceContract, provider, signer } = loadContracts();
-
+    const userType = await checkUser(projectData.projectId);
+    if (userType===2) {
       const tx = await marketplaceContract.buyProjectToken(
-        sampleProjectData.projectId,
+        projectId,
         {
-          value: ethers.utils.parseEther((sampleProjectData.tokenPrice / 10 ** 18).toString()), //in ethers
+          value: ethers.utils.parseEther(projectData.tokenPrice.toString()), //in ethers
         }
       );
 
@@ -31,6 +32,7 @@ export const BuyTokenButton = ({ projectData }) => {
 
       window.location.reload();
     }
+    else alert("You can't purchase this token")
   };
 
   return (

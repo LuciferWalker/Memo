@@ -19,7 +19,7 @@ app.get("/getUserData/:userAddress", async (req, res) => {
   const { userAddress } = req.params;
   try {
     //check if the user exists in the db
-    const user = await User.findOne({ userAddress });
+    const user = await User.findOne({ address:userAddress });
     res.status(200).send(user);
   } catch (err) {
     res.status(500).send(err);
