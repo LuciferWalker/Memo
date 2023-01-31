@@ -1,13 +1,11 @@
   import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
-import Navbar from "../components/Navbar.js";
-import { useLocation } from "react-router";
 import { checkUser } from "../utils";
+import { ethers } from "ethers";
 
 const PostDescription = () => {
-  const location = useLocation();
 
   const [projectDetail, setprojectDetail] = useState(null)
   const [isCreator, setIsCreator] = useState(false)
@@ -79,8 +77,16 @@ const PostDescription = () => {
 
     //after successful purchase, redirect them to download page
   }
-
+  const showAddress = async ()=>{
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    console.log("address: ", address);
+  }
   return (
+    <>
+
+    <button onClick={showAddress}>Show address</button>
     <div style={post}>
       <div style={{ padding: "40px" }}>
         <div style={{display:'flex',justifyContent: 'space-between', gap:'20px'}}>
@@ -207,6 +213,8 @@ const PostDescription = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 
