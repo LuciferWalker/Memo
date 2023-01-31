@@ -58,20 +58,6 @@ const CreatePost = () => {
         key={index}
         style={{ fontSize: "12px", marginTop: "5px",marginLeft:'170px' }}
       >
-        {/* <tr>
-          <label style={{ marginLeft: "130px" }}>
-            Creator Name {index + 1}
-          </label>
-          <input
-            type="text"
-            value={creator.creatorName}
-            onChange={(e) => {
-              handleInputs(e, index);
-            }}
-            name="creatorName"
-            style={{ marginLeft: "56px", padding: "4px", width: "160px" }}
-          />
-        </tr> */}
         <tr>
           <label style={{ marginLeft: "130px" }}>Social Login</label>
           <input
@@ -111,8 +97,6 @@ const CreatePost = () => {
             value={creator.creatorShare}
             onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
-            // onChange={(e) => setRoyalDist(e.target.value)}
-            // value={royalDist}
           />
           <span style={errorStyle}>{errorr}</span>
         </tr>
@@ -269,7 +253,6 @@ const CreatePost = () => {
                         style={inputTag}
                         value={formData.projectName}
                         onChange={handleInputs}
-                        // (e) => setFormData(e.target.value)
                       />
                       <span style={errorStyle}>{errorn}</span>
                     </td>
