@@ -342,11 +342,11 @@ const CreatePost = () => {
                 <div style={{ marginTop: "10px" }}>
                   <tr>
                     <td style={{ width: "250px" }}>
-                      <label>Price of each Token (in Wei)</label>
+                      <label>Price of each Token (in FIL)</label>
                     </td>
                     <td>
                       <input
-                        placeholder="100000000000000000"
+                        placeholder="10"
                         name="tokenPrice"
                         type="number"
                         style={inputTag}
