@@ -86,9 +86,6 @@ const Download = () => {
   return (
     <>
       <div style={{ padding: "40px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Navbar />
-        </div>
 
         <div style={{ textAlign: "center" }}>
           <img src={Img} width="40%" />
