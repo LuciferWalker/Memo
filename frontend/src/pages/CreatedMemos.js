@@ -41,7 +41,6 @@ const CreatedMemos = () => {
     }
   }, []);
 
-  console.log(boughtProjects, createdProjects);
 
   return (
     <>

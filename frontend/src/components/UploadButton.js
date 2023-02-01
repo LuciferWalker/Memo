@@ -66,10 +66,6 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(percentageDone);
   };
 
-  const checkCreatorData = () => {
-    //check the data they have entered or add validation in the form itself
-  };
-
   const handleLoader = (flowStage) => {
     console.log(FLOW[flowStage]);
   };

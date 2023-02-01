@@ -32,7 +32,6 @@ const PostDescription = () => {
 
   const setUser = async () => {
     let type = await checkUser(projectDetail.projectId);
-    console.log(type);
     setUserType(type);
   };
 

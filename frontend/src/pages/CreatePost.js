@@ -141,7 +141,6 @@ const CreatePost = () => {
       formData.creators[index] = updatedCreatorObject;
 
       setFormData({ ...formData, creators: formData.creators });
-      console.log(formData.creators[index]);
       validation(key, formData.creators[index]);
     }
   };

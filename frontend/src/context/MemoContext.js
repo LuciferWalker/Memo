@@ -13,9 +13,7 @@ export const MemoProvider = ({ children }) => {
 
   const checkUser = async (projectId) => {
     if (!account) return;
-    console.log(account);
     let userData = await fetch(`http://localhost:3001/getUserData/${account}`);
-    console.log(userData);
     userData = await userData.json();
 
     if (userData.boughtProjects.includes(projectId))

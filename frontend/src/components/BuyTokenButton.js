@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { Children, useContext, useState } from "react";
 import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
+import { NotificationManager } from "react-notifications";
 
 export const BuyTokenButton = ({ projectData }) => {
   const [hover, sethover] = useState(false);
@@ -53,10 +54,16 @@ export const BuyTokenButton = ({ projectData }) => {
         });
 
         window.location.reload();
-      } else alert("You can't purchase this token");
+      } else {
+        NotificationManager.error(
+          "You can't purchase this token",
+          "Failed!",
+          2000
+        );
+      }
     } catch (error) {
       //NOTIFICATION.SHOW(Error)
-      alert(error.data.message);
+      NotificationManager.error(error.data.message, "Failed!", 2000);
     }
   };
 

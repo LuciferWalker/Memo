@@ -20,7 +20,6 @@ const Explore = () => {
     getListedProjects();
   }, []);
 
-  console.log(listedProjects);
   const tab = {
     background:
       "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
