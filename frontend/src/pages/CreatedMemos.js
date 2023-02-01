@@ -53,8 +53,8 @@ const CreatedMemos = () => {
             overflowY: "auto",
           }}
         >
-          <h4>CREATED PROJECTS</h4>
-          {createdProjects == null ? (
+          <h2>CREATED PROJECTS</h2>
+          {createdProjects.length == 0 ? (
             <h3 style={{ color: "white" }}>
               No Projects Created, yet &#59;&#41;
             </h3>

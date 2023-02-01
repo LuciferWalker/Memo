@@ -4,17 +4,6 @@
   "sourceName": "web3/contracts/Marketplace.sol",
   "abi": [
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_projectCreationFee",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
       "anonymous": false,
       "inputs": [
         {
@@ -109,6 +98,30 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_newFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateProjectCreationFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectCreationFee",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
       "inputs": [],
       "name": "getCurrentProjectCounter",
       "outputs": [
@@ -193,19 +206,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_newFee",
-          "type": "uint256"
-        }
-      ],
-      "name": "updateProjectCreationFee",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
