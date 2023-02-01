@@ -1,4 +1,4 @@
-import React, { Children, useContext, useState } from "react";
+import React, {useContext, useState } from "react";
 import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
 import { NotificationManager } from "react-notifications";
