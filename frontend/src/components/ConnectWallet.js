@@ -5,10 +5,6 @@ const ConnectWallet = () => {
   const [userBalance, setUserBalance] = useState(null);
   const { account, setAccount } = useContext(MemoContext);
 
-  // useEffect(() => {
-  //   localStorage.setItem("account", account);
-  // }, [account, marketplaceContract]);
-
   // const networks = {
   //   hyperspace: {
   //     chainId: `0x${Number(3141)}`,
@@ -81,7 +77,7 @@ const ConnectWallet = () => {
   };
 
   //reload page if chain or account is changed
-  window.ethereum.on("accountsChanged", accountChangeHandler); //should we update account details if user connectes another account from metamask
+  window.ethereum.on("accountsChanged", accountChangeHandler); // should we update account details if user connectes another account from metamask
   window.ethereum.on("chainChanged", refreshPage);
 
   // const updateEthers = () => {

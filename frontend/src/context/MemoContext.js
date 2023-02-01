@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import MarketplaceAddress from "../contractsData/Marketplace-address.json";
-import MarketplaceAbi from "../contractsData/Marketplace.json";
+import React, { useEffect, useState } from 'react'
+import { ethers } from 'ethers'
+import MarketplaceAddress from '../contractsData/Marketplace-address.json'
+import MarketplaceAbi from '../contractsData/Marketplace.json'
 
-export const MemoContext = React.createContext();
+export const MemoContext = React.createContext()
 
 export const MemoProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
