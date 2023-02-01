@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadButton from "../components/UploadButton";
 import Web3 from "web3/dist/web3.min.js";
 import tick from '../images/tick.png'
@@ -8,7 +8,7 @@ import { useFormik } from "formik";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
-const CreatePost = () => {
+const CreatePost = (props) => {
   const [formData, setFormData] = useState({
     projectName: "",
     tokenSymbol: "",
@@ -19,6 +19,8 @@ const CreatePost = () => {
     numberOfCreators: "",
     creators: [],
   });
+
+  const [loadingData,setLoadingData] = useState('');
 
   const inputTag = {
     padding: "8px",
@@ -33,6 +35,12 @@ const CreatePost = () => {
   const handleMouseLeave = () => {
     sethoversub(false);
   };
+
+  useEffect(() => {
+    // setLoadingData(props.loadingdata);
+    // setLoadingData('change')
+  }, []);
+
 
   const [hoversub, sethoversub] = useState(false);
 
@@ -231,27 +239,35 @@ const CreatePost = () => {
     marginLeft: "5px",
   };
 
+  const pull_data = (data) => {
+    console.log(data); // LOGS DATA FROM CHILD (My name is Dean Winchester... &)
+  }
+
   return (
     <div>
       <div style={{ overflow: "hidden", width: "100%" }}>
+        <div style={{color:'#1aff1a',fontSize:'16px'}}>
+            <b>{loadingData}</b>
+        </div>
         <div
           style={{
-            width: "1000px",
+            width: "1050px",
             height: "500px",
             overflowX: "hidden",
             overflowY: "auto",
-            float: "left",
+            float:'left',
+            scrollbarWidth:'thin'
           }}
         >
-          <form>
             <div
               style={{
                 padding: "20px 0px 20px 60px",
                 color: "white",
                 backgroundColor: "rgba(0, 0, 0, 0.7)",
-                width: "100%",
+                width: "80%",
               }}
             >
+              <form>
               <table>
                 {/* Project Name */}
                 <div>
@@ -421,18 +437,19 @@ const CreatePost = () => {
                   </tr>
                 </div>
               </table>
-              <div style={{ textAlign:'center', marginTop: "10px" }}>
+              <div style={{ textAlign:'center',marginTop: "10px" }}>
                 <UploadButton
                   formData={formData}
                   projectImage={projectImage}
                   projectFileEvent={projectFileEvent}
+                  setLoadingData={setLoadingData}
                   />
                 {/* <button type="submit" onClick={handleSubmit}>
                       SUBMIT
                     </button> */}
               </div>
+              </form>
             </div>
-          </form>
         </div>
       </div>
     </div>
