@@ -2,6 +2,7 @@ import { useState } from "react";
 import UploadButton from "../components/UploadButton";
 import Web3 from "web3/dist/web3.min.js";
 import tick from '../images/tick.png'
+import { NotificationManager } from "react-notifications";
 
 import { useFormik } from "formik";
 
@@ -18,11 +19,6 @@ const CreatePost = () => {
     numberOfCreators: "",
     creators: [],
   });
-
-  //   const {errors, values, } = useFormik({
-  //     initialValues:formData,
-  //     onSubmit: (values)=>{}
-  //   })
 
   const inputTag = {
     padding: "8px",
@@ -48,6 +44,7 @@ const CreatePost = () => {
   const [errorc, setErrorC] = useState("");
   const [errorr, setErrorR] = useState("");
   const [erroradd, setErrorAdd] = useState("");
+  const [errorsocial, setErrorSocial] = useState("");
 
   const [projectImage, setProjectImage] = useState(null);
   const [projectFileEvent, setProjectFileEvent] = useState(null);
@@ -71,7 +68,7 @@ const CreatePost = () => {
             type="text"
             style={{ marginLeft: "77px", padding: "4px", width: "160px" }}
           />
-          {/* <span style={errorStyle}>{errorsocial}</span> */}
+          <span style={errorStyle}>{errorsocial}</span>
         </tr>
         <tr>
           <label style={{ marginLeft: "130px" }}>Wallet Add</label>
@@ -95,6 +92,7 @@ const CreatePost = () => {
             }}
             name="creatorShare"
             type="number"
+            min='0'
             value={creator.creatorShare}
             onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
@@ -151,16 +149,27 @@ const CreatePost = () => {
   const blockInvalidChar = e => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault();
 
   function validation(k, e) {
-    if (k == "creatorShare" || k == "creatorAddress") {
+    if (k== "creatorSocial" || k == "creatorShare" || k == "creatorAddress") {
+      if(k == "creatorSocial"){if (e.creatorSocial == '') {
+        setErrorSocial("Should not be Empty");
+        return false;
+      } else {
+        setErrorSocial(<img src={tick}/>);
+        return true;
+      }}
       if(k == "creatorShare"){if (e.creatorShare == '') {
         setErrorR("Should not be Empty");
+        return false;
       } else {
         setErrorR(<img src={tick}/>);
+        return true;
       }}
       if(k == "creatorAddress"){if (Web3.utils.isAddress(e.creatorAddress)) {
         setErrorAdd(<img src={tick}/>);
+        return true;
       } else {
         setErrorAdd("InValid Address");
+        return false;
       }
       }
     } else {
@@ -169,43 +178,55 @@ const CreatePost = () => {
       if (k == "projectName") {
         if (value == "") {
           setErrorN("Should Not be Empty");
+          return false;
         } else {
           setErrorN(<img src={tick}/>);
+          return true;
         }
       }
       if (k == "tokenSymbol") {
         if (value == "") {
           setError("Should Not be Empty");
+          return false;
         } else {
           setError(<img src={tick}/>);
+          return true;
         }
       }
       if (k == "projectDescription") {
         if (value == "") {
           setErrorD("Should Not be Empty");
+          return false;
         } else {
           setErrorD(<img src={tick}/>);
+          return true;
         }
       }
       if (k == "tokenPrice") {
         if (value == "") {
           setErrorP("Should Not be Empty");
+          return false;
         } else {
           setErrorP(<img src={tick}/>);
+          return true;
         }
       }
       if (k == "totalTokenSupply") {
         if (value == "") {
           setErrorS("Should Not be Empty");
+          return false;
         } else {
           setErrorS(<img src={tick}/>);
+          return true;
         }
       }
       if (k == "numberOfCreators") {
         if (value == "") {
           setErrorC("Should Not be Empty");
+          return false;
         } else {
           setErrorC(<img src={tick}/>);
+          return true;
         }
       }
     }
@@ -348,6 +369,7 @@ const CreatePost = () => {
                         placeholder="10"
                         name="tokenPrice"
                         type="number"
+                        min='0'
                         style={inputTag}
                         value={formData.tokenPrice}
                         onKeyDown={blockInvalidChar}
@@ -369,6 +391,7 @@ const CreatePost = () => {
                         type="number"
                         name="totalTokenSupply"
                         style={inputTag}
+                        min='0'
                         value={formData.totalTokenSupply}
                         onKeyDown={blockInvalidChar}
                         onChange={handleInputs}
@@ -388,6 +411,7 @@ const CreatePost = () => {
                         type="number"
                         placeholder="2"
                         name="numberOfCreators"
+                        min='0'
                         value={formData.numberOfCreators}
                         onKeyDown={blockInvalidChar}
                         style={inputTag}
