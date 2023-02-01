@@ -44,9 +44,11 @@ app.post("/createUser", async (req, res) => {
   //when user connects their wallet.
 
   const { address } = req.body;
+  console.log(address);
   try {
     //Create user data if they dont exist, once they connect their wallet
     let user = await User.findOne({ address: address });
+    console.log(user);
     if (!user) {
       user = await User.create({ address });
     }

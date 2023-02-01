@@ -22,12 +22,12 @@ const ConnectWallet = () => {
     //check if metmask exists
     if (window.ethereum) {
       try {
-        await window.ethereum.request({
+        const accounts = await window.ethereum.request({
           //returns an array of accounts
           method: "eth_requestAccounts",
         });
 
-        await accountChangeHandler();
+        await accountChangeHandler(accounts[0]);
 
         // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
@@ -38,11 +38,12 @@ const ConnectWallet = () => {
     }
   };
 
-  const accountChangeHandler = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const userAddress = await signer.getAddress();
+  const accountChangeHandler = async (userAddress) => {
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // const userAddress = await signer.getAddress();
     setAccount(userAddress);
+    console.log("Calling backend",userAddress);
     const res = await fetch("http://localhost:3001/createUser", {
       method: "POST",
       headers: {

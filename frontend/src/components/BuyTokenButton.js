@@ -24,6 +24,7 @@ export const BuyTokenButton = ({ projectData }) => {
     console.log(projectData.projectId);
 
     try {
+      console.log("...");
       const userType = await checkUser(projectData.projectId);
       console.log(userType);
       if (userType === 2) {

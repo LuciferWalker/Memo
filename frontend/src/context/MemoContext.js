@@ -7,7 +7,6 @@ export const MemoContext = React.createContext()
 
 export const MemoProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
-  const [userBalance, setUserBalance] = useState(null);
   const [marketplaceContract, setMarketplaceContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
@@ -16,6 +15,7 @@ export const MemoProvider = ({ children }) => {
     if (!account) return;
     let userData = await fetch(`http://localhost:3001/getUserData/${account}`);
     userData = await userData.json();
+    console.log(userData);
 
     if (userData.boughtProjects.includes(projectId))
       return 0; // user has bought
@@ -41,7 +41,7 @@ export const MemoProvider = ({ children }) => {
     setSigner(signer);
     setProvider(provider);
 
-    setAccount(await signer.getAddress());
+    
     // getUserBalance(account);
   };
 
@@ -60,9 +60,14 @@ export const MemoProvider = ({ children }) => {
   //   setUserBalance(approxUserBalance);
   // };
 
+  const setAcc = async ()=>setAccount(await signer.getAddress());
   useEffect(() => {
     loadContracts();
   }, [account]);
+
+  useEffect(()=>{
+    setAcc()
+  })
 
   return (
     <MemoContext.Provider
