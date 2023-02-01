@@ -1,6 +1,7 @@
 import { useState } from "react";
 import UploadButton from "../components/UploadButton";
 import Web3 from "web3/dist/web3.min.js";
+import tick from '../images/tick.png'
 
 import { useFormik } from "formik";
 
@@ -151,19 +152,17 @@ const CreatePost = () => {
 
   function validation(k, e) {
     if (k == "creatorShare" || k == "creatorAddress") {
-      // if(k == 'creatorShare'){
-      // console.log(e.creators);
-      if (e.creatorShare < 100) {
-        setErrorR("Empty");
+      if(k == "creatorShare"){if (e.creatorShare == '') {
+        setErrorR("Should not be Empty");
       } else {
-        setErrorR("");
-      }
-      if (Web3.utils.isAddress(e.creatorAddress)) {
-        setErrorAdd("Valid");
+        setErrorR(<img src={tick}/>);
+      }}
+      if(k == "creatorAddress"){if (Web3.utils.isAddress(e.creatorAddress)) {
+        setErrorAdd(<img src={tick}/>);
       } else {
-        setErrorAdd("Not Valid");
+        setErrorAdd("InValid Address");
       }
-      // }
+      }
     } else {
       let value = e.target.value;
       // let key = k;
@@ -171,42 +170,42 @@ const CreatePost = () => {
         if (value == "") {
           setErrorN("Should Not be Empty");
         } else {
-          setErrorN("");
+          setErrorN(<img src={tick}/>);
         }
       }
       if (k == "tokenSymbol") {
         if (value == "") {
           setError("Should Not be Empty");
         } else {
-          setError("");
+          setError(<img src={tick}/>);
         }
       }
       if (k == "projectDescription") {
         if (value == "") {
           setErrorD("Should Not be Empty");
         } else {
-          setErrorD("");
+          setErrorD(<img src={tick}/>);
         }
       }
       if (k == "tokenPrice") {
         if (value == "") {
           setErrorP("Should Not be Empty");
         } else {
-          setErrorP("");
+          setErrorP(<img src={tick}/>);
         }
       }
       if (k == "totalTokenSupply") {
         if (value == "") {
           setErrorS("Should Not be Empty");
         } else {
-          setErrorS("");
+          setErrorS(<img src={tick}/>);
         }
       }
       if (k == "numberOfCreators") {
         if (value == "") {
           setErrorC("Should Not be Empty");
         } else {
-          setErrorC("");
+          setErrorC(<img src={tick}/>);
         }
       }
     }

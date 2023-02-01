@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MemoContext } from "../context/MemoContext";
 import image from "../images/star.png";
+import { userAddress } from "../utils";
+import { NotificationManager } from "react-notifications";
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const CreatedMemos = () => {
 
     if (!userAddress) {
       navigate("/");
+      NotificationManager.info("Connect Your Wallet!", "Warning", 3000);
     }
   }, []);
 
