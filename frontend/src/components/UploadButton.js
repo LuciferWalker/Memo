@@ -12,8 +12,9 @@ import app from "../firebase";
 import { NotificationManager } from "react-notifications";
 import { MemoContext } from "../context/MemoContext";
 import { useNavigate } from "react-router-dom";
+import CreatePost from "../pages/CreatePost";
 
-function UploadButton({ formData, projectImage, projectFileEvent }) {
+function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData }) {
   const navigate = useNavigate();
 
     const { checkUser, marketplaceContract, account:userAddress, signer, provider } =
@@ -67,7 +68,10 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const handleLoader = (flowStage) => {
+    const data = FLOW[flowStage];
     console.log(FLOW[flowStage]);
+    setLoadingData('>'+data);
+    // <CreatePost loadingdata = {data}/>
   };
   const uploadProjectImage = async () => {
     if (!projectImage) return;
