@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
 import { useEffect, useState } from "react";
+import { formatBytes } from "../utils";
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
@@ -103,7 +104,7 @@ const Explore = () => {
                       <h5></h5>
                     </td>
                     <td>
-                      <h5>File Size: {card.fileSize || "50"} MB</h5>
+                      <h5>File Size: {formatBytes(card.fileSize)} </h5>
                     </td>
                   </tr>
                   <tr>

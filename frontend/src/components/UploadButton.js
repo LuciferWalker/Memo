@@ -123,21 +123,11 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   // };
 
   /* Deploy file along with encryption */
-  function formatBytes(bytes, decimals = 2) {
-    if (!+bytes) return '0 Bytes'
-
-    const k = 1024
-    const dm = decimals < 0 ? 0 : decimals
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
-  }
 
   const deployEncrypted = async (e) => {
     let { publicKey, signedMessage: uploadSignedMessage } =
       await encryptionSignature();
+         handleLoader(1);
     const uploadResponse = await lighthouse.uploadEncrypted(
       projectFileEvent, //e
       publicKey,
@@ -148,7 +138,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
     console.log(uploadResponse);
 
     formData.fileCid = uploadResponse.data.Hash;
-    formData.fileSize = formatBytes(uploadResponse.data.Size);//uploadResponse.data.Size/1000000; // converting fileSize to MB
+    formData.fileSize = uploadResponse.data.Size;//uploadResponse.data.Size/1000000; // converting fileSize to MB
     formData.fileName = uploadResponse.data.Name;
   };
 
@@ -186,8 +176,9 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
       creators,
       shares,
       fileCid,
-      { value: ethers.utils.parseEther("0.2") } //projectCreationFee in ether
+      { value: ethers.utils.parseEther((projectCreationFee/(10**18)).toString()) } //projectCreationFee in ether
     );
+     handleLoader(2);
 
     console.log(tx);
 
@@ -216,6 +207,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   const applyAccessCondition = async () => {
     let { publicKey, signedMessage: accessSignedMessage } =
       await encryptionSignature();
+         handleLoader(4);
 
     const conditions = [
       {
@@ -259,17 +251,16 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
     if(!projectName || !projectDescription || !tokenSymbol || !tokenPrice || !totalTokenSupply ||!numberOfCreators ||!creators) return     NotificationManager.error("Fill the required fields", "Fill the Form", 2000);
     console.log(formData);
     await uploadProjectImage(); //upload image to firebase
-    handleLoader(1);
     await deployEncrypted(e); //
-    handleLoader(2);
+   
     await deployAccessTokenContract();
     handleLoader(3);
     await uploadDataOnDB();
-    handleLoader(4);
+ 
     await applyAccessCondition();
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    navigate('explore');
+    navigate('/explore');
     // navigate("/display", {
     //   state: {
     //     title: projectName,

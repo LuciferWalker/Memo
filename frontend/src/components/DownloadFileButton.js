@@ -43,7 +43,8 @@ const DownloadFileButton = ({ projectData }) => {
     console.log(decrypted);
 
     const url = URL.createObjectURL(decrypted);
-    console.log(url);
+    console.log(url)
+    window.open(url, "_blank");
     setFileUrl(url);
   };
 
@@ -66,11 +67,6 @@ const DownloadFileButton = ({ projectData }) => {
       >
         DOWNLOAD
       </span>
-      {fileUrl ? (
-        <a href={fileUrl} target="_blank">
-          viewFile
-        </a>
-      ) : null}
     </>
   );
 };

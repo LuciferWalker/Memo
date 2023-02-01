@@ -7,6 +7,7 @@ export const MemoContext = React.createContext()
 
 export const MemoProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
+  const [userBalance, setUserBalance] = useState(null);
   const [marketplaceContract, setMarketplaceContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
@@ -41,7 +42,23 @@ export const MemoProvider = ({ children }) => {
     setProvider(provider);
 
     setAccount(await signer.getAddress());
+    // getUserBalance(account);
   };
+
+  
+  // const getUserBalance = async (userAddress) => {
+  //   const userBalance = await window.ethereum.request({
+  //     method: "eth_getBalance",
+  //     params: [userAddress, "latest"],
+  //   });
+  //   let formatedUserBalance = ethers.utils.formatEther(userBalance);
+  //   let approxUserBalance = formatedUserBalance.slice(
+  //     0,
+  //     formatedUserBalance.indexOf(".") + 4
+  //   );
+
+  //   setUserBalance(approxUserBalance);
+  // };
 
   useEffect(() => {
     loadContracts();

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
 const ConnectWallet = () => {
-  const [userBalance, setUserBalance] = useState(null);
   const { account, setAccount } = useContext(MemoContext);
 
   // const networks = {
@@ -52,23 +51,10 @@ const ConnectWallet = () => {
       body: JSON.stringify({ address: userAddress }),
     });
     // setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
-    await getUserBalance(userAddress.toString());
+    // await getUserBalance(userAddress.toString());
     // updateEthers();
   };
 
-  const getUserBalance = async (userAddress) => {
-    const userBalance = await window.ethereum.request({
-      method: "eth_getBalance",
-      params: [userAddress, "latest"],
-    });
-    let formatedUserBalance = ethers.utils.formatEther(userBalance);
-    let approxUserBalance = formatedUserBalance.slice(
-      0,
-      formatedUserBalance.indexOf(".") + 4
-    );
-
-    setUserBalance(approxUserBalance);
-  };
 
   const refreshPage = () => {
     window.location.reload();
@@ -121,7 +107,7 @@ const ConnectWallet = () => {
             : "Connect Wallet"}
         </span>
       </button>
-      {userBalance && <div>Balance: {userBalance}</div>}
+      {/* {userBalance && <div>Balance: {userBalance}</div>} */}
 
       {/* <h3>{walletAddress}</h3> */}
     </>
