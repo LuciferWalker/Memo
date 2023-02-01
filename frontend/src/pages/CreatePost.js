@@ -80,7 +80,7 @@ const CreatePost = () => {
             }}
             value={creator.creatorAddress}
             type="text"
-            style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
+            style={{ marginLeft: "83px", padding: "4px", width: "160px" }} 
           />
           <span style={errorStyle}>{erroradd}</span>
         </tr>
@@ -93,11 +93,11 @@ const CreatePost = () => {
             name="creatorShare"
             type="number"
             min='0'
+            max='100'
             value={creator.creatorShare}
             onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
           />
-          <span style={errorStyle}>{errorr}</span>
         </tr>
       </div>
     ));
@@ -155,13 +155,6 @@ const CreatePost = () => {
         return false;
       } else {
         setErrorSocial(<img src={tick}/>);
-        return true;
-      }}
-      if(k == "creatorShare"){if (e.creatorShare == '') {
-        setErrorR("Should not be Empty");
-        return false;
-      } else {
-        setErrorR(<img src={tick}/>);
         return true;
       }}
       if(k == "creatorAddress"){if (Web3.utils.isAddress(e.creatorAddress)) {
@@ -250,7 +243,7 @@ const CreatePost = () => {
             float: "left",
           }}
         >
-          <form action="">
+          <form>
             <div
               style={{
                 padding: "20px 0px 20px 60px",
@@ -411,7 +404,8 @@ const CreatePost = () => {
                         type="number"
                         placeholder="2"
                         name="numberOfCreators"
-                        min='0'
+                        min='1'
+                        max='5'
                         value={formData.numberOfCreators}
                         onKeyDown={blockInvalidChar}
                         style={inputTag}
@@ -432,7 +426,7 @@ const CreatePost = () => {
                   formData={formData}
                   projectImage={projectImage}
                   projectFileEvent={projectFileEvent}
-                />
+                  />
                 {/* <button type="submit" onClick={handleSubmit}>
                       SUBMIT
                     </button> */}

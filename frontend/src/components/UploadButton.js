@@ -74,7 +74,7 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
     console.log(FLOW[flowStage]);
   };
   const uploadProjectImage = async () => {
-    if (!projectImage) return alert("First select an Image");
+    if (!projectImage) return;
     const storage = getStorage(app);
     const fileName = projectImage.name + new Date().getTime();
     const storageRef = ref(storage, fileName);
@@ -255,6 +255,8 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const {projectName, projectDescription, tokenSymbol, tokenPrice, totalTokenSupply,numberOfCreators,creators} = formData;
+    if(!projectName || !projectDescription || !tokenSymbol || !tokenPrice || !totalTokenSupply ||!numberOfCreators ||!creators) return     NotificationManager.error("Fill the required fields", "Fill the Form", 2000);
     console.log(formData);
     await uploadProjectImage(); //upload image to firebase
     handleLoader(1);
