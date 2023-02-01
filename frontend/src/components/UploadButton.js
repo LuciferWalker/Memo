@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 function UploadButton({ formData, projectImage, projectFileEvent }) {
   const navigate = useNavigate();
 
-    const { checkUser, marketplaceContract, account, provider } =
+    const { checkUser, marketplaceContract, account:userAddress, signer, provider } =
       useContext(MemoContext);
   const [loader, setLoader] = useState(null);
   const FLOW = {
@@ -46,12 +46,10 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   //VALIDATE DATA
 
   const encryptionSignature = async () => {
-    const { isWalletConnected, provider, signer, userAddress } =
-      getUserWalletDetails();
 
-    if (isWalletConnected == false) {
-      //NOTIFICATION>SHOW("CONNECT YOUR WALLET FIRST")
-    }
+    // if (isWalletConnected == false) {
+    //   //NOTIFICATION>SHOW("CONNECT YOUR WALLET FIRST")
+    // }
     console.log(userAddress);
     const messageRequested = (await lighthouse.getAuthMessage(userAddress)).data
       .message;
@@ -155,7 +153,6 @@ function UploadButton({ formData, projectImage, projectFileEvent }) {
   };
 
   const deployAccessTokenContract = async () => {
-    let { provider } = getUserWalletDetails();
     let creators = [];
     let shares = [];
     let { projectName, tokenSymbol, totalTokenSupply, tokenPrice, fileCid } =
