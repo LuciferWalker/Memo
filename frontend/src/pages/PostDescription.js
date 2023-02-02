@@ -228,7 +228,17 @@ const PostDescription = () => {
                     <p>Your royalty pocket: {shareAmount} FIL</p>
                     {shareAmount > 0 && (
                       <p>
-                        <button onClick={collectShares}>Claim Money</button>
+                        <button
+                           style={{
+                           color: "#658BD6",
+                           padding: "7px",
+                           background: "none",
+                           border: "none",
+                           fontFamily: "Montserrat, sans-serif",
+                           cursor: "pointer",
+                           }}
+                           onClick={collectShares}>Claim Money
+                        </button>
                       </p>
                     )}
                   </div>
