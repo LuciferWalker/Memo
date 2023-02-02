@@ -243,7 +243,7 @@ const CreatePost = (props) => {
   }
 
   return (
-    <div>
+    <>
       <div style={{ overflow: "hidden", width: "100%" }}>
         <div style={{color:'#1aff1a',fontSize:'16px'}}>
             <b>{loadingData}</b>
@@ -451,7 +451,7 @@ const CreatePost = (props) => {
             </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
