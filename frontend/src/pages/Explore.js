@@ -90,39 +90,47 @@ const Explore = () => {
                 overflowY: "auto",
               }}
             >
-              {listedProjects?.map((card, index) => (
-                <table
-                  key={index}
-                  style={tab}
-                  onClick={() => navigate(`/explore/${card.projectId}`)}
-                >
-                  <tr>
-                    <td style={{ paddingLeft: "30px" }}>
-                      <h4>{card.projectName}</h4>
-                    </td>
-                    <td style={{ paddingLeft: "50px" }}>
-                      <h5></h5>
-                    </td>
-                    <td>
-                      <h5>File Size: {formatBytes(card.fileSize)} </h5>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ width: "200px", paddingLeft: "30px" }}>
-                      <h5>{card.projectDescription}</h5>
-                      <h6>{card.Date || ""}</h6>
-                    </td>
-                    <td style={{ width: "100px" }}></td>
-                    <td style={{ width: "130px" }}>
-                      <h5>
-                        {" "}
-                        PRICE: {card.tokenPrice} FIL
-                        <br /> $ DOWNLOAD
-                      </h5>
-                    </td>
-                  </tr>
-                </table>
-              ))}
+              {listedProjects.length == 0 ? (
+                <h3 style={{ color: "white" }}>
+                  Be the first one to register a project on MEMO!
+                </h3>
+              ) : (
+                listedProjects?.map((card, index) => (
+                  <>
+                    <table
+                      key={index}
+                      style={tab}
+                      onClick={() => navigate(`/explore/${card.projectId}`)}
+                    >
+                      <tr>
+                        <td style={{ paddingLeft: "30px" }}>
+                          <h4>{card.projectName}</h4>
+                        </td>
+                        <td style={{ paddingLeft: "50px" }}>
+                          <h5></h5>
+                        </td>
+                        <td>
+                          <h5>File Size: {formatBytes(card.fileSize)} </h5>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ width: "200px", paddingLeft: "30px" }}>
+                          <h5>{card.projectDescription}</h5>
+                          <h6>{card.Date || ""}</h6>
+                        </td>
+                        <td style={{ width: "100px" }}></td>
+                        <td style={{ width: "130px" }}>
+                          <h5>
+                            {" "}
+                            PRICE: {card.tokenPrice} FIL
+                            <br /> $ DOWNLOAD
+                          </h5>
+                        </td>
+                      </tr>
+                    </table>
+                  </>
+                ))
+              )}
             </div>
           </div>
         </div>

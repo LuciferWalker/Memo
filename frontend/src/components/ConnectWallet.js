@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ethers } from "ethers";
+import React, { useContext} from "react";
 import { MemoContext } from "../context/MemoContext";
 const ConnectWallet = () => {
   const { account, setAccount } = useContext(MemoContext);
