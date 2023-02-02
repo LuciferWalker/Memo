@@ -42,7 +42,7 @@ const ConnectWallet = () => {
     // const signer = provider.getSigner();
     // const userAddress = await signer.getAddress();
     setAccount(accounts[0]);
-    console.log("Calling backend", accounts[0]);
+    // console.log("Calling backend ",accounts[0]);
     const res = await fetch("http://localhost:3001/createUser", {
       method: "POST",
       headers: {
@@ -63,7 +63,7 @@ const ConnectWallet = () => {
   };
 
   //reload page if chain or account is changed
-  window.ethereum.on("accountsChanged", accountChangeHandler); // should we update account details if user connectes another account from metamask
+  // window.ethereum.on("accountsChanged", accountChangeHandler); // should we update account details if user connectes another account from metamask
   window.ethereum.on("chainChanged", refreshPage);
 
   // const updateEthers = () => {
