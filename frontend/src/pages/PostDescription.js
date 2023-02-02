@@ -103,7 +103,7 @@ const PostDescription = () => {
                       ? projectDetail.creators.map((item) => (
                           <h5 style={{ margin: '10px' }}>
                             {item.creatorAddress}
-                            {item.creatorSocial}
+                            <span><a style={{textDecoration:'none',color:'white'}} target="_blank">{item.creatorSocial}</a></span>
                           </h5>
                         ))
                       : ''}
