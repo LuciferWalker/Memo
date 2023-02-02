@@ -71,7 +71,7 @@ function UploadButton({
   const handleLoader = (flowStage) => {
     const data = FLOW[flowStage];
     console.log(FLOW[flowStage]);
-    setLoadingData(">" + data);
+    setLoadingData(data);
     // <CreatePost loadingdata = {data}/>
   };
   const uploadProjectImage = async () => {

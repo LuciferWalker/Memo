@@ -245,9 +245,10 @@ const CreatePost = (props) => {
   return (
     <>
       <div style={{ overflow: "hidden", width: "100%" }}>
-        <div style={{color:'#1aff1a',fontSize:'16px'}}>
+        { loadingData ? 
+        <><div style={{color:'#1aff1a',padding:'2px',fontSize:'16px',border:'1px solid #1aff1a',width:'500px'}}>
             <b>{loadingData}</b>
-        </div>
+        </div><br/></>:''}
         <div
           style={{
             width: "1050px",
