@@ -20,7 +20,6 @@ app.get("/getUserData/:userAddress", async (req, res) => {
   try {
     //check if the user exists in the db
     const user = await User.findOne({ address: userAddress.toLowerCase() });
-    console.log(user);
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
@@ -46,11 +45,9 @@ app.post("/createUser", async (req, res) => {
   //when user connects their wallet.
 
   const { address } = req.body;
-  console.log(address);
   try {
     //Create user data if they dont exist, once they connect their wallet
     let user = await User.findOne({ address: address.toLowerCase() });
-    console.log(user);
     if (!user) {
       user = await User.create({ address: address.toLowerCase() });
     }
@@ -63,7 +60,6 @@ app.post("/createUser", async (req, res) => {
 // Creates new project
 app.post("/createProject", async (req, res) => {
   try {
-    console.log(req.body);
     // create project
     let formData = req.body;
     // add project in user db
@@ -87,7 +83,6 @@ app.post("/createProject", async (req, res) => {
 
     res.status(201).json(project);
   } catch (err) {
-    console.log(err);
     res.status(500).send(err);
   }
 });
