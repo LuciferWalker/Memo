@@ -224,9 +224,11 @@ const PostDescription = () => {
                   <div style={{ textAlign: "left" }}>
                     {/* Contract function will be called for this info */}
                     <p>Your royalty pocket: {shareAmount} FIL</p>
-                    <p>
-                      <button onClick={collectShares}>Claim Money</button>
-                    </p>
+                    {shareAmount > 0 && (
+                      <p>
+                        <button onClick={collectShares}>Claim Money</button>
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

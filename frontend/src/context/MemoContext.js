@@ -41,6 +41,8 @@ export const MemoProvider = ({ children }) => {
     setSigner(signer);
     setProvider(provider);
 
+    setAccount(await signer.getAddress());
+
     
     // getUserBalance(account);
   };

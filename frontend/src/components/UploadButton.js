@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
 import {
@@ -13,12 +13,15 @@ import { NotificationManager } from "react-notifications";
 import { MemoContext } from "../context/MemoContext";
 import { useNavigate } from "react-router-dom";
 
-
-function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData }) {
+function UploadButton({
+  formData,
+  projectImage,
+  projectFileEvent,
+  setLoadingData,
+}) {
   const navigate = useNavigate();
 
-    const {marketplaceContract, account:userAddress, signer, provider } =
-      useContext(MemoContext);
+  const { marketplaceContract } = useContext(MemoContext);
   const [loader, setLoader] = useState(null);
   const FLOW = {
     1: "Encrypting and Uplaoding File to IPFS",
@@ -47,17 +50,15 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   //VALIDATE DATA
 
   const encryptionSignature = async () => {
-
-    // if (isWalletConnected == false) {
-    //   //NOTIFICATION>SHOW("CONNECT YOUR WALLET FIRST")
-    // }
-    console.log(userAddress);
-    const messageRequested = (await lighthouse.getAuthMessage(userAddress)).data
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const messageRequested = (await lighthouse.getAuthMessage(address)).data
       .message;
     const signedMessage = await signer.signMessage(messageRequested);
     return {
       signedMessage: signedMessage,
-      publicKey: userAddress,
+      publicKey: address,
     };
   };
 
@@ -70,7 +71,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   const handleLoader = (flowStage) => {
     const data = FLOW[flowStage];
     console.log(FLOW[flowStage]);
-    setLoadingData('>'+data);
+    setLoadingData(">" + data);
     // <CreatePost loadingdata = {data}/>
   };
   const uploadProjectImage = async () => {
@@ -127,22 +128,24 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   const deployEncrypted = async (e) => {
     let { publicKey, signedMessage: uploadSignedMessage } =
       await encryptionSignature();
-         handleLoader(1);
+    handleLoader(1);
+    console.log("Project file event ", projectFileEvent);
     const uploadResponse = await lighthouse.uploadEncrypted(
       projectFileEvent, //e
       publicKey,
-      "65e32863-69bb-4acc-bba8-08c461d19234", //process.env.REACT_APP_LIGHTHOUSE_API_KEY
+      "128d6f64-1b10-411c-8010-9bf83b41a7ec", //process.env.REACT_APP_LIGHTHOUSE_API_KEY
       uploadSignedMessage,
       progressCallback
     );
     console.log(uploadResponse);
 
     formData.fileCid = uploadResponse.data.Hash;
-    formData.fileSize = uploadResponse.data.Size;//uploadResponse.data.Size/1000000; // converting fileSize to MB
+    formData.fileSize = uploadResponse.data.Size; //uploadResponse.data.Size/1000000; // converting fileSize to MB
     formData.fileName = uploadResponse.data.Name;
   };
 
   const deployAccessTokenContract = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     let creators = [];
     let shares = [];
     let { projectName, tokenSymbol, totalTokenSupply, tokenPrice, fileCid } =
@@ -161,7 +164,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
     console.log(creators);
     console.log(shares);
 
-    console.log("before calling get current project id function")
+    console.log("before calling get current project id function");
     let { _hex: currentProjectId } =
       await marketplaceContract.getCurrentProjectCounter();
     console.log(currentProjectId);
@@ -177,9 +180,13 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
       creators,
       shares,
       fileCid,
-      { value: ethers.utils.parseEther((projectCreationFee/(10**18)).toString()) } //projectCreationFee in ether
+      {
+        value: ethers.utils.parseEther(
+          (projectCreationFee / 10 ** 18).toString()
+        ),
+      } //projectCreationFee in ether
     );
-     handleLoader(2);
+    handleLoader(2);
 
     console.log(tx);
 
@@ -196,7 +203,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   };
 
   const uploadDataOnDB = async () => {
-    console.log(formData)
+    console.log(formData);
     const res = await fetch("http://localhost:3001/createProject", {
       method: "POST",
       headers: {
@@ -209,7 +216,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   const applyAccessCondition = async () => {
     let { publicKey, signedMessage: accessSignedMessage } =
       await encryptionSignature();
-         handleLoader(4);
+    handleLoader(4);
 
     const conditions = [
       {
@@ -249,20 +256,41 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {projectName, projectDescription, tokenSymbol, tokenPrice, totalTokenSupply,numberOfCreators,creators} = formData;
-    if(!projectName || !projectDescription || !tokenSymbol || !tokenPrice || !totalTokenSupply ||!numberOfCreators ||!creators) return     NotificationManager.error("Fill the required fields", "Fill the Form", 2000);
+    const {
+      projectName,
+      projectDescription,
+      tokenSymbol,
+      tokenPrice,
+      totalTokenSupply,
+      numberOfCreators,
+      creators,
+    } = formData;
+    if (
+      !projectName ||
+      !projectDescription ||
+      !tokenSymbol ||
+      !tokenPrice ||
+      !totalTokenSupply ||
+      !numberOfCreators ||
+      !creators
+    )
+      return NotificationManager.error(
+        "Fill the required fields",
+        "Fill the Form",
+        2000
+      );
     console.log(formData);
     await uploadProjectImage(); //upload image to firebase
     await deployEncrypted(e); //
-   
+
     await deployAccessTokenContract();
     handleLoader(3);
     await uploadDataOnDB();
- 
+
     await applyAccessCondition();
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    navigate('/explore');
+    navigate("/explore");
     // navigate("/display", {
     //   state: {
     //     title: projectName,
@@ -274,8 +302,6 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
     // });
     // NotificationManager.success("Form Submitted!", "Successful!", 2000);
   };
-
-  const verifyData = () => {};
 
   return (
     <>
