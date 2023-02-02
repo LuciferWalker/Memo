@@ -26,7 +26,7 @@ const ConnectWallet = () => {
           method: "eth_requestAccounts",
         });
 
-        await accountChangeHandler(accounts[0]);
+        await accountChangeHandler(accounts);
 
         // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
@@ -37,18 +37,18 @@ const ConnectWallet = () => {
     }
   };
 
-  const accountChangeHandler = async (userAddress) => {
+  const accountChangeHandler = async (accounts) => {
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
     // const signer = provider.getSigner();
     // const userAddress = await signer.getAddress();
-    setAccount(userAddress);
-    console.log("Calling backend",userAddress);
+    setAccount(accounts[0]);
+    console.log("Calling backend", accounts[0]);
     const res = await fetch("http://localhost:3001/createUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ address: userAddress }),
+      body: JSON.stringify({ address: accounts[0] }),
     });
     // setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
     // await getUserBalance(userAddress.toString());

@@ -19,9 +19,11 @@ app.get("/getUserData/:userAddress", async (req, res) => {
   const { userAddress } = req.params;
   try {
     //check if the user exists in the db
-    const user = await User.findOne({ address:userAddress });
+    const user = await User.findOne({ address: userAddress.toLowerCase() });
+    console.log(user);
     res.status(200).json(user);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -47,10 +49,10 @@ app.post("/createUser", async (req, res) => {
   console.log(address);
   try {
     //Create user data if they dont exist, once they connect their wallet
-    let user = await User.findOne({ address: address });
+    let user = await User.findOne({ address: address.toLowerCase() });
     console.log(user);
     if (!user) {
-      user = await User.create({ address });
+      user = await User.create({ address: address.toLowerCase() });
     }
     res.status(200).send(user);
   } catch (err) {
@@ -61,8 +63,7 @@ app.post("/createUser", async (req, res) => {
 // Creates new project
 app.post("/createProject", async (req, res) => {
   try {
-
-    console.log(req.body)
+    console.log(req.body);
     // create project
     let formData = req.body;
     // add project in user db
@@ -70,9 +71,13 @@ app.post("/createProject", async (req, res) => {
 
     // create user with all the address present in the creatorAddresses Array
     const users = formData.creators.map(async (creator) => {
-      let user = await User.findOne({ address:creator.creatorAddress });
+      let user = await User.findOne({
+        address: creator.creatorAddress.toLowerCase(),
+      });
       if (!user) {
-        user = await User.create({ address:creator.creatorAddress });
+        user = await User.create({
+          address: creator.creatorAddress.toLowerCase(),
+        });
       }
       user.createdProjects.push(formData.projectId);
       await user.save();
@@ -88,7 +93,7 @@ app.post("/createProject", async (req, res) => {
 });
 
 // Updates the projectStatus to false since the token is exhausted
-app.post("/updateProjectStatus/:projectId", async (req, res) => {
+app.get("/updateProjectStatus/:projectId", async (req, res) => {
   const { projectId } = req.params;
   try {
     const project = await Project.findOneAndUpdate(
@@ -108,7 +113,7 @@ app.post("/projectTokenBought", async (req, res) => {
   try {
     const { projectId, address } = req.body;
     // Update in user db that ticket has been bought
-    const user = await User.findOne({ address });
+    const user = await User.findOne({ address: address.toLowerCase() });
     user.boughtProjects.push(projectId);
     await user.save();
 
@@ -138,11 +143,14 @@ app.get("/listedProjects", async (req, res) => {
 //call getProjectStatus function after a user buys token
 
 app.get("/boughtProjects", async (req, res) => {
+  let { address } = req.query;
   try {
-    const user = await User.findOne({ address: req.query.address });
+    const user = await User.findOne({
+      address: address.toLowerCase(),
+    });
     const projects = await Promise.all(
-      user.boughtProjects.map(async projectId => {
-        const project = await Project.findOne({projectId});
+      user.boughtProjects.map(async (projectId) => {
+        const project = await Project.findOne({ projectId });
         return project;
       })
     );
@@ -154,11 +162,11 @@ app.get("/boughtProjects", async (req, res) => {
 
 app.get("/createdProjects", async (req, res) => {
   try {
-    const user = await User.findOne({ address: req.query.address });
+    const user = await User.findOne({ address: req.query.address.toLowerCase() });
     // user.createdProjects is an array that contains the project IDs in the project database
     const projects = await Promise.all(
-      user.createdProjects.map(async projectId => {
-        const project = await Project.findOne({projectId});
+      user.createdProjects.map(async (projectId) => {
+        const project = await Project.findOne({ projectId });
         return project;
       })
     );
@@ -168,7 +176,6 @@ app.get("/createdProjects", async (req, res) => {
     res.status(500).send("An error occurred");
   }
 });
-
 
 app.get("/getAllUsers", async (req, res) => {
   try {

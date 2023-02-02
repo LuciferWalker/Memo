@@ -13,8 +13,8 @@ export const MemoProvider = ({ children }) => {
 
   const checkUser = async (projectId) => {
     if (!account) return;
-    let userData = await fetch(`http://localhost:3001/getUserData/${account}`);
-    userData = await userData.json();
+    let res = await fetch(`http://localhost:3001/getUserData/${account}`);
+    let userData = await res.json();
     console.log(userData);
 
     if (userData.boughtProjects.includes(projectId))
@@ -67,7 +67,7 @@ export const MemoProvider = ({ children }) => {
 
   useEffect(()=>{
     setAcc()
-  })
+  },)
 
   return (
     <MemoContext.Provider

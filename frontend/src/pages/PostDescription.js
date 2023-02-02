@@ -1,25 +1,38 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 
-import { ethers } from "ethers";
 import { BuyTokenButton } from "../components/BuyTokenButton";
 import { MemoContext } from "../context/MemoContext";
 import DownloadFileButton from "../components/DownloadFileButton";
+import { formatBytes } from "../utils";
+import { NotificationManager } from "react-notifications";
 
 const PostDescription = () => {
   const [projectDetail, setprojectDetail] = useState(null);
   const [userType, setUserType] = useState(null);
+  const [shareAmount, setShareAmount] = useState(0);
   let { projectId } = useParams();
 
-  const { account, setAccount, checkUser, loadContracts } =
-    useContext(MemoContext);
+  const { account, checkUser, marketplaceContract, provider } = useContext(MemoContext);
 
   const USER_TYPE = {
     CREATOR: 1,
     BOUGHT: 0,
     NEW: 2,
+  };
+
+  const getMyShareAmount = async () => {
+    setShareAmount(await marketplaceContract.getMyShareAmount(projectId));
+  };
+
+  const collectShares = async () => {
+    const tx = await marketplaceContract.collectFunds(projectId);
+    const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
+
+    NotificationManager.success("Amount Collected", shareAmount, 2000);
+    window.location.reload();
   };
 
   const fetchProjectDetails = async () => {
@@ -32,11 +45,13 @@ const PostDescription = () => {
 
   const setUser = async () => {
     let type = await checkUser(projectDetail.projectId);
+    console.log(type)
     setUserType(type);
   };
 
   useEffect(() => {
     fetchProjectDetails();
+    getMyShareAmount();
   }, []);
 
   useEffect(() => {
@@ -55,13 +70,7 @@ const PostDescription = () => {
     padding: "0px",
   };
 
-  const purchaseToken = () => {
-    //call mint function from marketplace contract
-    //getProjectStatus();
-    //if false, send a req to backend
-    //projectTokenBought api call
-    //after successful purchase, redirect them to download page
-  };
+
   return (
     <>
       <div style={post}>
@@ -201,8 +210,8 @@ const PostDescription = () => {
               >
                 <div style={{}}>
                   <div style={{ textAlign: "left" }}>
-                    <p>File Size - {projectDetail?.fileSize}</p>
-                    <p>Token Price - {projectDetail?.tokenPrice}</p>
+                    <p>File Size - {formatBytes(projectDetail?.fileSize)}</p>
+                    <p>Token Price - {projectDetail?.tokenPrice} FIL</p>
                     <p>Total Tokens - {projectDetail?.totalTokenSupply}</p>
                   </div>
                   <div style={{ textAlign: "left" }}>
@@ -214,10 +223,9 @@ const PostDescription = () => {
                   </div>
                   <div style={{ textAlign: "left" }}>
                     {/* Contract function will be called for this info */}
-                    <p>Creators Share</p>
-                    <p>Amount Collected</p>
+                    <p>Your royalty pocket: {shareAmount} FIL</p>
                     <p>
-                      <button>Claim Money</button>
+                      <button onClick={collectShares}>Claim Money</button>
                     </p>
                   </div>
                 </div>

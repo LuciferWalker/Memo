@@ -12,17 +12,17 @@ import app from "../firebase";
 import { NotificationManager } from "react-notifications";
 import { MemoContext } from "../context/MemoContext";
 import { useNavigate } from "react-router-dom";
-import CreatePost from "../pages/CreatePost";
+
 
 function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData }) {
   const navigate = useNavigate();
 
-    const { checkUser, marketplaceContract, account:userAddress, signer, provider } =
+    const {marketplaceContract, account:userAddress, signer, provider } =
       useContext(MemoContext);
   const [loader, setLoader] = useState(null);
   const FLOW = {
     1: "Encrypting and Uplaoding File to IPFS",
-    2: "Deploying a New Access Token Contract",
+    2: "Deploying Your Token Contract",
     3: "Uploading Data on the Web2 Database",
     4: "Applying Access Conditions on your File",
     5: "Finished",
@@ -161,6 +161,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
     console.log(creators);
     console.log(shares);
 
+    console.log("before calling get current project id function")
     let { _hex: currentProjectId } =
       await marketplaceContract.getCurrentProjectCounter();
     console.log(currentProjectId);
@@ -195,6 +196,7 @@ function UploadButton({ formData, projectImage, projectFileEvent,setLoadingData 
   };
 
   const uploadDataOnDB = async () => {
+    console.log(formData)
     const res = await fetch("http://localhost:3001/createProject", {
       method: "POST",
       headers: {
