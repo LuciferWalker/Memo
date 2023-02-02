@@ -9,11 +9,11 @@ import { MemoProvider } from "./context/MemoContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <MemoProvider>
-  <React.StrictMode>
+  
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
+  
   </MemoProvider>
 );
 

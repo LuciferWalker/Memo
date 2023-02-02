@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
 import { useEffect, useState } from "react";
 import { formatBytes } from "../utils";
+import Spinner from 'react-spinners/ClipLoader';
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [listedProjects, setListedProjects] = useState(null);
+  const [loadingSpin, setLoadingSpin] = useState(false);
+
   const navigate = useNavigate();
 
   //call listedProjects api from backend
@@ -19,6 +22,11 @@ const Explore = () => {
 
   useEffect(() => {
     getListedProjects();
+    if (loadingSpin) {
+      setTimeout(() => {
+        setLoadingSpin(false);
+      }, 8000);
+    }
   }, []);
 
   const tab = {
@@ -74,6 +82,8 @@ const Explore = () => {
     },
   ];
 
+  if (loadingSpin) return <Spinner />;
+
   return (
     <>
       {loading ? (
@@ -100,7 +110,14 @@ const Explore = () => {
                     <table
                       key={index}
                       style={tab}
-                      onClick={() => navigate(`/explore/${card.projectId}`)}
+                      
+                      onClick={() => {
+                        setLoadingSpin(!loadingSpin);
+                        setTimeout(()=> {
+                          setLoadingSpin(!loadingSpin);
+                          navigate(`/explore/${card.projectId}`)
+                         }, 8000);
+                      }}
                     >
                       <tr>
                         <td style={{ paddingLeft: "30px" }}>
