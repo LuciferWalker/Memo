@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
 import lighthouse from "@lighthouse-web3/sdk";
