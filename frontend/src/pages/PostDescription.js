@@ -1,88 +1,87 @@
-import { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import image from '../images/star.png'
-import Img1 from '../images/mars.jpg'
-import Spinner from 'react-spinners/ClipLoader'
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import image from "../images/star.png";
+import Img1 from "../images/mars.jpg";
+import Spinner from "react-spinners/ClipLoader";
 
-import { BuyTokenButton } from '../components/BuyTokenButton'
-import { MemoContext } from '../context/MemoContext'
-import DownloadFileButton from '../components/DownloadFileButton'
-import { BASE_URL, formatBytes } from '../utils'
-import { NotificationManager } from 'react-notifications'
-import { ethers } from 'ethers'
+import { BuyTokenButton } from "../components/BuyTokenButton";
+import { MemoContext } from "../context/MemoContext";
+import DownloadFileButton from "../components/DownloadFileButton";
+import { BASE_URL, formatBytes } from "../utils";
+import { NotificationManager } from "react-notifications";
+import { ethers } from "ethers";
+import moment from "moment";
 
 const PostDescription = () => {
-  const [projectDetail, setprojectDetail] = useState(null)
-  const [userType, setUserType] = useState(null)
-  const [shareAmount, setShareAmount] = useState(null)
-  const [downloadProcessing, setDownloadProcessing] = useState(null)
-  const [purchaseProcessing, setPurchaseProcessing] = useState(null)
+  const [projectDetail, setprojectDetail] = useState(null);
+  const [userType, setUserType] = useState(null);
+  const [shareAmount, setShareAmount] = useState(null);
+  const [downloadProcessing, setDownloadProcessing] = useState(null);
+  const [purchaseProcessing, setPurchaseProcessing] = useState(null);
   const [collectShareProcessing, setCollectShareProcessing] = useState(null);
-  let { projectId } = useParams()
+  let { projectId } = useParams();
 
-  const { account, checkUser, marketplaceContract, provider } = useContext(
-    MemoContext,
-  )
+  const { account, checkUser, marketplaceContract, provider } =
+    useContext(MemoContext);
 
   const USER_TYPE = {
     CREATOR: 1,
     BOUGHT: 0,
     NEW: 2,
-  }
+  };
 
   const getMyShareAmount = async () => {
-    const shareAmount = await marketplaceContract.getMyShareAmount(projectId)
-    setShareAmount(ethers.utils.formatEther(shareAmount))
-  }
+    const shareAmount = await marketplaceContract.getMyShareAmount(projectId);
+    setShareAmount(ethers.utils.formatEther(shareAmount));
+  };
 
   const collectShares = async () => {
-    const tx = await marketplaceContract.collectFunds(projectId)
+    const tx = await marketplaceContract.collectFunds(projectId);
     setCollectShareProcessing(true);
-    const receipt = await provider.waitForTransaction(tx.hash, 1, 150000)
+    const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
     setCollectShareProcessing(false);
-    NotificationManager.success('Amount Collected', shareAmount, 2000)
-    window.location.reload()
-  }
+    NotificationManager.success("Amount Collected", shareAmount, 2000);
+    window.location.reload();
+  };
 
   const fetchProjectDetails = async () => {
-    const res = await fetch(`${BASE_URL}/getProjectData/${projectId}`)
-    const project = await res.json()
-    setprojectDetail(project)
-  }
+    const res = await fetch(`${BASE_URL}/getProjectData/${projectId}`);
+    const project = await res.json();
+    setprojectDetail(project);
+  };
 
   const setUser = async () => {
-    let type = await checkUser(projectDetail.projectId)
-    setUserType(type)
-  }
+    let type = await checkUser(projectDetail.projectId);
+    setUserType(type);
+  };
 
   useEffect(() => {
-    fetchProjectDetails()
-    getMyShareAmount()
-  }, [])
+    fetchProjectDetails();
+    getMyShareAmount();
+  }, []);
 
   useEffect(() => {
-    if (projectDetail) setUser()
-  }, [projectDetail, account])
-
+    if (projectDetail) setUser();
+  }, [projectDetail, account]);
 
   const post = {
     backgroundImage: `url(${image})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  }
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  };
 
   const tab = {
     background:
-      'linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)',
-    padding: '0px',
-  }
+      "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
+    padding: "0px",
+  };
 
-  if (!projectDetail || userType==null) 
+  if (!projectDetail || userType == null)
     return (
-      <div style={{textAlign:'center', marginTop:'120px'}}>
-        <Spinner color='white' size={100} />
+      <div style={{ textAlign: "center", marginTop: "120px" }}>
+        <Spinner color="white" size={100} />
       </div>
-    ) 
+    );
   return (
     <>
       {collectShareProcessing ? (
@@ -152,13 +151,19 @@ const PostDescription = () => {
                   }}
                 >
                   <div style={{ paddingLeft: "30px" }}>
-                    <h4>{projectDetail?.projectName || ""}</h4>
+                    <h3>
+                      {projectDetail?.projectName} |{" "}
+                      <span style={{fontSize:"15px"}}>
+                        {moment(projectDetail?.createdAt).format("DD-MM-YYYY")}
+                      </span>
+                    </h3>
+
                     <img
                       src={projectDetail?.projectImageUrl || Img1}
                       style={{ width: "550px", height: "260px" }}
                     />
                     <h4>DESCRIPTION</h4>
-                    {(projectDetail && projectDetail.projectDescription) || ""}
+                    {projectDetail && projectDetail.projectDescription}
                     <h4>CREATORS</h4>
                     {projectDetail
                       ? projectDetail.creators.map((item) => (
@@ -199,9 +204,9 @@ const PostDescription = () => {
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: "200px", paddingLeft: "20px" }}>
-                            <h5>18.05.2023</h5>
-                          </td>
+                          <td
+                            style={{ width: "200px", paddingLeft: "20px" }}
+                          ></td>
                           <td style={{ width: "200px" }}></td>
                           <td style={{ width: "200px" }}>
                             <h5>
@@ -230,9 +235,9 @@ const PostDescription = () => {
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: "200px", paddingLeft: "20px" }}>
-                            <h5>18.05.2023</h5>
-                          </td>
+                          <td
+                            style={{ width: "200px", paddingLeft: "20px" }}
+                          ></td>
                           <td style={{ width: "200px" }}></td>
                           <td style={{ width: "200px" }}>
                             <h5>
@@ -256,9 +261,9 @@ const PostDescription = () => {
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: "200px", paddingLeft: "20px" }}>
-                            <h5>18.05.2023</h5>
-                          </td>
+                          <td
+                            style={{ width: "200px", paddingLeft: "20px" }}
+                          ></td>
                           <td style={{ width: "200px" }}></td>
                           <td style={{ width: "200px" }}>
                             <h5>
@@ -332,6 +337,6 @@ const PostDescription = () => {
       </div>
     </>
   );
-}
+};
 
-export default PostDescription
+export default PostDescription;
