@@ -51,7 +51,7 @@ const CreatedMemos = () => {
           }}
         >
           <h2>CREATED PROJECTS</h2>
-          {createdProjects == null ? (
+          {createdProjects?.length == 0 ? (
             <h3 style={{ color: "white" }}>
               No Projects Created, yet &#59;&#41;
             </h3>
