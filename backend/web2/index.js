@@ -157,7 +157,9 @@ app.get("/boughtProjects", async (req, res) => {
 
 app.get("/createdProjects", async (req, res) => {
   try {
-    const user = await User.findOne({ address: req.query.address.toLowerCase() });
+    const user = await User.findOne({
+      address: req.query.address.toLowerCase(),
+    });
     // user.createdProjects is an array that contains the project IDs in the project database
     const projects = await Promise.all(
       user.createdProjects.map(async (projectId) => {

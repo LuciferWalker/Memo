@@ -123,7 +123,7 @@ function UploadButton({
     const uploadResponse = await lighthouse.uploadEncrypted(
       projectFileEvent, //e
       publicKey,
-      "128d6f64-1b10-411c-8010-9bf83b41a7ec", //process.env.REACT_APP_LIGHTHOUSE_API_KEY
+      process.env.REACT_APP_LIGHTHOUSE_API_KEY,
       uploadSignedMessage,
       progressCallback
     );
@@ -252,14 +252,14 @@ function UploadButton({
     await uploadProjectImage(); //upload image to firebase
     await deployEncrypted(e); //
 
-    // await deployAccessTokenContract();
-    // handleLoader(3);
-    // await uploadDataOnDB();
+    await deployAccessTokenContract();
+    handleLoader(3);
+    await uploadDataOnDB();
 
-    // await applyAccessCondition();
-    // handleLoader(5);
-    // NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    // navigate("/explore");
+    await applyAccessCondition();
+    handleLoader(5);
+    NotificationManager.success("Form Submitted!", "Successful!", 2000);
+    navigate("/explore");
   };
 
   return (
