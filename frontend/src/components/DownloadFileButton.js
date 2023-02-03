@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
 
-const DownloadFileButton = ({ projectData }) => {
+const DownloadFileButton = ({ projectData,downloadProcessing,setDownloadProcessing }) => {
+
   const [hover, sethover] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const handleMouseEnter = () => {
@@ -25,6 +26,10 @@ const DownloadFileButton = ({ projectData }) => {
     // Fetch file encryption key
     const cid = projectData.fileCid; //replace with your IPFS CID
     const { publicKey, signedMessage } = await sign_auth_message();
+    setDownloadProcessing(true)
+    console.log(publicKey)
+    console.log(cid)
+    console.log(signedMessage);
 
     const keyObject = await lighthouse.fetchEncryptionKey(
       cid,
@@ -40,6 +45,8 @@ const DownloadFileButton = ({ projectData }) => {
     );
 
     const url = URL.createObjectURL(decrypted);
+    setDownloadProcessing(false)
+    console.log(url)
     window.open(url, "_blank");
     setFileUrl(url);
   };
