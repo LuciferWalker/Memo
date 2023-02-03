@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { ethers } from 'ethers'
-import MarketplaceAddress from '../contractsData/Marketplace-address.json'
-import MarketplaceAbi from '../contractsData/Marketplace.json'
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import MarketplaceAddress from "../contractsData/Marketplace-address.json";
+import MarketplaceAbi from "../contractsData/Marketplace.json";
+import { NotificationManager } from "react-notifications";
 
-export const MemoContext = React.createContext()
+export const MemoContext = React.createContext();
 
 export const MemoProvider = ({ children }) => {
   const [account, setAccount] = useState(null);
@@ -15,7 +16,6 @@ export const MemoProvider = ({ children }) => {
     if (!account) return;
     let res = await fetch(`http://localhost:3001/getUserData/${account}`);
     let userData = await res.json();
-    console.log(userData);
 
     if (userData.boughtProjects.includes(projectId))
       return 0; // user has bought
@@ -42,36 +42,24 @@ export const MemoProvider = ({ children }) => {
     setProvider(provider);
 
     setAccount(await signer.getAddress());
-
-    
-    // getUserBalance(account);
   };
-
-  
-  // const getUserBalance = async (userAddress) => {
-  //   const userBalance = await window.ethereum.request({
-  //     method: "eth_getBalance",
-  //     params: [userAddress, "latest"],
-  //   });
-  //   let formatedUserBalance = ethers.utils.formatEther(userBalance);
-  //   let approxUserBalance = formatedUserBalance.slice(
-  //     0,
-  //     formatedUserBalance.indexOf(".") + 4
-  //   );
-
-  //   setUserBalance(approxUserBalance);
-  // };
 
   const checkIfWalletIsConnected = async () => {
     try {
       if (!window.ethereum) return alert("Please install MetaMask.");
 
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
 
       if (accounts.length) {
         setAccount(accounts[0]);
       } else {
-        console.log("No accounts found");
+        NotificationManager.error(
+          "No Accounts Found",
+          "Connect a wallet",
+          2000
+        );
       }
     } catch (error) {
       console.log(error);
@@ -79,15 +67,15 @@ export const MemoProvider = ({ children }) => {
       throw new Error("No ethereum object");
     }
   };
-  const setAcc = async ()=>setAccount(await signer.getAddress());
+  const setAcc = async () => setAccount(await signer.getAddress());
   useEffect(() => {
     loadContracts();
-    checkIfWalletIsConnected()
+    checkIfWalletIsConnected();
   }, [account]);
 
-  useEffect(()=>{
-    setAcc()
-  },)
+  useEffect(() => {
+    setAcc();
+  });
 
   return (
     <MemoContext.Provider

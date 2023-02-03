@@ -17,7 +17,7 @@ const Home = () => {
           MEMO IS A BLUEPRINT TO STORE HUMANITY’S DREAMS, DISCOVERIES &
           MEMORIES.
         </h3>
-        <table style={{ marginTop: "70px",padding:'0px 50px 0px 50px' }}>
+        <table style={{ marginTop: "70px", padding: "0px 50px 0px 50px" }}>
           <tr>
             <td style={{ width: "45%" }}>
               <h4>

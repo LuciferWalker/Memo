@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import UploadButton from "../components/UploadButton";
 import Web3 from "web3/dist/web3.min.js";
-import tick from '../images/tick.png'
-import { NotificationManager } from "react-notifications";
-
-import { useFormik } from "formik";
+import tick from "../images/tick.png";
 
 //ADD UPLOAD FILE OPTION IN THE FORM
 
-const CreatePost = (props) => {
+const CreatePost = () => {
   const [formData, setFormData] = useState({
     projectName: "",
     tokenSymbol: "",
@@ -20,7 +17,7 @@ const CreatePost = (props) => {
     creators: [],
   });
 
-  const [loadingData,setLoadingData] = useState('');
+  const [loadingData, setLoadingData] = useState("");
 
   const inputTag = {
     padding: "8px",
@@ -28,29 +25,12 @@ const CreatePost = (props) => {
     marginLeft: "40px",
   };
 
-  //Unused
-  const handleMouseEnter = () => {
-    sethoversub(true);
-  };
-  const handleMouseLeave = () => {
-    sethoversub(false);
-  };
-
-  useEffect(() => {
-    // setLoadingData(props.loadingdata);
-    // setLoadingData('change')
-  }, []);
-
-
-  const [hoversub, sethoversub] = useState(false);
-
   const [errorn, setErrorN] = useState("");
   const [error, setError] = useState("");
   const [errord, setErrorD] = useState("");
   const [errorp, setErrorP] = useState("");
   const [errors, setErrorS] = useState("");
   const [errorc, setErrorC] = useState("");
-  const [errorr, setErrorR] = useState("");
   const [erroradd, setErrorAdd] = useState("");
   const [errorsocial, setErrorSocial] = useState("");
 
@@ -62,7 +42,7 @@ const CreatePost = (props) => {
       <div
         id="creator"
         key={index}
-        style={{ fontSize: "12px", marginTop: "5px",marginLeft:'170px' }}
+        style={{ fontSize: "12px", marginTop: "5px", marginLeft: "170px" }}
       >
         <tr>
           <label style={{ marginLeft: "130px" }}>Social Login</label>
@@ -88,7 +68,7 @@ const CreatePost = (props) => {
             }}
             value={creator.creatorAddress}
             type="text"
-            style={{ marginLeft: "83px", padding: "4px", width: "160px" }} 
+            style={{ marginLeft: "83px", padding: "4px", width: "160px" }}
           />
           <span style={errorStyle}>{erroradd}</span>
         </tr>
@@ -100,8 +80,8 @@ const CreatePost = (props) => {
             }}
             name="creatorShare"
             type="number"
-            min='0'
-            max='100'
+            min="0"
+            max="100"
             value={creator.creatorShare}
             onKeyDown={blockInvalidChar}
             style={{ marginLeft: "20px", padding: "4px", width: "160px" }}
@@ -153,24 +133,28 @@ const CreatePost = (props) => {
     }
   };
 
-  const blockInvalidChar = e => ['e', 'E', '+', '-', '.'].includes(e.key) && e.preventDefault();
+  const blockInvalidChar = (e) =>
+    ["e", "E", "+", "-", "."].includes(e.key) && e.preventDefault();
 
   function validation(k, e) {
-    if (k== "creatorSocial" || k == "creatorShare" || k == "creatorAddress") {
-      if(k == "creatorSocial"){if (e.creatorSocial == '') {
-        setErrorSocial("Should not be Empty");
-        return false;
-      } else {
-        setErrorSocial(<img src={tick}/>);
-        return true;
-      }}
-      if(k == "creatorAddress"){if (Web3.utils.isAddress(e.creatorAddress)) {
-        setErrorAdd(<img src={tick}/>);
-        return true;
-      } else {
-        setErrorAdd("InValid Address");
-        return false;
+    if (k == "creatorSocial" || k == "creatorShare" || k == "creatorAddress") {
+      if (k == "creatorSocial") {
+        if (e.creatorSocial == "") {
+          setErrorSocial("Should not be Empty");
+          return false;
+        } else {
+          setErrorSocial(<img src={tick} />);
+          return true;
+        }
       }
+      if (k == "creatorAddress") {
+        if (Web3.utils.isAddress(e.creatorAddress)) {
+          setErrorAdd(<img src={tick} />);
+          return true;
+        } else {
+          setErrorAdd("InValid Address");
+          return false;
+        }
       }
     } else {
       let value = e.target.value;
@@ -180,7 +164,7 @@ const CreatePost = (props) => {
           setErrorN("Should Not be Empty");
           return false;
         } else {
-          setErrorN(<img src={tick}/>);
+          setErrorN(<img src={tick} />);
           return true;
         }
       }
@@ -189,7 +173,7 @@ const CreatePost = (props) => {
           setError("Should Not be Empty");
           return false;
         } else {
-          setError(<img src={tick}/>);
+          setError(<img src={tick} />);
           return true;
         }
       }
@@ -198,7 +182,7 @@ const CreatePost = (props) => {
           setErrorD("Should Not be Empty");
           return false;
         } else {
-          setErrorD(<img src={tick}/>);
+          setErrorD(<img src={tick} />);
           return true;
         }
       }
@@ -207,7 +191,7 @@ const CreatePost = (props) => {
           setErrorP("Should Not be Empty");
           return false;
         } else {
-          setErrorP(<img src={tick}/>);
+          setErrorP(<img src={tick} />);
           return true;
         }
       }
@@ -216,7 +200,7 @@ const CreatePost = (props) => {
           setErrorS("Should Not be Empty");
           return false;
         } else {
-          setErrorS(<img src={tick}/>);
+          setErrorS(<img src={tick} />);
           return true;
         }
       }
@@ -225,7 +209,7 @@ const CreatePost = (props) => {
           setErrorC("Should Not be Empty");
           return false;
         } else {
-          setErrorC(<img src={tick}/>);
+          setErrorC(<img src={tick} />);
           return true;
         }
       }
@@ -238,36 +222,46 @@ const CreatePost = (props) => {
     marginLeft: "5px",
   };
 
-  const pull_data = (data) => {
-    console.log(data); // LOGS DATA FROM CHILD (My name is Dean Winchester... &)
-  }
-
   return (
     <>
       <div style={{ overflow: "hidden", width: "100%" }}>
-        { loadingData ? 
-        <><div style={{color:'#1aff1a',padding:'2px',fontSize:'16px',border:'1px solid #1aff1a',width:'500px'}}>
-            <b>{loadingData}</b>
-        </div><br/></>:''}
+        {loadingData ? (
+          <>
+            <div
+              style={{
+                color: "#1aff1a",
+                padding: "2px",
+                fontSize: "16px",
+                border: "1px solid #1aff1a",
+                width: "500px",
+              }}
+            >
+              <b>{loadingData}</b>
+            </div>
+            <br />
+          </>
+        ) : (
+          ""
+        )}
         <div
           style={{
             width: "1050px",
             height: "500px",
             overflowX: "hidden",
             overflowY: "auto",
-            float:'left',
-            scrollbarWidth:'thin'
+            float: "left",
+            scrollbarWidth: "thin",
           }}
         >
-            <div
-              style={{
-                padding: "20px 0px 20px 60px",
-                color: "white",
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                width: "80%",
-              }}
-            >
-              <form>
+          <div
+            style={{
+              padding: "20px 0px 20px 60px",
+              color: "white",
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              width: "80%",
+            }}
+          >
+            <form>
               <table>
                 {/* Project Name */}
                 <div>
@@ -330,7 +324,9 @@ const CreatePost = (props) => {
                 <div style={{ marginTop: "10px" }}>
                   <tr style={{ verticalAlign: "middle" }}>
                     <td style={{ width: "250px" }}>
-                      <label className="custom-file-upload">Project File (.zip format)</label>
+                      <label className="custom-file-upload">
+                        Project File (.zip format)
+                      </label>
                     </td>
                     <td>
                       <input
@@ -339,7 +335,7 @@ const CreatePost = (props) => {
                           marginLeft: "40px",
                           padding: "8px",
                           width: "200px",
-                          size:"100"
+                          size: "100",
                         }}
                         accept="application/zip"
                         type="file"
@@ -378,7 +374,7 @@ const CreatePost = (props) => {
                         placeholder="10"
                         name="tokenPrice"
                         type="number"
-                        min='0'
+                        min="0"
                         style={inputTag}
                         value={formData.tokenPrice}
                         onKeyDown={blockInvalidChar}
@@ -400,7 +396,7 @@ const CreatePost = (props) => {
                         type="number"
                         name="totalTokenSupply"
                         style={inputTag}
-                        min='0'
+                        min="0"
                         value={formData.totalTokenSupply}
                         onKeyDown={blockInvalidChar}
                         onChange={handleInputs}
@@ -420,8 +416,8 @@ const CreatePost = (props) => {
                         type="number"
                         placeholder="2"
                         name="numberOfCreators"
-                        min='1'
-                        max='5'
+                        min="1"
+                        max="5"
                         value={formData.numberOfCreators}
                         onKeyDown={blockInvalidChar}
                         style={inputTag}
@@ -437,19 +433,19 @@ const CreatePost = (props) => {
                   </tr>
                 </div>
               </table>
-              <div style={{ textAlign:'center',marginTop: "10px" }}>
+              <div style={{ textAlign: "center", marginTop: "10px" }}>
                 <UploadButton
                   formData={formData}
                   projectImage={projectImage}
                   projectFileEvent={projectFileEvent}
                   setLoadingData={setLoadingData}
-                  />
+                />
                 {/* <button type="submit" onClick={handleSubmit}>
                       SUBMIT
                     </button> */}
               </div>
-              </form>
-            </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

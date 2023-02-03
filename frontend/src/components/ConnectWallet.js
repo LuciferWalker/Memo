@@ -1,5 +1,7 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { MemoContext } from "../context/MemoContext";
+
+import { NotificationManager } from "react-notifications";
 const ConnectWallet = () => {
   const { account, setAccount } = useContext(MemoContext);
 
@@ -27,22 +29,16 @@ const ConnectWallet = () => {
         });
 
         await accountChangeHandler(accounts);
-
-        // navigate("/getprotected", { state: { walletAddress: accounts[0] } });
       } catch (error) {
         console.log(error);
       }
     } else {
-      //NOTIFICATIONS.SHOW("Need to install Metamask");
+      NotificationManager.error("Need to install Metamask", "Failed!", 2000);
     }
   };
 
   const accountChangeHandler = async (accounts) => {
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const signer = provider.getSigner();
-    // const userAddress = await signer.getAddress();
     setAccount(accounts[0]);
-    // console.log("Calling backend ",accounts[0]);
     const res = await fetch("http://localhost:3001/createUser", {
       method: "POST",
       headers: {
@@ -50,11 +46,7 @@ const ConnectWallet = () => {
       },
       body: JSON.stringify({ address: accounts[0] }),
     });
-    // setAccount(userAddress.slice(0, 6) + "..." + userAddress.slice(-4));
-    // await getUserBalance(userAddress.toString());
-    // updateEthers();
   };
-
 
   const refreshPage = () => {
     window.location.reload();
@@ -65,22 +57,6 @@ const ConnectWallet = () => {
   //reload page if chain or account is changed
   // window.ethereum.on("accountsChanged", accountChangeHandler); // should we update account details if user connectes another account from metamask
   window.ethereum.on("chainChanged", refreshPage);
-
-  // const updateEthers = () => {
-  //   let provider = new ethers.providers.Web3Provider(window.ethereum);
-  //   // setProvider(provider);
-
-  //   let signer = provider.getsigner();
-  //   localStorage.setItem("signer", signer);
-  //   console.log(signer)
-
-  //   let marketplaceContract = new ethers.Contract(
-  //     MarketplaceAddress,
-  //     MarketplaceAbi,
-  //     signer
-  //   );
-  //   setMarketplaceContract(marketplaceContract);
-  // };
 
   return (
     <>
@@ -107,17 +83,8 @@ const ConnectWallet = () => {
             : "Connect Wallet"}
         </span>
       </button>
-      {/* {userBalance && <div>Balance: {userBalance}</div>} */}
-
-      {/* <h3>{walletAddress}</h3> */}
     </>
   );
 };
 
 export default ConnectWallet;
-
-// const checkWallet = async () => {
-//   let temp = await tokenContract.balanceOf(walletAddress);
-//   temp = ethers.utils.formatEther(temp);
-//   console.log(temp);
-// };

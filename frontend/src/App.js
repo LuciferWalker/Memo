@@ -1,16 +1,12 @@
-import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import CreatedMemos from "./pages/CreatedMemos";
 import PostDescription from "./pages/PostDescription";
-import Download from "./pages/Download";
-import Display from "./pages/Display";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
-import CreatePosttry from "./pages/CreatePosttry";
-import 'react-notifications/lib/notifications.css';
-import { NotificationContainer } from 'react-notifications';
+import "react-notifications/lib/notifications.css";
+import { NotificationContainer } from "react-notifications";
 
 import "./styles/App.css";
 import BoughtMemos from "./pages/BoughtMemos";
@@ -22,10 +18,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="explore" element={<Explore />}/>
-          <Route path="/explore/:projectId" element={<PostDescription />} />
-        <Route path="/download" element={<Download />} />
-        <Route path="/display" element={<Display />} />
+        <Route path="explore" element={<Explore />} />
+        <Route path="/explore/:projectId" element={<PostDescription />} />
 
         <Route path="dashboard" element={<Dashboard />}>
           <Route path="createProject" element={<CreatePost />} />
@@ -33,7 +27,7 @@ function App() {
           <Route path="boughtMemos" element={<BoughtMemos />} />
         </Route>
       </Routes>
-      <NotificationContainer/>
+      <NotificationContainer />
 
       {/* <Route path="*" element={<>error</>} /> */}
     </>

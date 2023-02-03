@@ -99,12 +99,6 @@ contract Marketplace {
         emit ProjectCreated(currentId, cid, newAccessTokenContract);
     }
 
-    // Not needed if mapping can be accessed by the code
-    // function getProjectDetails(uint _projectId) public view {
-    //     require(_projectId < projectCounter.current(), "Invalid Project Id");
-    //     return projectIdToDetails[_projectId];
-    // }
-
     function buyProjectToken(uint256 _projectId) public payable {
         require(_projectId < projectCounter.current(), "Invalid Project Id");
         // Calls mint function of the token
@@ -140,5 +134,10 @@ contract Marketplace {
 
     function getProjectCreationFee() public view returns (uint256) {
         return projectCreationFee;
+    }
+
+    function getProjectStatus(uint256 _projectId) public view returns (bool) {
+        require(_projectId < projectCounter.current(), "Invalid Project Id");
+        return projectIdToDetails[_projectId].tokenAddress.getProjectStatus();
     }
 }

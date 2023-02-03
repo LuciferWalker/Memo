@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract AccessToken is ERC20 {
     using Counters for Counters.Counter;
     Counters.Counter private tokenCounter;
-    
+
     uint256 public MAX_TOKEN_SUPPLY;
     uint256 public TOKEN_PRICE;
     address[] public creators;
@@ -46,8 +46,14 @@ contract AccessToken is ERC20 {
 
     function mint(address minterAddress) public payable {
         require(msg.value >= TOKEN_PRICE, "Insufficient Amount");
-        require(tokenCounter.current() < MAX_TOKEN_SUPPLY, "Tokens are sold out");
-        require(balanceOf(minterAddress) == 0, "You have already bought this token");
+        require(
+            tokenCounter.current() < MAX_TOKEN_SUPPLY,
+            "Tokens are sold out"
+        );
+        require(
+            balanceOf(minterAddress) == 0,
+            "You have already bought this token"
+        );
         _mint(minterAddress, 1000000000000000000);
         distributeFunds(msg.value);
         tokenCounter.increment();
@@ -59,10 +65,6 @@ contract AccessToken is ERC20 {
     function updateProjectStatus(bool _status) private {
         projectStatus = _status;
     }
-
-    // function getProjectStatus() public view returns (bool) {
-    //     return projectStatus;
-    // }
 
     function _transfer(
         address _from,
@@ -79,7 +81,8 @@ contract AccessToken is ERC20 {
     {
         return creatorBalance[userAddress];
     }
-}
 
-//2. use function parameter
-//3. use contract data from web2 storage
+    function getProjectStatus() public view returns (bool) {
+        return projectStatus;
+    }
+}

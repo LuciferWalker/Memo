@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { ethers } from "ethers";
 import lighthouse from "@lighthouse-web3/sdk";
 import {
@@ -70,9 +70,7 @@ function UploadButton({
 
   const handleLoader = (flowStage) => {
     const data = FLOW[flowStage];
-    console.log(FLOW[flowStage]);
     setLoadingData(data);
-    // <CreatePost loadingdata = {data}/>
   };
   const uploadProjectImage = async () => {
     if (!projectImage) return;
@@ -102,26 +100,11 @@ function UploadButton({
       },
       async () => {
         let projectImageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-        console.log(projectImageUrl);
         // This url will be stored in the web2 backend
         formData.projectImageUrl = projectImageUrl;
       }
     );
   };
-
-  // const loadContracts = () => {
-  //   let provider = new ethers.providers.Web3Provider(window.ethereum);
-  //   setProvider(provider);
-  //   let signer = provider.getSigner();
-
-  //   let marketplaceContract = new ethers.Contract(
-  //     MarketplaceAddress.address,
-  //     MarketplaceAbi.abi,
-  //     signer
-  //   );
-  //   setMarketplaceContract(marketplaceContract);
-  //   return marketplaceContract;
-  // };
 
   /* Deploy file along with encryption */
 
@@ -129,7 +112,6 @@ function UploadButton({
     let { publicKey, signedMessage: uploadSignedMessage } =
       await encryptionSignature();
     handleLoader(1);
-    console.log("Project file event ", projectFileEvent);
     const uploadResponse = await lighthouse.uploadEncrypted(
       projectFileEvent, //e
       publicKey,
@@ -137,7 +119,6 @@ function UploadButton({
       uploadSignedMessage,
       progressCallback
     );
-    console.log(uploadResponse);
 
     formData.fileCid = uploadResponse.data.Hash;
     formData.fileSize = uploadResponse.data.Size; //uploadResponse.data.Size/1000000; // converting fileSize to MB
@@ -154,20 +135,10 @@ function UploadButton({
       creators.push(creator.creatorAddress);
       shares.push(creator.creatorShare);
     });
-    console.log(
-      projectName,
-      tokenSymbol,
-      totalTokenSupply,
-      tokenPrice,
-      fileCid
-    );
-    console.log(creators);
-    console.log(shares);
 
-    console.log("before calling get current project id function");
     let { _hex: currentProjectId } =
       await marketplaceContract.getCurrentProjectCounter();
-    console.log(currentProjectId);
+
     currentProjectId = parseInt(currentProjectId.toString());
     const projectCreationFee =
       await marketplaceContract.getProjectCreationFee();
@@ -188,11 +159,7 @@ function UploadButton({
     );
     handleLoader(2);
 
-    console.log(tx);
-
     const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
-
-    console.log(receipt);
 
     const projectDetails = await marketplaceContract.projectIdToDetails(
       currentProjectId
@@ -203,7 +170,6 @@ function UploadButton({
   };
 
   const uploadDataOnDB = async () => {
-    console.log(formData);
     const res = await fetch("http://localhost:3001/createProject", {
       method: "POST",
       headers: {
@@ -235,8 +201,6 @@ function UploadButton({
 
     const aggregator = "([1])";
 
-    //dont know if encryptionSignature needs to be done again
-
     const accessResponse = await lighthouse.accessCondition(
       publicKey,
       formData.fileCid,
@@ -244,8 +208,6 @@ function UploadButton({
       conditions,
       aggregator
     );
-
-    console.log(accessResponse);
 
     if (accessResponse.data.status === "Success") {
       setLoader(5);
@@ -279,7 +241,6 @@ function UploadButton({
         "Fill the Form",
         2000
       );
-    console.log(formData);
     await uploadProjectImage(); //upload image to firebase
     await deployEncrypted(e); //
 
@@ -291,16 +252,6 @@ function UploadButton({
     handleLoader(5);
     NotificationManager.success("Form Submitted!", "Successful!", 2000);
     navigate("/explore");
-    // navigate("/display", {
-    //   state: {
-    //     title: projectName,
-    //     desc: projectDescription,
-    //     price: price,
-    //     creators: distribution,
-    //     royal: royalDist,
-    //   },
-    // });
-    // NotificationManager.success("Form Submitted!", "Successful!", 2000);
   };
 
   return (

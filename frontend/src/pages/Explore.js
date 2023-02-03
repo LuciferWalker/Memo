@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
 import { useEffect, useState } from "react";
 import { formatBytes } from "../utils";
-import Spinner from 'react-spinners/ClipLoader';
+import Spinner from "react-spinners/ClipLoader";
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
@@ -110,9 +110,8 @@ const Explore = () => {
                     <table
                       key={index}
                       style={tab}
-                      
                       onClick={() => {
-                          navigate(`/explore/${card.projectId}`)
+                        navigate(`/explore/${card.projectId}`);
                       }}
                     >
                       <tr>
