@@ -35,8 +35,6 @@ const Dashboard = () => {
               </h4>{" "}
             </Link>
 
-            <h4>STORAGE</h4>
-
             <Link to="/dashboard/createdMemos" style={rmLink}>
               {" "}
               <h4
@@ -64,7 +62,7 @@ const Dashboard = () => {
                 BOUGHT MEMOS
               </h4>{" "}
             </Link>
-
+            <h4>STORAGE</h4>
             <h4>ANALYTICS</h4>
             <h4>ACCOUNT</h4>
           </div>
