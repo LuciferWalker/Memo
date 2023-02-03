@@ -55,11 +55,19 @@ function UploadButton({
     const address = await signer.getAddress();
     const messageRequested = (await lighthouse.getAuthMessage(address)).data
       .message;
-    const signedMessage = await signer.signMessage(messageRequested);
-    return {
-      signedMessage: signedMessage,
-      publicKey: address,
-    };
+    try {
+      const signedMessage = await signer.signMessage(messageRequested);
+      return {
+        signedMessage: signedMessage,
+        publicKey: address,
+      };
+    } catch (error) {
+      NotificationManager.error(
+        "Denied Signature",
+        "You denied to sign the message",
+        3000
+      );
+    }
   };
 
   const progressCallback = (progressData) => {
@@ -244,14 +252,14 @@ function UploadButton({
     await uploadProjectImage(); //upload image to firebase
     await deployEncrypted(e); //
 
-    await deployAccessTokenContract();
-    handleLoader(3);
-    await uploadDataOnDB();
+    // await deployAccessTokenContract();
+    // handleLoader(3);
+    // await uploadDataOnDB();
 
-    await applyAccessCondition();
-    handleLoader(5);
-    NotificationManager.success("Form Submitted!", "Successful!", 2000);
-    navigate("/explore");
+    // await applyAccessCondition();
+    // handleLoader(5);
+    // NotificationManager.success("Form Submitted!", "Successful!", 2000);
+    // navigate("/explore");
   };
 
   return (
