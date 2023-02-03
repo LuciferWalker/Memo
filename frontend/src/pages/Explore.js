@@ -82,12 +82,12 @@ const Explore = () => {
     },
   ];
 
-  if (!listedProjects) return <Spinner />;
-
   return (
     <>
-      {loading ? (
-        "Loading"
+      {!listedProjects ? (
+        <div style={{textAlign:'center', marginTop:'120px'}}>
+        <Spinner color='white' size={100} />
+      </div>
       ) : (
         <div style={explore}>
           <div style={{ padding: "20px" }}>
@@ -135,7 +135,6 @@ const Explore = () => {
                           <h5>
                             {" "}
                             PRICE: {card.tokenPrice} FIL
-                            <br /> $ DOWNLOAD
                           </h5>
                         </td>
                       </tr>
