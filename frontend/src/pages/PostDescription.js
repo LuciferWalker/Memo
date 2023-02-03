@@ -62,6 +62,8 @@ const PostDescription = () => {
     if (projectDetail) setUser()
   }, [projectDetail, account])
 
+  console.log(projectDetail, userType)
+
   const post = {
     backgroundImage: `url(${image})`,
     backgroundRepeat: 'no-repeat',
@@ -74,7 +76,7 @@ const PostDescription = () => {
     padding: '0px',
   }
 
-  if (!projectDetail || !userType) 
+  if (!projectDetail || userType==null) 
     return (
       <div style={{textAlign:'center', marginTop:'120px'}}>
         <Spinner color='white' size={100} />
