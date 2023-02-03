@@ -56,7 +56,7 @@ export const BuyTokenButton = ({ projectData }) => {
 
       window.location.reload();
     } catch (error) {
-      NotificationManager.error(error, "Failed!", 2000);
+      NotificationManager.error("Failed", error.data.message, 3000);
     }
   };
 
