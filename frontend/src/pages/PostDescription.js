@@ -304,7 +304,7 @@ const PostDescription = () => {
                   </div>
                   <div style={{ textAlign: "left" }}>
                     <p>
-                      Your royalty pocket: {shareAmount ? shareAmount : 0} FIL
+                      Your Royalty Pocket: {shareAmount ? shareAmount : 0} FIL
                     </p>
                     {shareAmount > 0 && (
                       <p>
