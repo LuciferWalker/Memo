@@ -2,17 +2,19 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import image from '../images/star.png'
 import Img1 from '../images/mars.jpg'
+import Spinner from 'react-spinners/ClipLoader';
 
 import { BuyTokenButton } from '../components/BuyTokenButton'
 import { MemoContext } from '../context/MemoContext'
 import DownloadFileButton from '../components/DownloadFileButton'
 import { formatBytes } from '../utils'
 import { NotificationManager } from 'react-notifications'
+import { ethers } from 'ethers';
 
 const PostDescription = () => {
   const [projectDetail, setprojectDetail] = useState(null)
   const [userType, setUserType] = useState(null)
-  const [shareAmount, setShareAmount] = useState(0)
+  const [shareAmount, setShareAmount] = useState(null)
   let { projectId } = useParams()
 
   const { account, checkUser, marketplaceContract, provider } = useContext(
@@ -26,9 +28,11 @@ const PostDescription = () => {
   }
 
   const getMyShareAmount = async () => {
-    setShareAmount(await marketplaceContract.getMyShareAmount(projectId))
+    const shareAmount = await marketplaceContract.getMyShareAmount(projectId)
+    setShareAmount(ethers.utils.formatEther(shareAmount));
+    console.log(ethers.utils.formatEther(shareAmount))
   }
-
+  
   const collectShares = async () => {
     const tx = await marketplaceContract.collectFunds(projectId)
     const receipt = await provider.waitForTransaction(tx.hash, 1, 150000)
@@ -70,7 +74,8 @@ const PostDescription = () => {
     padding: '0px',
   }
 
-  console.log(projectDetail)
+  console.log(shareAmount)
+  if(!projectDetail && !userType) return <Spinner/>
   return (
     <>
       <div style={post}>
@@ -224,8 +229,7 @@ const PostDescription = () => {
                     </p>
                   </div>
                   <div style={{ textAlign: 'left' }}>
-                    {/* Contract function will be called for this info */}
-                    <p>Your royalty pocket: {shareAmount} FIL</p>
+                    <p>Your royalty pocket: {shareAmount?shareAmount:0} FIL</p>
                     {shareAmount > 0 && (
                       <p>
                         <button
@@ -241,7 +245,7 @@ const PostDescription = () => {
                         </button>
                       </p>
                     )}
-                  </div>
+                    </div>
                 </div>
               </div>
             )}

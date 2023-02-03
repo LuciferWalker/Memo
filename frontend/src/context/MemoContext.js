@@ -62,9 +62,27 @@ export const MemoProvider = ({ children }) => {
   //   setUserBalance(approxUserBalance);
   // };
 
+  const checkIfWalletIsConnected = async () => {
+    try {
+      if (!window.ethereum) return alert("Please install MetaMask.");
+
+      const accounts = await window.ethereum.request({ method: "eth_accounts" });
+
+      if (accounts.length) {
+        setAccount(accounts[0]);
+      } else {
+        console.log("No accounts found");
+      }
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object");
+    }
+  };
   const setAcc = async ()=>setAccount(await signer.getAddress());
   useEffect(() => {
     loadContracts();
+    checkIfWalletIsConnected()
   }, [account]);
 
   useEffect(()=>{

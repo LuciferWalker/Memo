@@ -82,7 +82,7 @@ const Explore = () => {
     },
   ];
 
-  if (loadingSpin) return <Spinner />;
+  if (!listedProjects) return <Spinner />;
 
   return (
     <>
@@ -112,11 +112,7 @@ const Explore = () => {
                       style={tab}
                       
                       onClick={() => {
-                        setLoadingSpin(!loadingSpin);
-                        setTimeout(()=> {
-                          setLoadingSpin(!loadingSpin);
                           navigate(`/explore/${card.projectId}`)
-                         }, 8000);
                       }}
                     >
                       <tr>
