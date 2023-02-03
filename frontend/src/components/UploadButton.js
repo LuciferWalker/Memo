@@ -12,6 +12,7 @@ import app from "../firebase";
 import { NotificationManager } from "react-notifications";
 import { MemoContext } from "../context/MemoContext";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils";
 
 function UploadButton({
   formData,
@@ -178,7 +179,7 @@ function UploadButton({
   };
 
   const uploadDataOnDB = async () => {
-    const res = await fetch("http://localhost:3001/createProject", {
+    const res = await fetch(`${BASE_URL}/createProject`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -7,7 +7,7 @@ import Spinner from "react-spinners/ClipLoader";
 import { BuyTokenButton } from "../components/BuyTokenButton";
 import { MemoContext } from "../context/MemoContext";
 import DownloadFileButton from "../components/DownloadFileButton";
-import { formatBytes } from "../utils";
+import { BASE_URL, formatBytes } from "../utils";
 import { NotificationManager } from "react-notifications";
 import { ethers } from "ethers";
 
@@ -41,9 +41,7 @@ const PostDescription = () => {
   };
 
   const fetchProjectDetails = async () => {
-    const res = await fetch(
-      "http://localhost:3001/getProjectData/" + projectId
-    );
+    const res = await fetch(`${BASE_URL}/getProjectData/${projectId}`);
     const project = await res.json();
     setprojectDetail(project);
   };

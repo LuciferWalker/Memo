@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
 import { NotificationManager } from "react-notifications";
+import { BASE_URL } from "../utils";
 
 export const BuyTokenButton = ({ projectData }) => {
   const [hover, sethover] = useState(false);
@@ -31,13 +32,13 @@ export const BuyTokenButton = ({ projectData }) => {
 
       if (!projectStatus) {
         const res = await fetch(
-          `http://localhost:3001/updateProjectStatus/${projectData.projectId}`
+          `${BASE_URL}/updateProjectStatus/${projectData.projectId}`
         );
       }
 
       //check if transaction is successful logic
 
-      const res = await fetch("http://localhost:3001/projectTokenBought", {
+      const res = await fetch(`${BASE_URL}/projectTokenBought`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

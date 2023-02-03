@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import image from "../images/star.png";
 import { useEffect, useState } from "react";
-import { formatBytes } from "../utils";
+import { BASE_URL, formatBytes } from "../utils";
 import Spinner from "react-spinners/ClipLoader";
 
 const Explore = () => {
@@ -14,7 +14,7 @@ const Explore = () => {
   //call listedProjects api from backend
 
   const getListedProjects = async () => {
-    const res = await fetch("http://localhost:3001/listedProjects");
+    const res = await fetch(`${BASE_URL}/listedProjects`);
     const projects = await res.json();
     setListedProjects(projects);
     setLoading(false);

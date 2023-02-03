@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MemoContext } from "../context/MemoContext";
 import { NotificationManager } from "react-notifications";
+import { BASE_URL } from "../utils";
 
 const CreatedMemos = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const CreatedMemos = () => {
 
   const getCreatedProjects = async (userAddress) => {
     const response = await fetch(
-      `http://localhost:3001/createdProjects?address=${userAddress}`
+      `${BASE_URL}/createdProjects?address=${userAddress}`
     );
     const projects = await response.json();
     setCreatedProjects(projects);
@@ -22,7 +23,7 @@ const CreatedMemos = () => {
 
   const getBoughtProjects = async (userAddress) => {
     const response = await fetch(
-      `http://localhost:3001/boughtProjects?address=${userAddress}`
+      `${BASE_URL}/boughtProjects?address=${userAddress}`
     );
     const projects = await response.json();
     setBoughtProjects(projects);

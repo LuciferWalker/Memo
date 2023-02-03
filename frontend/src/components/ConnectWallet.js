@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { MemoContext } from "../context/MemoContext";
 
 import { NotificationManager } from "react-notifications";
+import { BASE_URL } from "../utils";
 const ConnectWallet = () => {
   const { account, setAccount } = useContext(MemoContext);
 
@@ -39,7 +40,7 @@ const ConnectWallet = () => {
 
   const accountChangeHandler = async (accounts) => {
     setAccount(accounts[0]);
-    const res = await fetch("http://localhost:3001/createUser", {
+    const res = await fetch(`${BASE_URL}/createUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

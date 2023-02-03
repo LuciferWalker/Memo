@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import MarketplaceAddress from "../contractsData/Marketplace-address.json";
 import MarketplaceAbi from "../contractsData/Marketplace.json";
 import { NotificationManager } from "react-notifications";
+import { BASE_URL } from "../utils";
 
 export const MemoContext = React.createContext();
 
@@ -14,7 +15,7 @@ export const MemoProvider = ({ children }) => {
 
   const checkUser = async (projectId) => {
     if (!account) return;
-    let res = await fetch(`http://localhost:3001/getUserData/${account}`);
+    let res = await fetch(`${BASE_URL}/getUserData/${account}`);
     let userData = await res.json();
 
     if (userData.boughtProjects.includes(projectId))
