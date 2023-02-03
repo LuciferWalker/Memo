@@ -62,7 +62,6 @@ const PostDescription = () => {
     if (projectDetail) setUser()
   }, [projectDetail, account])
 
-  console.log(projectDetail, userType)
 
   const post = {
     backgroundImage: `url(${image})`,
