@@ -17,6 +17,7 @@ const PostDescription = () => {
   const [shareAmount, setShareAmount] = useState(null)
   const [downloadProcessing, setDownloadProcessing] = useState(null)
   const [purchaseProcessing, setPurchaseProcessing] = useState(null)
+  const [collectShareProcessing, setCollectShareProcessing] = useState(null);
   let { projectId } = useParams()
 
   const { account, checkUser, marketplaceContract, provider } = useContext(
@@ -36,8 +37,9 @@ const PostDescription = () => {
 
   const collectShares = async () => {
     const tx = await marketplaceContract.collectFunds(projectId)
+    setCollectShareProcessing(true);
     const receipt = await provider.waitForTransaction(tx.hash, 1, 150000)
-
+    setCollectShareProcessing(false);
     NotificationManager.success('Amount Collected', shareAmount, 2000)
     window.location.reload()
   }
@@ -83,109 +85,125 @@ const PostDescription = () => {
     ) 
   return (
     <>
+      {collectShareProcessing ? (
+        <div
+          style={{
+            marginLeft: "80px",
+            color: "#1aff1a",
+            padding: "2px",
+            fontSize: "16px",
+            border: "1px solid #1aff1a",
+            width: "500px",
+          }}
+        >
+          <b>Transferring your shares...</b>
+        </div>
+      ) : (
+        ""
+      )}
       {downloadProcessing ? (
         <div
           style={{
-            marginLeft: '80px',
-            color: '#1aff1a',
-            padding: '2px',
-            fontSize: '16px',
-            border: '1px solid #1aff1a',
-            width: '500px',
+            marginLeft: "80px",
+            color: "#1aff1a",
+            padding: "2px",
+            fontSize: "16px",
+            border: "1px solid #1aff1a",
+            width: "500px",
           }}
         >
-          <b>Download Under Process</b>
+          <b>Downloading your file...</b>
         </div>
       ) : (
-        ''
+        ""
       )}
       {purchaseProcessing ? (
         <div
           style={{
-            marginLeft: '80px',
-            color: '#1aff1a',
-            padding: '2px',
-            fontSize: '16px',
-            border: '1px solid #1aff1a',
-            width: '500px',
+            marginLeft: "80px",
+            color: "#1aff1a",
+            padding: "2px",
+            fontSize: "16px",
+            border: "1px solid #1aff1a",
+            width: "500px",
           }}
         >
-          <b>Purchase Under Process</b>
+          <b>Purchasing the token...</b>
         </div>
       ) : (
-        ''
+        ""
       )}
 
       <div style={post}>
-        <div style={{ padding: '40px' }}>
+        <div style={{ padding: "40px" }}>
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: '20px',
+              display: "flex",
+              justifyContent: "space-between",
+              gap: "20px",
             }}
           >
             <table>
               <tr>
                 <td
                   style={{
-                    width: '750px',
-                    backgroundColor: 'rgba(7, 7, 7, 0.5)',
+                    width: "750px",
+                    backgroundColor: "rgba(7, 7, 7, 0.5)",
                   }}
                 >
-                  <div style={{ paddingLeft: '30px' }}>
-                    <h4>{projectDetail?.projectName || ''}</h4>
+                  <div style={{ paddingLeft: "30px" }}>
+                    <h4>{projectDetail?.projectName || ""}</h4>
                     <img
                       src={projectDetail?.projectImageUrl || Img1}
-                      style={{ width: '550px', height: '260px' }}
+                      style={{ width: "550px", height: "260px" }}
                     />
                     <h4>DESCRIPTION</h4>
-                    {(projectDetail && projectDetail.projectDescription) || ''}
+                    {(projectDetail && projectDetail.projectDescription) || ""}
                     <h4>CREATORS</h4>
                     {projectDetail
                       ? projectDetail.creators.map((item) => (
-                          <h5 style={{ margin: '10px' }}>
+                          <h5 style={{ margin: "10px" }}>
                             {item.creatorAddress} |
                             <span>
                               <a
                                 style={{
-                                  textDecoration: 'none',
-                                  color: '#658BD6',
+                                  textDecoration: "none",
+                                  color: "#658BD6",
                                 }}
                                 target="_blank"
                                 href={item.creatorSocial}
                               >
-                                {' '}
+                                {" "}
                                 Social Link
                               </a>
                             </span>
                           </h5>
                         ))
-                      : ''}
+                      : ""}
                   </div>
                 </td>
 
                 {userType !== USER_TYPE.CREATOR && (
-                  <td style={{ paddingLeft: '20px' }}>
+                  <td style={{ paddingLeft: "20px" }}>
                     <div>
                       <table style={tab}>
                         <tr>
-                          <td style={{ paddingLeft: '20px' }}>
+                          <td style={{ paddingLeft: "20px" }}>
                             <h4>DOWNLOAD</h4>
                           </td>
                           <td></td>
                           <td>
                             <h4>
-                              Token Price: {projectDetail?.tokenPrice} FIL{' '}
+                              Token Price: {projectDetail?.tokenPrice} FIL{" "}
                             </h4>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', paddingLeft: '20px' }}>
+                          <td style={{ width: "200px", paddingLeft: "20px" }}>
                             <h5>18.05.2023</h5>
                           </td>
-                          <td style={{ width: '200px' }}></td>
-                          <td style={{ width: '200px' }}>
+                          <td style={{ width: "200px" }}></td>
+                          <td style={{ width: "200px" }}>
                             <h5>
                               WISHLIST
                               {userType === USER_TYPE.BOUGHT ? (
@@ -207,22 +225,22 @@ const PostDescription = () => {
                       </table>
                       <table style={tab}>
                         <tr>
-                          <td style={{ paddingLeft: '20px' }}>
+                          <td style={{ paddingLeft: "20px" }}>
                             <h4>RENT</h4>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', paddingLeft: '20px' }}>
+                          <td style={{ width: "200px", paddingLeft: "20px" }}>
                             <h5>18.05.2023</h5>
                           </td>
-                          <td style={{ width: '200px' }}></td>
-                          <td style={{ width: '200px' }}>
+                          <td style={{ width: "200px" }}></td>
+                          <td style={{ width: "200px" }}>
                             <h5>
                               WISHLIST
                               <span
                                 style={{
-                                  marginLeft: '30px',
-                                  paddingRight: '10px',
+                                  marginLeft: "30px",
+                                  paddingRight: "10px",
                                 }}
                               >
                                 PURCHASE
@@ -233,22 +251,22 @@ const PostDescription = () => {
                       </table>
                       <table style={tab}>
                         <tr>
-                          <td style={{ paddingLeft: '20px' }}>
+                          <td style={{ paddingLeft: "20px" }}>
                             <h4>PURCHASE</h4>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', paddingLeft: '20px' }}>
+                          <td style={{ width: "200px", paddingLeft: "20px" }}>
                             <h5>18.05.2023</h5>
                           </td>
-                          <td style={{ width: '200px' }}></td>
-                          <td style={{ width: '200px' }}>
+                          <td style={{ width: "200px" }}></td>
+                          <td style={{ width: "200px" }}>
                             <h5>
                               WISHLIST
                               <span
                                 style={{
-                                  marginLeft: '30px',
-                                  paddingRight: '10px',
+                                  marginLeft: "30px",
+                                  paddingRight: "10px",
                                 }}
                               >
                                 PURCHASE
@@ -265,26 +283,26 @@ const PostDescription = () => {
             {userType === USER_TYPE.CREATOR && (
               <div
                 style={{
-                  width: '40%',
+                  width: "40%",
                   background:
-                    'linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)',
-                  padding: '40px',
+                    "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
+                  padding: "40px",
                 }}
               >
                 <div style={{}}>
-                  <div style={{ textAlign: 'left' }}>
+                  <div style={{ textAlign: "left" }}>
                     <p>File Size - {formatBytes(projectDetail?.fileSize)}</p>
                     <p>Token Price - {projectDetail?.tokenPrice} FIL</p>
                     <p>Total Tokens - {projectDetail?.totalTokenSupply}</p>
                   </div>
-                  <div style={{ textAlign: 'left' }}>
+                  <div style={{ textAlign: "left" }}>
                     <p>Tokens Bought - {projectDetail?.tokensBought}</p>
                     <p>
-                      Token Contract Address -{' '}
+                      Token Contract Address -{" "}
                       {projectDetail?.tokenContractAddress}
                     </p>
                   </div>
-                  <div style={{ textAlign: 'left' }}>
+                  <div style={{ textAlign: "left" }}>
                     <p>
                       Your royalty pocket: {shareAmount ? shareAmount : 0} FIL
                     </p>
@@ -292,12 +310,12 @@ const PostDescription = () => {
                       <p>
                         <button
                           style={{
-                            color: '#658BD6',
-                            padding: '7px',
-                            background: 'none',
-                            border: 'none',
-                            fontFamily: 'Montserrat, sans-serif',
-                            cursor: 'pointer',
+                            color: "#658BD6",
+                            padding: "7px",
+                            background: "none",
+                            border: "none",
+                            fontFamily: "Montserrat, sans-serif",
+                            cursor: "pointer",
                           }}
                           onClick={collectShares}
                         >
@@ -313,7 +331,7 @@ const PostDescription = () => {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default PostDescription
