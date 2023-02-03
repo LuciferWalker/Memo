@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { MemoContext } from "../context/MemoContext";
 import lighthouse from "@lighthouse-web3/sdk";
 
-const DownloadFileButton = ({ projectData }) => {
+const DownloadFileButton = ({ projectData,downloadProcessing,setDownloadProcessing }) => {
   console.log(projectData)
 
   const [hover, sethover] = useState(false);
@@ -28,6 +28,7 @@ const DownloadFileButton = ({ projectData }) => {
     // Fetch file encryption key
     const cid = projectData.fileCid; //replace with your IPFS CID
     const { publicKey, signedMessage } = await sign_auth_message();
+    setDownloadProcessing(true)
     console.log(publicKey)
     console.log(cid)
     console.log(signedMessage);
@@ -49,6 +50,7 @@ const DownloadFileButton = ({ projectData }) => {
     console.log(decrypted);
 
     const url = URL.createObjectURL(decrypted);
+    setDownloadProcessing(false)
     console.log(url)
     window.open(url, "_blank");
     setFileUrl(url);

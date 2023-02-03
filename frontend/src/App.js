@@ -8,7 +8,6 @@ import Download from "./pages/Download";
 import Display from "./pages/Display";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
-import CreatePosttry from "./pages/CreatePosttry";
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 

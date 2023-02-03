@@ -15,6 +15,7 @@ const PostDescription = () => {
   const [projectDetail, setprojectDetail] = useState(null)
   const [userType, setUserType] = useState(null)
   const [shareAmount, setShareAmount] = useState(null)
+  const [downloadProcessing,setDownloadProcessing] = useState(null)
   let { projectId } = useParams()
 
   const { account, checkUser, marketplaceContract, provider } = useContext(
@@ -78,6 +79,9 @@ const PostDescription = () => {
   if(!projectDetail && !userType) return <Spinner/>
   return (
     <>
+    {downloadProcessing?<div style={{marginLeft:'80px',color:'#1aff1a',padding:'2px',fontSize:'16px',border:'1px solid #1aff1a',width:'500px'}}>
+            <b>Download Under Process</b>
+        </div>:""}
       <div style={post}>
         <div style={{ padding: '40px' }}>
           <div
@@ -141,6 +145,8 @@ const PostDescription = () => {
                               {userType === USER_TYPE.BOUGHT ? (
                                 <DownloadFileButton
                                   projectData={projectDetail}
+                                  downloadProcessing={downloadProcessing}
+                                  setDownloadProcessing={setDownloadProcessing}
                                 />
                               ) : (
                                 <BuyTokenButton projectData={projectDetail} />
