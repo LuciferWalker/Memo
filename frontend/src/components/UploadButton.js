@@ -25,7 +25,7 @@ function UploadButton({
   const { marketplaceContract } = useContext(MemoContext);
   const [loader, setLoader] = useState(null);
   const FLOW = {
-    1: "Encrypting and Uplaoding File to IPFS",
+    1: "Encrypting and Uploading File to IPFS",
     2: "Deploying Your Token Contract",
     3: "Uploading Data on the Web2 Database",
     4: "Applying Access Conditions on your File",
