@@ -21,6 +21,15 @@ const PostDescription = () => {
   const [collectShareProcessing, setCollectShareProcessing] = useState(null);
   let { projectId } = useParams();
 
+  const [hoversub, sethoversub] = useState(false);
+
+  const handleMouseEnter = () => {
+    sethoversub(true);
+  };
+  const handleMouseLeave = () => {
+    sethoversub(false);
+  };
+
   const { account, checkUser, marketplaceContract, provider } =
     useContext(MemoContext);
 
@@ -315,7 +324,7 @@ const PostDescription = () => {
                       <p>
                         <button
                           style={{
-                            color: "#658BD6",
+                            color: hoversub ? "#658BD6" : "white",
                             padding: "7px",
                             background: "none",
                             border: "none",
@@ -323,8 +332,10 @@ const PostDescription = () => {
                             cursor: "pointer",
                           }}
                           onClick={collectShares}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
                         >
-                          Claim Money
+                          <b>Claim Money</b>
                         </button>
                       </p>
                     )}
