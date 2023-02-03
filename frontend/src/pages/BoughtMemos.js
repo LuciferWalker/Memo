@@ -30,7 +30,7 @@ const BoughtMemos = () => {
 
   return (
     <>
-      {!boughtProjects ? (
+      {boughtProjects?.length == 0 ? (
         <div style={{ marginLeft:'400px', marginTop: '120px' }}>
           <Spinner color="white" size={100} />
         </div>

@@ -30,7 +30,7 @@ const CreatedMemos = () => {
 
   return (
     <>
-      {!createdProjects ? (
+      {createdProjects?.length == 0 (
         <div style={{ marginLeft: '400px', marginTop: '120px' }}>
           <Spinner color="white" size={100} />
         </div>
