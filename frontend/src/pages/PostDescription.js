@@ -40,7 +40,7 @@ const PostDescription = () => {
     setCollectShareProcessing(true);
     const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
     setCollectShareProcessing(false);
-    NotificationManager.success("Amount Collected", shareAmount, 2000);
+    NotificationManager.success(shareAmount, "Royalty Amount Collected", 2000);
     window.location.reload();
   };
 
