@@ -64,6 +64,13 @@ const PostDescription = () => {
     setUserType(type);
   };
 
+   useEffect(() => {
+     if (!account) {
+       navigate("/");
+       NotificationManager.info("Connect Your Wallet!", "Warning", 3000);
+     }
+   }, []);
+
   useEffect(() => {
     fetchProjectDetails();
     getMyShareAmount();

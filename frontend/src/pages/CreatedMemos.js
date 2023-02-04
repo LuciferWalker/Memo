@@ -26,7 +26,6 @@ const CreatedMemos = () => {
       NotificationManager.info('Connect Your Wallet!', 'Warning', 3000)
     }
   }, [])
-  console.log(createdProjects)
 
   return (
     <>
