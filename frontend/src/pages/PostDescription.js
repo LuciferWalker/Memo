@@ -352,18 +352,16 @@ const PostDescription = () => {
                     </div>
                     </div>
                   </div>
-                  </>
-                )}
-              </tr>
-            </table>
-            {userType === USER_TYPE.CREATOR && (
+                  <div>
+                  {userType === USER_TYPE.CREATOR && (
               <div
                 style={{
-                  width: "40%",
+                  width: "80%",
                   background:
                     "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
                   padding: "40px",
                 }}
+                className="creatorBlock"
               >
                 <div style={{}}>
                   <div style={{ textAlign: "left" }}>
@@ -404,7 +402,62 @@ const PostDescription = () => {
                   </div>
                 </div>
               </div>
-            )}
+             )} 
+                  </div>
+                  </>
+                )}
+              </tr>
+            </table>
+            {userType === USER_TYPE.CREATOR && (
+              <div
+                style={{
+                  width: "40%",
+                  background:
+                    "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
+                  padding: "40px",
+                }}
+                className="fullCreatorBlock"
+              >
+                <div style={{}}>
+                  <div style={{ textAlign: "left" }}>
+                    <p>File Size - {formatBytes(projectDetail?.fileSize)}</p>
+                    <p>Token Price - {projectDetail?.tokenPrice} FIL</p>
+                    <p>Total Tokens - {projectDetail?.totalTokenSupply}</p>
+                  </div>
+                  <div style={{ textAlign: "left" }}>
+                    <p>Tokens Bought - {projectDetail?.tokensBought}</p>
+                    <p>
+                      Token Contract Address -{" "}
+                      {projectDetail?.tokenContractAddress}
+                    </p>
+                  </div>
+                  <div style={{ textAlign: "left" }}>
+                    <p>
+                      Your Royalty Pocket: {shareAmount ? shareAmount : 0} FIL
+                    </p>
+                    {shareAmount > 0 && (
+                      <p>
+                        <button
+                          style={{
+                            color: hoversub ? "#658BD6" : "white",
+                            padding: "7px",
+                            background: "none",
+                            border: "none",
+                            fontFamily: "Montserrat, sans-serif",
+                            cursor: "pointer",
+                          }}
+                          onClick={collectShares}
+                          onMouseEnter={handleMouseEnter}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          <b>Claim Money</b>
+                        </button>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+             )}
           </div>
         </div>
       </div>

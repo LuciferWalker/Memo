@@ -6,6 +6,13 @@
       margin-top: 20px;
       display: block;
     }
+    .fullCreatorBlock{
+      display: none;
+    }
+    .creatorBlock{
+      margin-top: 20px;
+      display: block;
+    }
     .tbl-responsive th {
       display: none;
     }
@@ -26,6 +33,12 @@
   }
 
   @media (min-width:1007px){
+    .creatorBlock{
+      display: none;
+    }
+    .fullCreatorBlock{
+      display: block;
+    }
     .disBlock{
       display: none;
     }
