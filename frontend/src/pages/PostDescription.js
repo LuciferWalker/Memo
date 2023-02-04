@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import image from "../images/star.png";
 import Img1 from "../images/mars.jpg";
 import Spinner from "react-spinners/ClipLoader";
@@ -32,6 +32,8 @@ const PostDescription = () => {
 
   const { account, checkUser, marketplaceContract, provider } =
     useContext(MemoContext);
+
+  const navigate = useNavigate();
 
   const USER_TYPE = {
     CREATOR: 1,
