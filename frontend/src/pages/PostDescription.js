@@ -66,12 +66,12 @@ const PostDescription = () => {
     setUserType(type);
   };
 
-   useEffect(() => {
-     if (!account) {
-       navigate("/explore");
-       NotificationManager.info("Connect Your Wallet!", "Warning", 3000);
-     }
-   }, []);
+  //  useEffect(() => {
+  //    if (!account) {
+  //      navigate("/explore");
+  //      NotificationManager.info("Connect Your Wallet!", "Warning", 3000);
+  //    }
+  //  }, []);
 
   useEffect(() => {
     fetchProjectDetails();

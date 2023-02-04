@@ -4,7 +4,11 @@ import { MemoContext } from "../context/MemoContext";
 import { NotificationManager } from "react-notifications";
 import { BASE_URL } from "../utils";
 
-export const BuyTokenButton = ({ projectData,purchaseProcessing,setPurchaseProcessing }) => {
+export const BuyTokenButton = ({
+  projectData,
+  purchaseProcessing,
+  setPurchaseProcessing,
+}) => {
   const [hover, sethover] = useState(false);
   const handleMouseEnter = () => {
     sethover(true);
@@ -22,12 +26,12 @@ export const BuyTokenButton = ({ projectData,purchaseProcessing,setPurchaseProce
         {
           value: ethers.utils.parseEther(projectData.tokenPrice.toString()), //in ethers
         }
-        );
-      setPurchaseProcessing(true)
+      );
+      setPurchaseProcessing(true);
 
       const receipt = await provider.waitForTransaction(tx.hash, 1, 150000);
 
-      setPurchaseProcessing(false)
+      setPurchaseProcessing(false);
       const projectStatus = await marketplaceContract.getProjectStatus(
         projectData.projectId
       );
