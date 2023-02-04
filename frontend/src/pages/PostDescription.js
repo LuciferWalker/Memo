@@ -10,7 +10,8 @@ import DownloadFileButton from "../components/DownloadFileButton";
 import { BASE_URL, formatBytes } from "../utils";
 import { NotificationManager } from "react-notifications";
 import { ethers } from "ethers";
-import moment from "moment";
+import '../styles/responsive.css'
+// import moment from "moment";
 
 const PostDescription = () => {
   const [projectDetail, setprojectDetail] = useState(null);
@@ -160,7 +161,7 @@ const PostDescription = () => {
               gap: "20px",
             }}
           >
-            <table>
+            <table className="tbl-responsive">
               <tr>
                 <td
                   style={{
@@ -172,7 +173,7 @@ const PostDescription = () => {
                     <h3>
                       {projectDetail?.projectName} |{" "}
                       <span style={{fontSize:"15px"}}>
-                        {moment(projectDetail?.createdAt).format("DD-MM-YYYY")}
+                        {/* {moment(projectDetail?.createdAt).format("DD-MM-YYYY")} */}
                       </span>
                     </h3>
 
@@ -207,9 +208,10 @@ const PostDescription = () => {
                 </td>
 
                 {userType !== USER_TYPE.CREATOR && (
-                  <td style={{ paddingLeft: "20px" }}>
+                  <>
+                  <td id="buyBlock" style={{ paddingLeft: "20px" }}>
                     <div>
-                      <table style={tab}>
+                      <table className="innerTable" style={tab}>
                         <tr>
                           <td style={{ paddingLeft: "20px" }}>
                             <h4>DOWNLOAD</h4>
@@ -300,6 +302,56 @@ const PostDescription = () => {
                       </table>
                     </div>
                   </td>
+                  <div className="disBlock">
+                    <div style={{padding:'30px',background:
+                      "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                      <div style={{display:"flex",justifyContent:'space-between',}}>
+                        <h4>DOWNLOAD</h4>
+                        <h4>Token Price: {projectDetail?.tokenPrice} FIL{" "}</h4>
+                      </div>
+                      <div style={{display:"flex",justifyContent:'space-between',}}>
+                        <h4>WISHLIST</h4>
+                        <h4>
+                        {userType === USER_TYPE.BOUGHT ? (
+                          <DownloadFileButton
+                            projectData={projectDetail}
+                            downloadProcessing={downloadProcessing}
+                            setDownloadProcessing={setDownloadProcessing}
+                          />
+                        ) : (
+                          <BuyTokenButton
+                            projectData={projectDetail}
+                            purchaseProcessing={purchaseProcessing}
+                            setPurchaseProcessing={setPurchaseProcessing}
+                          />
+                        )}
+                        </h4>
+                      </div>
+                    </div>
+                    <div style={{padding:'30px',background:
+                    "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>RENT</h4>
+                      <h4></h4>
+                    </div>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>WISHLIST</h4>
+                      <h4>PURCHASE</h4>
+                    </div>
+                    </div>
+                    <div style={{padding:'30px',background:
+                    "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>PURCHASE</h4>
+                      <h4></h4>
+                    </div>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>WISHLIST</h4>
+                      <h4>PURCHASE</h4>
+                    </div>
+                    </div>
+                  </div>
+                  </>
                 )}
               </tr>
             </table>

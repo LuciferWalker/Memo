@@ -1,0 +1,32 @@
+@media (max-width: 720px) {
+    #buyBlock{
+      display: none;
+    }
+    .disBlock{
+      margin-top: 20px;
+      display: block;
+    }
+    .tbl-responsive th {
+      display: none;
+    }
+  
+    .tbl-responsive td {
+      display: flex;
+    }
+  
+    .tbl-responsive td .btn{
+      position: relative;
+    }
+  
+    .tbl-responsive td:before {
+      content: attr(data-header);
+      font-weight: bold;
+      color: #000;
+    }
+  }
+
+  @media (min-width:1007px){
+    .disBlock{
+      display: none;
+    }
+  }
