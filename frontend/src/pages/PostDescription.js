@@ -159,6 +159,7 @@ const PostDescription = () => {
               display: "flex",
               justifyContent: "space-between",
               gap: "20px",
+              overflowX: 'hidden'
             }}
           >
             <table className="tbl-responsive">
