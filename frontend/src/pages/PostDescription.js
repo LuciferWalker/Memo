@@ -352,7 +352,7 @@ const PostDescription = () => {
                     </div>
                     </div>
                   </div>
-                  <div>
+                  <div className="creatorBlock">
                   {userType === USER_TYPE.CREATOR && (
               <div
                 style={{
@@ -361,7 +361,6 @@ const PostDescription = () => {
                     "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
                   padding: "40px",
                 }}
-                className="creatorBlock"
               >
                 <div style={{}}>
                   <div style={{ textAlign: "left" }}>
@@ -402,7 +401,7 @@ const PostDescription = () => {
                   </div>
                 </div>
               </div>
-             )} 
+              )} 
                   </div>
                   </>
                 )}

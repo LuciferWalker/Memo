@@ -9,7 +9,7 @@
     .fullCreatorBlock{
       display: none;
     }
-    .creatorBlock{
+    #creatorBlock{
       margin-top: 20px;
       display: block;
     }
@@ -33,7 +33,7 @@
   }
 
   @media (min-width:1007px){
-    .creatorBlock{
+    #creatorBlock{
       display: none;
     }
     .fullCreatorBlock{
