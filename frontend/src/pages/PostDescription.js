@@ -10,7 +10,8 @@ import DownloadFileButton from "../components/DownloadFileButton";
 import { BASE_URL, formatBytes } from "../utils";
 import { NotificationManager } from "react-notifications";
 import { ethers } from "ethers";
-import moment from "moment";
+import '../styles/responsive.css'
+// import moment from "moment";
 
 const PostDescription = () => {
   const [projectDetail, setprojectDetail] = useState(null);
@@ -158,9 +159,10 @@ const PostDescription = () => {
               display: "flex",
               justifyContent: "space-between",
               gap: "20px",
+              overflowX: 'hidden'
             }}
           >
-            <table>
+            <table className="tbl-responsive">
               <tr>
                 <td
                   style={{
@@ -172,7 +174,7 @@ const PostDescription = () => {
                     <h3>
                       {projectDetail?.projectName} |{" "}
                       <span style={{fontSize:"15px"}}>
-                        {moment(projectDetail?.createdAt).format("DD-MM-YYYY")}
+                        {/* {moment(projectDetail?.createdAt).format("DD-MM-YYYY")} */}
                       </span>
                     </h3>
 
@@ -207,9 +209,10 @@ const PostDescription = () => {
                 </td>
 
                 {userType !== USER_TYPE.CREATOR && (
-                  <td style={{ paddingLeft: "20px" }}>
+                  <>
+                  <td id="buyBlock" style={{ paddingLeft: "20px" }}>
                     <div>
-                      <table style={tab}>
+                      <table className="innerTable" style={tab}>
                         <tr>
                           <td style={{ paddingLeft: "20px" }}>
                             <h4>DOWNLOAD</h4>
@@ -300,7 +303,108 @@ const PostDescription = () => {
                       </table>
                     </div>
                   </td>
-                )}
+                  <div className="disBlock">
+                    <div style={{padding:'30px',background:
+                      "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                      <div style={{display:"flex",justifyContent:'space-between',}}>
+                        <h4>DOWNLOAD</h4>
+                        <h4>Token Price: {projectDetail?.tokenPrice} FIL{" "}</h4>
+                      </div>
+                      <div style={{display:"flex",justifyContent:'space-between',}}>
+                        <h4>WISHLIST</h4>
+                        <h4>
+                        {userType === USER_TYPE.BOUGHT ? (
+                          <DownloadFileButton
+                            projectData={projectDetail}
+                            downloadProcessing={downloadProcessing}
+                            setDownloadProcessing={setDownloadProcessing}
+                          />
+                        ) : (
+                          <BuyTokenButton
+                            projectData={projectDetail}
+                            purchaseProcessing={purchaseProcessing}
+                            setPurchaseProcessing={setPurchaseProcessing}
+                          />
+                        )}
+                        </h4>
+                      </div>
+                    </div>
+                    <div style={{padding:'30px',background:
+                    "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>RENT</h4>
+                      <h4></h4>
+                    </div>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>WISHLIST</h4>
+                      <h4>PURCHASE</h4>
+                    </div>
+                    </div>
+                    <div style={{padding:'30px',background:
+                    "linear-gradient(180deg, rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",width:'500px'}}>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>PURCHASE</h4>
+                      <h4></h4>
+                    </div>
+                    <div style={{display:"flex",justifyContent:'space-between',}}>
+                      <h4>WISHLIST</h4>
+                      <h4>PURCHASE</h4>
+                    </div>
+                    </div>
+                  </div>
+                  </>
+                  )}
+                  {userType === USER_TYPE.CREATOR && (
+                    <div className="creatorBlock">
+                    <div
+                      style={{
+                        width: "80%",
+                        background:
+                          "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
+                        padding: "40px",
+                      }}
+                    >
+                      <div style={{}}>
+                        <div style={{ textAlign: "left" }}>
+                          <p>File Size - {formatBytes(projectDetail?.fileSize)}</p>
+                          <p>Token Price - {projectDetail?.tokenPrice} FIL</p>
+                          <p>Total Tokens - {projectDetail?.totalTokenSupply}</p>
+                        </div>
+                        <div style={{ textAlign: "left" }}>
+                          <p>Tokens Bought - {projectDetail?.tokensBought}</p>
+                          <p>
+                            Token Contract Address -{" "}
+                            {projectDetail?.tokenContractAddress}
+                          </p>
+                        </div>
+                        <div style={{ textAlign: "left" }}>
+                          <p>
+                            Your Royalty Pocket: {shareAmount ? shareAmount : 0} FIL
+                          </p>
+                          {shareAmount > 0 && (
+                            <p>
+                              <button
+                                style={{
+                                  color: hoversub ? "#658BD6" : "white",
+                                  padding: "7px",
+                                  background: "none",
+                                  border: "none",
+                                  fontFamily: "Montserrat, sans-serif",
+                                  cursor: "pointer",
+                                }}
+                                onClick={collectShares}
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                              >
+                                <b>Claim Money</b>
+                              </button>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  )} 
               </tr>
             </table>
             {userType === USER_TYPE.CREATOR && (
@@ -311,6 +415,7 @@ const PostDescription = () => {
                     "linear-gradient(rgba(0, 13, 46, 0.7) 7.81%, rgba(0, 0, 0, 0) 100%)",
                   padding: "40px",
                 }}
+                className="fullCreatorBlock"
               >
                 <div style={{}}>
                   <div style={{ textAlign: "left" }}>
@@ -351,7 +456,7 @@ const PostDescription = () => {
                   </div>
                 </div>
               </div>
-            )}
+             )}
           </div>
         </div>
       </div>
