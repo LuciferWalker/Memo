@@ -66,7 +66,7 @@ const PostDescription = () => {
 
    useEffect(() => {
      if (!account) {
-       navigate("/");
+       navigate("/explore");
        NotificationManager.info("Connect Your Wallet!", "Warning", 3000);
      }
    }, []);
