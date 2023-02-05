@@ -388,9 +388,10 @@ const PostDescription = () => {
                                   color: hoversub ? "#658BD6" : "white",
                                   padding: "7px",
                                   background: "none",
-                                  border: "none",
                                   fontFamily: "Montserrat, sans-serif",
                                   cursor: "pointer",
+                                  border:'1px solid #658BD6',
+                                  borderRadius:'10px'
                                 }}
                                 onClick={collectShares}
                                 onMouseEnter={handleMouseEnter}
@@ -439,11 +440,12 @@ const PostDescription = () => {
                         <button
                           style={{
                             color: hoversub ? "#658BD6" : "white",
-                            padding: "7px",
-                            background: "none",
-                            border: "none",
-                            fontFamily: "Montserrat, sans-serif",
-                            cursor: "pointer",
+                                  padding: "7px",
+                                  background: "none",
+                                  fontFamily: "Montserrat, sans-serif",
+                                  cursor: "pointer",
+                                  border:'1px solid #658BD6',
+                                  borderRadius:'10px'
                           }}
                           onClick={collectShares}
                           onMouseEnter={handleMouseEnter}
@@ -457,6 +459,7 @@ const PostDescription = () => {
                 </div>
               </div>
              )}
+             
           </div>
         </div>
       </div>
