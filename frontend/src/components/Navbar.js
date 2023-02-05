@@ -22,7 +22,6 @@ const Navbar = () => {
               }}
             >
               <h1>MEMO</h1>
-              <h5>01.01.2023</h5>
             </div>
             <div style={{ cursor: "pointer", textAlign: "right" }}>
               <h4>
